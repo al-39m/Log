@@ -1,6 +1,24 @@
-<script type="text/javascript">
-   function gate() {
-      var UserInput = prompt("パスワードを入力して下さい:","");
-      location.href = UserInput + ".html";
-   }
-</script>
+<!-- login.php -->
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+  <form action="check_password.php" method="post">
+    <input type="password" name="password" required>
+    <input type="submit" value="Submit">
+  </form>
+</body>
+</html>
+
+<!-- check_password.php -->
+<?php
+$password = $_POST['password'];
+$correct_password = "mypassword";
+
+if ($password == $correct_password) {
+  header("Location: protected_page.html");
+} else {
+  echo "Incorrect password!";
+}
+?>
