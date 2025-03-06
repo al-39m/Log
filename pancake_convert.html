@@ -1,0 +1,3618 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>パンケーキ食べきらないと出られない部屋</title>
+<meta http-equiv="content-type" charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<style>*{font-family:sans-serif;}:root{--header-back:0,0,0;--header-color:#FFF;--awesome:'Font Awesome 5 Free';}body{padding-top:80px;margin:0;}/* header */header{background:rgba(var(--header-back),0.5);color:var(--header-color);position:fixed;top:0;left:0;width:100%;overflow-x:hidden;transition:0.3s;}header:has(#menu[open]){background:rgba(var(--header-back),0.8);}summary{outline:none;}details > summary{display:inline-block;cursor:pointer;opacity:0.3;font-size:80%;font-weight:bold;padding:5px;margin:10px 0 0;}details > summary:hover,details[open] > summary{opacity:1;}details[open] > summary:hover{opacity:0.3;}details > summary:before{content:'\f138';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details[open] > summary:before{content:'\f13a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details > div{margin:10px 10px 30px 20px;word-break:break-all;}details > div > button{padding:3px 20px;margin:0 0 8px;font-size:80%;cursor:pointer;outline:none;border:2px solid var(--header-color);border-radius:3px;background:rgba(0,0,0,0);color:var(--header-color);opacity:0.3;}details > div > button:hover{opacity:1;}button.all.hide:before{content:'一括非表示';}button.all.hide:after{content:'\f070';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}button.all.show:before{content:'一括表示';}button.all.show:after{content:'\f06e';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}input[type="checkbox"]{display:none;}label{cursor:pointer;}input[type="checkbox"]+ label:before{content:'\f0c8';font-family:var(--awesome);font-weight:400;margin-right:0.5em;}input[type="checkbox"]:checked + label:before{content:'\f14a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open]{max-height:85vh;}#menu > summary{padding:0 10px 10px;}#menu[open] > summary{opacity:0.3;}#menu[open] > summary:hover{opacity:1;}#menu > summary:before{content:'\f0c9';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu > summary:after{content:'MENU';}#menu[open] > summary:before{content:'\f00d';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open] > summary:after{content:'CLOSE';}#menu > div{max-height:60vh;max-width:80vw;padding-bottom:50px;overflow-y: auto;}#menu > div::-webkit-scrollbar{display:none;}header a:link,header a:visited{color:var(--header-color);opacity:0.5;text-decoration: none;}header a:hover{opacity:1;}/* chat-log default style */#chat-log{margin:20px 0 20px 25px;}.chat{display:flex;flex-wrap:nowrap;flex-direction:column;padding-right:1em;}.chat > div{word-break:break-all;}.chat > div:nth-child(1){display:block;font-weight:bold;padding-top:0.2em;}.chat > div:nth-child(2){margin-left:1em;padding:0 0.2em 0.2em;}/* headline */[id^="index"]{margin-top:-90px;padding-top:90px;}/* hide-user style */.hide-user > div:nth-child(1),.hide-user2 > div:nth-child(1){display: none !important;}.hide-user > div:nth-child(2):not(:has(b)){margin-left:0;padding:0;}.hide-user + div:not(:has(.hide-user)){padding-bottom:0.5em;}.hide-user b,.hide-user2 b{ margin-left:-1.2em; }/* tab style */body{background:#2a2a2a;}/* diceroll */button.dice{outline:none;border:none;background:none;color:inherit;opacity:0.5;cursor:pointer;transition:0.3s;}button.dice:hover{opacity:1;letter-spacing:0.1em;}button.dice.select{opacity:1;}button.dice.select:hover{letter-spacing:0;cursor:default;}#dice-output-area{padding:10px 15px;background:#000;color:#888;border-radius:3px;font-size:80%;}#dice-output-area li{text-indent:-1.5em;padding-left:2.5em;}#dice-output-area li.sub{list-style-type:circle;padding-left:5em;}button.dice-output-area{display:none;padding:2px 8px;font-size:100%;}#dice-text-copy{display:none;}@media only screen and (orientation: portrait){button.dice{display:block;color:var(--header-color);background:rgba(var(--header-back),1);}span.dice-span{display:none;}}/* safari */summary::-webkit-details-marker {display:none;}/* mediaquery */@media only screen and (orientation: portrait){*{overflow-x:hidden !important;}html{width:100vw;overflow-x:hidden !important;}header{padding:50px 0 0 0;margin:0;width:100%;overflow-x:hidden !important;position:fixed;top:0;left:0;right:0;}#menu{padding-left:10px;}body{padding:120px 0 0 0;margin:0;;width:100%;font-size:90%;overflow-x:hidden !important;}#chat-log{width:90vw;overflow-x:hidden !important;margin:20px 0 20px 15px;}#chat-log div{word-break:break-all;overflow-x:hidden !important;padding-right:0;}.chat > div:nth-child(2){margin-left:0;overflow-x:hidden;}.hide-user b,.hide-user2 b{ margin-left:0em; }[id^="index"]{margin-top:-120px;padding-top:120px;}}</style>
+<script>$(function(){$(document).on('click','#tab-all,#user-all',function(){let tgt = $(this).attr('id').replace('-all','');let result = true;if( $(this).hasClass('hide') ){ result = false; }$('input[name="' + tgt + '"]').prop('checked',result);$(this).toggleClass('show hide');chatShowHide();});});$(function(){$(document).on('change','[name="user"],[name="tab"]',function(){ chatShowHide(); });});function chatShowHide(){$('.chat').show();let hide_list = [];$('[name="user"]:not(:checked),[name="tab"]:not(:checked)').each(function(){ hide_list.push('.' + $(this).attr('id').toLowerCase()); });hide_list = hide_list.join(',');$(hide_list).hide();$('#dice-output-area').html('').hide();$('.dice-output-area').hide();$('button.dice').removeClass('select');}</script><script>/* dice output */$(function(){$(document).on('click','button.dice',function(){if( $(this).hasClass('select') ){ return; }else{$('button.dice.select').removeClass('select');let tgt = $(this).attr('id');let user_ary = [];let dice_ary = [];let result_ary = [];let elm = $('#chat-log > div.diceroll:visible');for( i = 0 ; i < elm.length ; i++ ){let thisUser = elm.eq(i).attr('class').split(' ')[2];let txt = elm.eq(i).children().eq(1).html();try{let txt_re = txt.split('</b>');if( txt_re[1] == undefined ){ throw new Error(); }txt = txt_re[1];}catch(e){;}txt = txt.replace(/\n|\s|\t| |　| /g,'');let terms = false;if( tgt == 'diceroll' ){ terms = true; }else if( tgt == 'cf' && ( elm.eq(i).data('dice-result').split(',').indexOf('cr') !== -1 || elm.eq(i).data('dice-result').split(',').indexOf('fb') !== -1 ) ){ terms = true; }else if( elm.eq(i).data('dice-result').split(',').indexOf(tgt) !== -1 ){ terms = true; }if( terms ){if( user_ary.indexOf(thisUser) == -1 ){ user_ary.push(thisUser);dice_ary.push([]);result_ary.push([0,0]); }let user_num = user_ary.indexOf(thisUser);if( Boolean(elm.eq(i).data('dice-ccb')) && !Boolean(elm.eq(i).data('dice-x'))){try{let cbr_result = txt.split('&lt;=')[1].split('[')[1].split(']')[0].split(',');if( cbr_result[0].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[0].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }if( cbr_result[1].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[1].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}catch(e){;}}else if( Boolean(elm.eq(i).data('dice-x')) ){txt = txt.split(/#\d/);for( j = 0 ; j < txt.length ; j++ ){txt[j] = txt[j].replace(/<br>/g,'');if( j > 0 ){txt[j] = '<li class="sub">' + txt[j] + '</li>';if( txt[j].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt[j].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}}txt = txt.join('');}else{txt = txt.replace(/<br>/g,'');if( txt.match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt.match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}let tabspan = '<span>［' + $('#' + elm.eq(i).attr('class').split(' ')[1].toUpperCase()).next().text() + '］</span>';dice_ary[user_num].push(tabspan + txt);}}let output = '';for( i = 0 ; i < user_ary.length ; i++ ){output += '<b>▼ ' + $('#' + user_ary[i].toUpperCase() ).next().text();if( tgt == 'diceroll' || tgt == 'cf' ){ output += '（' + result_ary[i].join('C') + 'F）'; }output += '<br></b>';output += '<li>' + dice_ary[i].join('</li><li>') + '</li><br>';}$('#dice-output-area').html(output).show();$('.dice-output-area').show();$(this).addClass('select');}});});/* copy action */$(function(){$(document).on('click','button.dice-output-area',function(){$('#dice-text-copy').html($('#dice-output-area').html());$('#dice-text-copy span').remove();let li_elm = $('#dice-text-copy li.sub');for( i = 0 ; i < li_elm.length ; i++ ){ li_elm.eq(i).prop('outerHTML','　◦ ' + li_elm.eq(i).text() + '<br>'); }let copyTxt = $('#dice-text-copy').html();copyTxt = copyTxt.replace(/<br><b>/g,'\n\n').replace(/<li>|<b>|<\/b>/g,'').replace(/<\/li>|<br>/g,'\n').replace(/&lt;/g,'<').replace(/&nbsp;/g,' ');copyToClipboard(copyTxt);alert('クリップボードにコピーしました。');$('#dice-text-copy').html('');});});function copyToClipboard(txt){const pre = document.createElement('pre');pre.style.webkitUserSelect = 'auto';pre.style.userSelect = 'auto';pre.textContent = txt;document.body.appendChild(pre);document.getSelection().selectAllChildren(pre);const result = document.execCommand('Copy');document.body.removeChild(pre);return result;}</script>
+</head>
+<header>
+<details id="menu">
+<summary></summary>
+<div>
+<details>
+<summary>発言者別表示切替</summary>
+<div>
+<button id="user-all" class="all hide"></button><br>
+<input type="checkbox" name="user" id="USER0" checked><label for="USER0">system</label><br>
+<input type="checkbox" name="user" id="USER1" checked><label for="USER1">真昼野　夕都</label><br>
+<input type="checkbox" name="user" id="USER2" checked><label for="USER2">二ノ瀬のの</label><br>
+<input type="checkbox" name="user" id="USER3" checked><label for="USER3">出雲　鈴</label><br>
+<input type="checkbox" name="user" id="USER4" checked><label for="USER4">幸田　夢子</label><br>
+<input type="checkbox" name="user" id="USER5" checked><label for="USER5">石川 晴樹</label><br>
+<input type="checkbox" name="user" id="USER6" checked><label for="USER6">巻き込まれた探偵さん</label><br>
+<input type="checkbox" name="user" id="USER7" checked><label for="USER7">　</label><br>
+</div>
+</details>
+<details>
+<summary>ダイス出力機能</summary>
+<div>
+<button type="button" class="dice" id="diceroll">ダイス一括表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="sc">成功のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="fl">失敗のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="cf">CF表示</button>
+<div id="dice-output-area" style="display:none;"></div>
+<br>
+<button class="dice-output-area">コピー <i class="fa-regular fa-copy"></i></button><div id="dice-text-copy"></div>
+<br>
+<span style="font-size:70%;">
+※組み合わせダイス（CBR,CBRB）、繰り返しコマンド（Xn CCB等）は正しく判定できない可能性があります。<br>
+※ダイス結果のコピーではタブ名はコピーされません。
+</span>
+</div>
+</details>
+
+<br><br>
+<a href="#"><i class="fa-solid fa-angles-up"></i> ログの先頭へ</a><br>
+<a href="#log-end"><i class="fa-solid fa-angles-down"></i> ログの最後へ</a>
+</div>
+</details>
+</header>
+<body>
+<div id="chat-log">
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        テスト 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        てすと 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#8bc34a;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        てすと 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        1d100&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 91 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        てすとでーす 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝65　演奏 
+Cthulhu : (1D100&lt;=65) ＞ 18 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#3f51b5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=35　古書修理 
+Cthulhu : (1D100&lt;=35) ＞ 2 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝71　聞き耳 
+Cthulhu : (1D100&lt;=71) ＞ 39 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        目を覚ますと、見知らぬ四角い部屋に探索者たちは横たわっています。<br>部屋の中心にはテーブルと椅子、壁際に棚と電子タブレットと扉があります。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「う、うーん……どこ？ここ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「うっ……頭いって……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「うーん…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「あれ？美香子姉のお友達の……真昼野くんと出雲ちゃん？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「と、知らない人……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「む・・・？知らないひとがたくさんですねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「久しぶり……だけどなんでこんなところに？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「うーん…？ボクもよくわかんないや」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「あれ…真昼野さんと…二ノ瀬さん？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「そっちの初めましてのお2人も気失ってたの？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「みたいですね………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「なんかまた厄介ごとの気がする。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「はて・・・私は仕事上がりの読書をしていたはずなんですけどねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「あ、とりあえずまずは自己紹介しましょ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「それじゃあみんな気づいたらここに居たって感じなのかな？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「そうだね、僕もそれが良いと思うよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「ボクは二ノ瀬のの。よろしくね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「私は出雲　鈴っていいます」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「幸田夢子です。みなさんはじめましてー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「俺は石川晴樹っていいます。はじめまして」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「幸田さんと晴樹くんね、よろしく。僕は真昼野夕都って言います、好きに呼んでください。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「とりあえず……部屋の中調べてみようか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「……ってか、机の上見て！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「これは………パンケーキ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「ん？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        カードと大きなパンケーキが載った皿が置いてある。可愛らしいリボンがあしらわれたカードには、「パンケーキを食べきらないと出られない部屋」と書かれている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「机のうえ・・・なにかありますねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「パンケーキを食べきらないとでれない…？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        1d100&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 43 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#2196f3;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>石川 晴樹</div>
+	<div>
+	
+        ccb&lt;=80   目星 
+Cthulhu : (1D100&lt;=80) ＞ 63 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝50　目星 
+Cthulhu : (1D100&lt;=50) ＞ 13 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#e91e63;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        ccb&lt;=35 目星 
+Cthulhu : (1D100&lt;=35) ＞ 45 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#3f51b5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=65　目星 
+Cthulhu : (1D100&lt;=65) ＞ 51 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「パンケーキ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        七段重ねの何もかかっていない生クリームだけ載ったパンケーキで、このまま食べるのは少しキツイのではないかと思う。また、フォークやナイフの類が見つからないことにも気づく。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「ですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        扉は、赤やピンクのリボンや色とりどりのお菓子があしらわれた、白ばかりの部屋には似つかないほど可愛らしい扉。目線の高さくらいに覗き穴がついている 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「ここから出られないんでしょうか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝55　DEX×5 
+Cthulhu : (1D100&lt;=55) ＞ 94 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝54　SAN 
+Cthulhu : (1D100&lt;=54) ＞ 55 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        1ｄ3 
+Cthulhu : (1D3) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 出雲　鈴 ] HP : 13 → 12 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 出雲　鈴 ] SAN : 54 → 52 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「いったぁ…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「どうしたの！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「どうしたの？その怪我」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「大丈夫ですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「出雲さん、どうかしましたー？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「扉の覗き穴からナイフが飛んできて…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「ええ！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝60　応急手当 
+Cthulhu : (1D100&lt;=60) ＞ 86 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ひえぇ・・・やはりこれを食べきるまで出られない、と」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「あれー…絆創膏どこだったかな…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        1d100&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 95 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#3f51b5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=65　目星 
+Cthulhu : (1D100&lt;=65) ＞ 95 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        一杯ソースがありますね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#3f51b5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=65　目星 
+Cthulhu : (1D100&lt;=65) ＞ 45 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        イチゴソースを見つけた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        1d100&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 75 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        見つかりませんでしたーｗｗｗｗ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「棚からイチゴのソース見つけてきましたー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        僕は包丁持ってくよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「あとはですねー、棚の上にコーヒーメーカーがあるのが見えましたねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「コーヒーメーカー？豆とかはある？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「コーヒーメーカーも一応持ってこうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「お豆はないですねー。誰かもっていってもらえると助かりますー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「とりあえず手元にあるタブレットの電源を入れてみますね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「あ！メニュー表みたいですね。」（一緒にのぞき込んでいる） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「ですね…  生クリーム山盛りパンケーキ、各種フルーツ、あとはみなさま…？と表示されてますね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「うーん？よく見せてください」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        二ノ瀬はタブレットを適当にいじりました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#e91e63;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        ccb&lt;=50 幸運 
+Cthulhu : (1D100&lt;=50) ＞ 13 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「……ん？この部屋の注意…？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「石川さん、これ読んでみてください！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「どれどれ…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「読みあげますね。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「この部屋の扉は、食べきらないと開きません。ご了承下さい。<br>また、ソース等のアレンジは、セルフサービスとなっております。<br>どうぞどれでもご自由にお使いください。<br>また、カトラリーなどをご希望される場合は、お申し付け下さい。<br>何かありましたらこちらまで」と書いてあり、その下にメール送信フォームがついている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「メール送ってみましょう！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「人数分のカトラリーをください、とかでしょうかねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「コーヒー豆も貰おうかな？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「じゃあカトラリーと、コーヒー豆くださいってメールしてみましょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「あいたた…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「……送信してみました」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        メッセを送って少し経つとガシャン、と音がしてテーブルにその物が置かれる。何もない空間から急に物が現れた事にSAN(0/1) 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#e91e63;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        ccb&lt;=57 SAN 
+Cthulhu : (1D100&lt;=57) ＞ 45 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        1d100&lt;=58 SAN 
+Cthulhu : (1D100&lt;=58) ＞ 56 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝52　SAN 
+Cthulhu : (1D100&lt;=52) ＞ 67 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#2196f3;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>石川 晴樹</div>
+	<div>
+	
+        ccb&lt;=81   SAN 
+Cthulhu : (1D100&lt;=81) ＞ 81 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#3f51b5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=53　SAN 
+Cthulhu : (1D100&lt;=53) ＞ 19 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 出雲　鈴 ] SAN : 52 → 51 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        テーブルの上に人数分のカトラリーとコーヒー豆が出てきました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        これでパンケーキを食べれますね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「うわあっ！びっくりした…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「うーん……フルーツってありました？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「そういえば棚の方にあったね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「あった気がしますねぇ。もう1回見に行きます？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「じゃあボクもいきます！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「ソースもあったはずだよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ワンモア棚 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「晴樹くんと出雲さんも来る？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「あっ、私も行きたいです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「俺も行きます。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「ブルーベリーのジャムとかほしいよね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「バナナとかあるのかな…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#e91e63;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        ccb&lt;=35 目星 
+Cthulhu : (1D100&lt;=35) ＞ 31 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「よーしじゃあ色々見つけよっか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝50　目星 
+Cthulhu : (1D100&lt;=50) ＞ 16 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「わ！あったー！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「俺は蜂蜜が欲しいですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「ケーキならやっぱりオ……じゃなくてイチゴかな？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#2196f3;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>石川 晴樹</div>
+	<div>
+	
+        ccb&lt;=80   目星 
+Cthulhu : (1D100&lt;=80) ＞ 70 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        1d100&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 90 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「真昼野くん以外は目当てのものを見つけました」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「今オリーブオイルって言おうとしてませんでした？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「お！蜂蜜ありました」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        みつかんなかったTT 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ではイチゴ、さがしてきます」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「イチゴあるかなあ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#3f51b5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=65　目星 
+Cthulhu : (1D100&lt;=65) ＞ 2 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        イチゴとパイナップルも見つけました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「イチゴと・・・あとパイナップルがありましたね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「あ！チョコソースも欲しくない？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「欲しいよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#e91e63;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        ccb&lt;=35 目星 
+Cthulhu : (1D100&lt;=35) ＞ 27 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「あった♥」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「チョコソース、いいですねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「結構ありますね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「あ、あとあと、メープルシロップ！外せないよね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「アイスクリーム…とかは流石に置いてないのかな？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「僕はコーヒーは甘々にしないと飲めないからシュガーとミルクもらおうかな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#e91e63;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        ccb&lt;=35 目星 
+Cthulhu : (1D100&lt;=35) ＞ 55 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ベリー系のフルーツが他にも欲しいですね。ラズベリーとか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#3f51b5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=65　目星 
+Cthulhu : (1D100&lt;=65) ＞ 11 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ラズベリーとメープルシロップも見つけました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「取り皿もいるよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「色々出てきますねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        『アイスクリーム、シュガー、ミルク、取り皿、コーヒー用の食器』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        1d2 
+Cthulhu : (1D2) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 真昼野　夕都 ] MP : 8 → 6 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「ゔっ……頭が……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「みんなはあんまりメールは多用しない方が良いかも」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「真昼野さん大丈夫ですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「うん、ちょっと頭痛がしただけだよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「あ！葡萄とかないかな～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#e91e63;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        ccb&lt;=35 目星 
+Cthulhu : (1D100&lt;=35) ＞ 53 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「ないかー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝60　応急手当 
+Cthulhu : (1D100&lt;=60) ＞ 84 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「葡萄ありますかね…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「あれー…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#2196f3;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>石川 晴樹</div>
+	<div>
+	
+        ccb&lt;=80   目星 
+Cthulhu : (1D100&lt;=80) ＞ 16 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        葡萄を見つけました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「おっ、葡萄ありましたよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「ありがとうございます！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「りんごあるかな？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        1d100&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 26 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「オリーブオイルも一応探しとこうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        1d100&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 60 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「これだけ見つかればいいですよね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「うんうん、十分だね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「とりあえず、みんなで食べきりましょうね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「たくさん材料が集まりましたねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「とりあえずほんとに食べられるのか調べてみようか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「そうですねー、これだけあれば色々と組み合わせができますね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        1d100&lt;=75 料理 
+Cthulhu : (1D100&lt;=75) ＞ 57 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        普通のパンケーキです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「うん、大丈夫みたいだね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        じゃあ全員席について各々取り皿にとって食べ始めるでしょうね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「料理人の真昼野さんが言うなら大丈夫ですよね♪」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「ケーキ切り分けるよー？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「助かります」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        直径５０ｃｍあります（急遽調整を淹れる） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「改めて見ると……この量……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「大きい………ですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「重ねて切って食べられる量を増やす・・・とかどうでしょう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「食べきらないと出れないし、頑張るしか！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「一枚なら…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝88　CON×8 
+Cthulhu : (1D100&lt;=88) ＞ 84 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#e91e63;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        ccb&lt;=103 CON 
+Cthulhu : (1D100&lt;=103) ＞ 91 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        1d100&lt;=72 CON×8 
+Cthulhu : (1D100&lt;=72) ＞ 45 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#2196f3;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>石川 晴樹</div>
+	<div>
+	
+        ccb&lt;=104  CON 
+Cthulhu : (1D100&lt;=104) ＞ 79 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#3f51b5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=72　CON×8 
+Cthulhu : (1D100&lt;=72) ＞ 94 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        幸田ちゃん以外は一枚目を完食しました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「美味しかったねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「おいしいね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「…ふぅ、美味しかったです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「キツくないです？これ」（もぐ） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「ん～、アイスクリームのトッピングはいいですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#e91e63;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        ccb&lt;=91 CON7 
+Cthulhu : (1D100&lt;=91) ＞ 40 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#2196f3;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>石川 晴樹</div>
+	<div>
+	
+        ccb&lt;=91 
+Cthulhu : (1D100&lt;=91) ＞ 23 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        1d100&lt;=63 CON×7 
+Cthulhu : (1D100&lt;=63) ＞ 49 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝77　CON×7 
+Cthulhu : (1D100&lt;=77) ＞ 24 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「おいしい～！まだいけそうかも！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#3f51b5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=63　CON×7 
+Cthulhu : (1D100&lt;=63) ＞ 44 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「うんうん、まだまだいけそう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「まだまだがんばります」（ももも） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#e91e63;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        ccb&lt;=78 CON*6 
+Cthulhu : (1D100&lt;=78) ＞ 92 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「俺もまだいけそうです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        1d100&lt;=54 CON×6 
+Cthulhu : (1D100&lt;=54) ＞ 82 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「ｳｯ……きついかも…！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝66　CON×6 
+Cthulhu : (1D100&lt;=66) ＞ 37 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#2196f3;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>石川 晴樹</div>
+	<div>
+	
+        ccb&lt;=78  CON×6 
+Cthulhu : (1D100&lt;=78) ＞ 78 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        二ノ瀬と真昼野くんは三枚目で苦戦しました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「ｳﾞｯ、オリーブオイルが足らない……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#3f51b5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=54　CON×6 
+Cthulhu : (1D100&lt;=54) ＞ 18 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        ccb&lt;=45 CON×5 
+Cthulhu : (1D100&lt;=45) ＞ 15 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝55　CON×５ 
+Cthulhu : (1D100&lt;=55) ＞ 35 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#e91e63;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        ccb&lt;=65 CON*5 
+Cthulhu : (1D100&lt;=65) ＞ 24 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#2196f3;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>石川 晴樹</div>
+	<div>
+	
+        ccb&lt;=65 
+Cthulhu : (1D100&lt;=65) ＞ 79 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「よし、オリーブキメればまだまだ入るね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「うーん、美味しい～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#3f51b5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=45　CON×5 
+Cthulhu : (1D100&lt;=45) ＞ 60 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「むぐ・・・くるしい・・・」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「………っ、少しキツいですね…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        石川くん幸田ちゃんは４枚目に苦戦しています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        ccb&lt;=36 CON×4 
+Cthulhu : (1D100&lt;=36) ＞ 38 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝44　CON×5 
+Cthulhu : (1D100&lt;=44) ＞ 29 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#e91e63;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        ccb&lt;=52 CON*4 
+Cthulhu : (1D100&lt;=52) ＞ 20 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#3f51b5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=36　CON×4 
+Cthulhu : (1D100&lt;=36) ＞ 72 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#2196f3;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>石川 晴樹</div>
+	<div>
+	
+        ccb&lt;=52  CON4 
+Cthulhu : (1D100&lt;=52) ＞ 28 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「うぇっぷ……胸焼けが……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「ま、まだいける……まだ…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「む、むりです～～～！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「真昼野さん、食べきれますか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        ccb&lt;=27 CON×3 
+Cthulhu : (1D100&lt;=27) ＞ 11 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「みんながんばろ……！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「料理人たるもの残すわけには……！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#e91e63;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        ccb&lt;=39 CON*3 
+Cthulhu : (1D100&lt;=39) ＞ 92 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝33　CON×3 
+Cthulhu : (1D100&lt;=33) ＞ 52 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#2196f3;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>石川 晴樹</div>
+	<div>
+	
+        ccb&lt;=39   CON3 
+Cthulhu : (1D100&lt;=39) ＞ 88 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「う。うう……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#3f51b5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=27　CON×3 
+Cthulhu : (1D100&lt;=27) ＞ 61 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「くるしい……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「みんなオリーブキメる？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「いらない」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「うっ…胃が…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        TT 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「・・・・・・・・」（明後日の方向をみている） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「うぐぅ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        ccb&lt;=18 CON×2 
+Cthulhu : (1D100&lt;=18) ＞ 94 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#e91e63;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        ccb&lt;=26 CON*2 
+Cthulhu : (1D100&lt;=26) ＞ 63 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#2196f3;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>石川 晴樹</div>
+	<div>
+	
+        ccb&lt;=26 CON2 
+Cthulhu : (1D100&lt;=26) ＞ 43 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#3f51b5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=18　CON×2 
+Cthulhu : (1D100&lt;=18) ＞ 87 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝22　CON×2 
+Cthulhu : (1D100&lt;=22) ＞ 97 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…うっぷ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「ぐぐぐ……もう……限界……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「く、くるしいよぉ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「う、うぅ・・・・・」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「〜〜〜っ！！！きっつぃ………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「ま、まだ…舞えます…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        ccb&lt;=9 CON 
+Cthulhu : (1D100&lt;=9) ＞ 45 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#e91e63;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        ccb&lt;=13 CON 
+Cthulhu : (1D100&lt;=13) ＞ 60 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝11　CON×1 
+Cthulhu : (1D100&lt;=11) ＞ 52 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#2196f3;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>石川 晴樹</div>
+	<div>
+	
+        ccb&lt;=13  CON 
+Cthulhu : (1D100&lt;=13) ＞ 81 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#3f51b5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=9　CON 
+Cthulhu : (1D100&lt;=9) ＞ 37 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「もうむりぃ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        食べても食べても減らないパンケーキ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「俺も………限界です…………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「ふ、ふくろ…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        1d100&lt;=40 幸運 
+Cthulhu : (1D100&lt;=40) ＞ 1 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        嘘だろお前 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        もう胃が限界……誰か助けてと思う人がいたかもしれない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「だれですかね」（棒読み） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        S1d2 
+Cthulhu : (1D2) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「でもここにいる全員が限界に近いですよねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「……………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「急に…きましたね…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「いきなり何！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「いや、何！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        助っ人ｷﾀｰ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「満を持しての助っ人登場・・・おいしいポジションですねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「なんで！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「人が増えましたね………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「お兄さんあとは頼んだ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「ひ…人が…助かりました」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「ど、どういうこと！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「私みてないから状況がわっかんないなー！！！！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「私の代わりにこのパンケーキを食べてください…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「まあまあ、パンケーキでもどうぞ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「食べきらないと出られなくて…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「喰いかけじゃん！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「どうしてそんなことするの！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「わかんない……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「人の心がない」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「だずげで」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「私が知りたいです…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「すいません……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「まあ、食べればいいんだね……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「私たちはもう限界なのであとはお願いします」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「何枚食べればいいの…？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「たくさんです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「いやこれでかくない？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「3枚」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「私甘いもの苦手なんだけど！！！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「これを3枚」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「50ｃｍあります…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「きっつ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「がんばれ！がんばれ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「コーヒーかければどうでしょうか…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 diceroll" style="color:#62418a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        ccb&lt;=91 CON*7 
+Cthulhu : (1D100&lt;=91) ＞ 63 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「もしくはオリーブオイル」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ふぁいとー、ですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「おえきつ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「オリーブオイルはダメですよ真昼野さん…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「あまい……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「頑張ってください…！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「こういうのは兄ちゃんの方が適任だったよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「間違いないね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「貴方が頼りなんです…頑張ってください」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 diceroll" style="color:#62418a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        ccb&lt;=78 CON*7 
+Cthulhu : (1D100&lt;=78) ＞ 99 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「無理」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「もう無理」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「ギブ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「帰っていい？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「誰よりもダウン早かったな……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「早っ！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「だめですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「甘いもの苦手なんだもん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「やだ帰る　私おうち帰る」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「食べきらないと帰れませんよ…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「食べないと帰れないんですって」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「なんでそんないじめるの！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「出られたら良かったんですけどねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「私たちも被害者ですから…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「そうそう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「無理に扉から出ようとするとナイフ飛んでくるし…」（ほっぺを指しながら） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「私はのんびり仕事してただけなのに！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「怪我くらいどうでもよくない？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「そんなぁ…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「うーん……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「じゃあそうだなあ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「君たちの中で一番運がない人って誰？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「たぶん僕かな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「あ、オリーブオイル君？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「うんうん、うん？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「え？名前言い当ててやろうか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 diceroll" style="color:#62418a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        Sccb&lt;=85 
+Cthulhu : (1D100&lt;=85) ＞ 24 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「じゃあオリーブオイルくん、君は今からお腹が空きます」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「え？それはどういう……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        真昼野くんはお腹が空きました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「うわ、ほんとだ。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        ccb&lt;=72 CON×8 
+Cthulhu : (1D100&lt;=72) ＞ 22 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「うん余裕余裕」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        ccb&lt;=63 CON×7 
+Cthulhu : (1D100&lt;=63) ＞ 92 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「おい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「やっぱりお腹空いてても記憶が……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「あと一枚どうすんの？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「ま、真昼野さん凄いですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「俺に任せてください………あと1枚なら………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#2196f3;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>石川 晴樹</div>
+	<div>
+	
+        ccb&lt;=65   CON5 
+Cthulhu : (1D100&lt;=65) ＞ 81 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「だめじゃん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「無理しちゃダメだよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「この男の人めっちゃ失礼だよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        「お前が食えよって感じ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「ほんとどの口が言うんだって感じ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「…………………………無理でした」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「う・・・じゃあ、私もチャレンジしてみます」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#3f51b5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=45　CON×5 
+Cthulhu : (1D100&lt;=45) ＞ 40 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        パンケーキを食べきった！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        「幸田さんやるぅ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        「凄いですね…！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「や、やりました！」（もぐ） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        最後の一口を口に入れる。もう入らない、もう無理だ、などと思いながら皿を見つめていると、突然背後からガチャリと鍵の音がする。<br>どうやら扉が開いた様だ。探索者たちは立ち上がり、扉の方へ向かうだろう。しかし、足がもつれてしまう。なんだかお腹がいっぱいで、急激な眠気が襲いかかってきたようだ。<br>抗いがたい眠気に勝てず、探索者たちは意識を手放す。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        目を覚ますと、探索者たちは自分のベッドにいる。あれは夢だったのか、いや、はちきれそうな程の満腹感があれは現実の出来事だったのだと伝えてくる。<br>ふとベッドサイドをみると、見覚えのあるカードが置かれている。<br>見ると、「ご利用ありがとうございました」と達筆で書かれている下に、パンケーキの絵が描かれている。<br>やれやれ、パンケーキはもうこりごりだ。<br><br>シナリオクリア 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        脱出した 1d3<br>カトラリーを使った 1d3 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#cddc39;">
+	<div>真昼野　夕都</div>
+	<div>
+	
+        1d3+1d3 
+Cthulhu : (1D3+1D3) ＞ 1[1]+2[2] ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        2d3+2d3 
+Cthulhu : (2D3+2D3) ＞ 5[3,2]+5[2,3] ＞ 10
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 真昼野　夕都 ] SAN : 58 → 61 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+         
+Cthulhu : (1D3+1+3) ＞ 1[1]+1+3 ＞ 5
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#e91e63;">
+	<div>二ノ瀬のの</div>
+	<div>
+	
+        1d3+1d3 
+Cthulhu : (1D3+1D3) ＞ 3[3]+2[2] ＞ 5
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#2196f3;">
+	<div>石川 晴樹</div>
+	<div>
+	
+        1d3+1d3 
+Cthulhu : (1D3+1D3) ＞ 2[2]+3[3] ＞ 5
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 二ノ瀬のの ] SAN : 57 → 62 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 石川 晴樹 ] SAN : 81 → 86 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#3f51b5;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        1D3+1D3 
+Cthulhu : (1D3+1D3) ＞ 3[3]+2[2] ＞ 5
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 幸田　夢子 ] SAN : 53 → 58 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#62418a;">
+	<div>巻き込まれた探偵さん</div>
+	<div>
+	
+        「うええ　くるしい」 
+      
+	</div>
+</div>
+
+</div>
+<div id="log-end"></div>
+</body>
+</html>
