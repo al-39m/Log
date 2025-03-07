@@ -1,0 +1,3394 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>鳥籠のカナリア</title>
+<meta http-equiv="content-type" charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<style>*{font-family:sans-serif;}:root{--header-back:0,0,0;--header-color:#FFF;--awesome:'Font Awesome 5 Free';}body{padding-top:80px;margin:0;}/* header */header{background:rgba(var(--header-back),0.5);color:var(--header-color);position:fixed;top:0;left:0;width:100%;overflow-x:hidden;transition:0.3s;}header:has(#menu[open]){background:rgba(var(--header-back),0.8);}summary{outline:none;}details > summary{display:inline-block;cursor:pointer;opacity:0.3;font-size:80%;font-weight:bold;padding:5px;margin:10px 0 0;}details > summary:hover,details[open] > summary{opacity:1;}details[open] > summary:hover{opacity:0.3;}details > summary:before{content:'\f138';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details[open] > summary:before{content:'\f13a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details > div{margin:10px 10px 30px 20px;word-break:break-all;}details > div > button{padding:3px 20px;margin:0 0 8px;font-size:80%;cursor:pointer;outline:none;border:2px solid var(--header-color);border-radius:3px;background:rgba(0,0,0,0);color:var(--header-color);opacity:0.3;}details > div > button:hover{opacity:1;}button.all.hide:before{content:'一括非表示';}button.all.hide:after{content:'\f070';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}button.all.show:before{content:'一括表示';}button.all.show:after{content:'\f06e';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}input[type="checkbox"]{display:none;}label{cursor:pointer;}input[type="checkbox"]+ label:before{content:'\f0c8';font-family:var(--awesome);font-weight:400;margin-right:0.5em;}input[type="checkbox"]:checked + label:before{content:'\f14a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open]{max-height:85vh;}#menu > summary{padding:0 10px 10px;}#menu[open] > summary{opacity:0.3;}#menu[open] > summary:hover{opacity:1;}#menu > summary:before{content:'\f0c9';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu > summary:after{content:'MENU';}#menu[open] > summary:before{content:'\f00d';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open] > summary:after{content:'CLOSE';}#menu > div{max-height:60vh;max-width:80vw;padding-bottom:50px;overflow-y: auto;}#menu > div::-webkit-scrollbar{display:none;}header a:link,header a:visited{color:var(--header-color);opacity:0.5;text-decoration: none;}header a:hover{opacity:1;}/* chat-log default style */#chat-log{margin:20px 0 20px 25px;}.chat{display:flex;flex-wrap:nowrap;flex-direction:column;padding-right:1em;}.chat > div{word-break:break-all;}.chat > div:nth-child(1){display:block;font-weight:bold;padding-top:0.2em;}.chat > div:nth-child(2){margin-left:1em;padding:0 0.2em 0.2em;}/* headline */[id^="index"]{margin-top:-90px;padding-top:90px;}/* hide-user style */.hide-user > div:nth-child(1),.hide-user2 > div:nth-child(1){display: none !important;}.hide-user > div:nth-child(2):not(:has(b)){margin-left:0;padding:0;}.hide-user + div:not(:has(.hide-user)){padding-bottom:0.5em;}.hide-user b,.hide-user2 b{ margin-left:-1.2em; }/* tab style */body{background:#2a2a2a;}/* diceroll */button.dice{outline:none;border:none;background:none;color:inherit;opacity:0.5;cursor:pointer;transition:0.3s;}button.dice:hover{opacity:1;letter-spacing:0.1em;}button.dice.select{opacity:1;}button.dice.select:hover{letter-spacing:0;cursor:default;}#dice-output-area{padding:10px 15px;background:#000;color:#888;border-radius:3px;font-size:80%;}#dice-output-area li{text-indent:-1.5em;padding-left:2.5em;}#dice-output-area li.sub{list-style-type:circle;padding-left:5em;}button.dice-output-area{display:none;padding:2px 8px;font-size:100%;}#dice-text-copy{display:none;}@media only screen and (orientation: portrait){button.dice{display:block;color:var(--header-color);background:rgba(var(--header-back),1);}span.dice-span{display:none;}}/* safari */summary::-webkit-details-marker {display:none;}/* mediaquery */@media only screen and (orientation: portrait){*{overflow-x:hidden !important;}html{width:100vw;overflow-x:hidden !important;}header{padding:50px 0 0 0;margin:0;width:100%;overflow-x:hidden !important;position:fixed;top:0;left:0;right:0;}#menu{padding-left:10px;}body{padding:120px 0 0 0;margin:0;;width:100%;font-size:90%;overflow-x:hidden !important;}#chat-log{width:90vw;overflow-x:hidden !important;margin:20px 0 20px 15px;}#chat-log div{word-break:break-all;overflow-x:hidden !important;padding-right:0;}.chat > div:nth-child(2){margin-left:0;overflow-x:hidden;}.hide-user b,.hide-user2 b{ margin-left:0em; }[id^="index"]{margin-top:-120px;padding-top:120px;}}</style>
+<script>$(function(){$(document).on('click','#tab-all,#user-all',function(){let tgt = $(this).attr('id').replace('-all','');let result = true;if( $(this).hasClass('hide') ){ result = false; }$('input[name="' + tgt + '"]').prop('checked',result);$(this).toggleClass('show hide');chatShowHide();});});$(function(){$(document).on('change','[name="user"],[name="tab"]',function(){ chatShowHide(); });});function chatShowHide(){$('.chat').show();let hide_list = [];$('[name="user"]:not(:checked),[name="tab"]:not(:checked)').each(function(){ hide_list.push('.' + $(this).attr('id').toLowerCase()); });hide_list = hide_list.join(',');$(hide_list).hide();$('#dice-output-area').html('').hide();$('.dice-output-area').hide();$('button.dice').removeClass('select');}</script><script>/* dice output */$(function(){$(document).on('click','button.dice',function(){if( $(this).hasClass('select') ){ return; }else{$('button.dice.select').removeClass('select');let tgt = $(this).attr('id');let user_ary = [];let dice_ary = [];let result_ary = [];let elm = $('#chat-log > div.diceroll:visible');for( i = 0 ; i < elm.length ; i++ ){let thisUser = elm.eq(i).attr('class').split(' ')[2];let txt = elm.eq(i).children().eq(1).html();try{let txt_re = txt.split('</b>');if( txt_re[1] == undefined ){ throw new Error(); }txt = txt_re[1];}catch(e){;}txt = txt.replace(/\n|\s|\t| |　| /g,'');let terms = false;if( tgt == 'diceroll' ){ terms = true; }else if( tgt == 'cf' && ( elm.eq(i).data('dice-result').split(',').indexOf('cr') !== -1 || elm.eq(i).data('dice-result').split(',').indexOf('fb') !== -1 ) ){ terms = true; }else if( elm.eq(i).data('dice-result').split(',').indexOf(tgt) !== -1 ){ terms = true; }if( terms ){if( user_ary.indexOf(thisUser) == -1 ){ user_ary.push(thisUser);dice_ary.push([]);result_ary.push([0,0]); }let user_num = user_ary.indexOf(thisUser);if( Boolean(elm.eq(i).data('dice-ccb')) && !Boolean(elm.eq(i).data('dice-x'))){try{let cbr_result = txt.split('&lt;=')[1].split('[')[1].split(']')[0].split(',');if( cbr_result[0].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[0].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }if( cbr_result[1].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[1].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}catch(e){;}}else if( Boolean(elm.eq(i).data('dice-x')) ){txt = txt.split(/#\d/);for( j = 0 ; j < txt.length ; j++ ){txt[j] = txt[j].replace(/<br>/g,'');if( j > 0 ){txt[j] = '<li class="sub">' + txt[j] + '</li>';if( txt[j].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt[j].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}}txt = txt.join('');}else{txt = txt.replace(/<br>/g,'');if( txt.match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt.match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}let tabspan = '<span>［' + $('#' + elm.eq(i).attr('class').split(' ')[1].toUpperCase()).next().text() + '］</span>';dice_ary[user_num].push(tabspan + txt);}}let output = '';for( i = 0 ; i < user_ary.length ; i++ ){output += '<b>▼ ' + $('#' + user_ary[i].toUpperCase() ).next().text();if( tgt == 'diceroll' || tgt == 'cf' ){ output += '（' + result_ary[i].join('C') + 'F）'; }output += '<br></b>';output += '<li>' + dice_ary[i].join('</li><li>') + '</li><br>';}$('#dice-output-area').html(output).show();$('.dice-output-area').show();$(this).addClass('select');}});});/* copy action */$(function(){$(document).on('click','button.dice-output-area',function(){$('#dice-text-copy').html($('#dice-output-area').html());$('#dice-text-copy span').remove();let li_elm = $('#dice-text-copy li.sub');for( i = 0 ; i < li_elm.length ; i++ ){ li_elm.eq(i).prop('outerHTML','　◦ ' + li_elm.eq(i).text() + '<br>'); }let copyTxt = $('#dice-text-copy').html();copyTxt = copyTxt.replace(/<br><b>/g,'\n\n').replace(/<li>|<b>|<\/b>/g,'').replace(/<\/li>|<br>/g,'\n').replace(/&lt;/g,'<').replace(/&nbsp;/g,' ');copyToClipboard(copyTxt);alert('クリップボードにコピーしました。');$('#dice-text-copy').html('');});});function copyToClipboard(txt){const pre = document.createElement('pre');pre.style.webkitUserSelect = 'auto';pre.style.userSelect = 'auto';pre.textContent = txt;document.body.appendChild(pre);document.getSelection().selectAllChildren(pre);const result = document.execCommand('Copy');document.body.removeChild(pre);return result;}</script>
+</head>
+<header>
+<details id="menu">
+<summary></summary>
+<div>
+<details>
+<summary>発言者別表示切替</summary>
+<div>
+<button id="user-all" class="all hide"></button><br>
+<input type="checkbox" name="user" id="USER0" checked><label for="USER0">system</label><br>
+<input type="checkbox" name="user" id="USER1" checked><label for="USER1">出雲　鈴</label><br>
+<input type="checkbox" name="user" id="USER2" checked><label for="USER2">幸田　夢子</label><br>
+<input type="checkbox" name="user" id="USER3" checked><label for="USER3">?????</label><br>
+<input type="checkbox" name="user" id="USER4" checked><label for="USER4">カナリア</label><br>
+<input type="checkbox" name="user" id="USER5" checked><label for="USER5">KP</label><br>
+</div>
+</details>
+<details>
+<summary>ダイス出力機能</summary>
+<div>
+<button type="button" class="dice" id="diceroll">ダイス一括表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="sc">成功のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="fl">失敗のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="cf">CF表示</button>
+<div id="dice-output-area" style="display:none;"></div>
+<br>
+<button class="dice-output-area">コピー <i class="fa-regular fa-copy"></i></button><div id="dice-text-copy"></div>
+<br>
+<span style="font-size:70%;">
+※組み合わせダイス（CBR,CBRB）、繰り返しコマンド（Xn CCB等）は正しく判定できない可能性があります。<br>
+※ダイス結果のコピーではタブ名はコピーされません。
+</span>
+</div>
+</details>
+
+<br><br>
+<a href="#"><i class="fa-solid fa-angles-up"></i> ログの先頭へ</a><br>
+<a href="#log-end"><i class="fa-solid fa-angles-down"></i> ログの最後へ</a>
+</div>
+</details>
+</header>
+<body>
+<div id="chat-log">
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        てす 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ccb&lt;=50 
+Cthulhu : (1D100&lt;=50) ＞ 40 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ccb&lt;=50 
+Cthulhu : (1D100&lt;=50) ＞ 84 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝65　演奏 
+Cthulhu : (1D100&lt;=65) ＞ 32 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        テスト 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=45　芸術（文学） 
+Cthulhu : (1D100&lt;=45) ＞ 33 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        探索者が各々いつも通りの生活を送っていると、唐突に視界が歪む。<br>目眩のような、空間が丸ごと揺れているような不快感に立っていられなくなった探索者は、倒れ込むと同時に意識を失う。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        聞き耳どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=65　聞き耳 
+Cthulhu : (1D100&lt;=65) ＞ 96 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝71　聞き耳 
+Cthulhu : (1D100&lt;=71) ＞ 87 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        気絶する時頭をぶつけて1ダメージ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 幸田　夢子 ] HP : 10 → 9 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        次に目を覚ました時、視界に広がるのは見覚えの無い真っ白な空間と自分と同じく倒れている他の探索者。そして、部屋の中央に設置された巨大な鳥籠のような檻だった。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「いたた……なんか頭ぶつけたような……。あれ、どこです？ここ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「うーん…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「ここは…どこですか…？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「あれっ、そこにいるのはもしや出雲さん。お久しぶり？です」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「あっ…幸田さん、お久しぶりです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「この間のあれは……嫌な事件でしたねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「あっ……はい…そうですね…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「それより…ここはどこですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「さぁ？私も気づいたらここにいたんですよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「仕事がサボれるのでラッキーなんですけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        正方形の真っ白な部屋。広い部屋だが、中央に設置された巨大な黒い鳥籠が圧迫感を放っている。<br>部屋の3辺に扉があり、自分達が倒れていた背後の壁以外には“赤”と“黄”と“白”の扉があるのがわかる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=70　目星 
+Cthulhu : (1D100&lt;=70) ＞ 25 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝50　目星 
+Cthulhu : (1D100&lt;=50) ＞ 8 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        中央の黒い鳥籠の中に、人が横たわっているのがわかる。<br>また、天井にはダクトらしきものが設置してあるのが見える。が、探索者達には到底届きそうもない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「大丈夫ですか！？」（駆け寄る） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「人？が倒れてるみたいですねぇ」（一緒に様子見に行きます） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        鳥籠の中には1人の少女が身体を丸めて眠っている。<br>白と黒のゴスロリチックな服装で、首元の赤いチョーカーがよく映えている。人形のように整ったまだ幼い顔立ちは、日本人でないようだと分かるだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝50　目星 
+Cthulhu : (1D100&lt;=50) ＞ 22 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=70　目星 
+Cthulhu : (1D100&lt;=70) ＞ 2 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        鳥籠はとても頑丈そうで壊す事は不可能だろうという事がわかる。また、出入り口と思しき場所には鍵がかかっている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        少女は規則正しい呼吸を繰り返している。また、首元のチョーカーに小さな鈴が付いているのが見える。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        鳥籠から嫌な感じがする触ってはいけないと本能が訴えるだろう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「出入口は鍵がかかってて入れないですね…かといって隙間から入るのも無理そう…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「どこかに鍵があるのかもしれませんねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「そうですね…あるとしたらあの扉の奥かと」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「赤と黄と白の扉がありますけど…どこから入ってみます？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「赤、白、黄色……チューリップの歌に合わせるなら赤からですかねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「なら赤から行ってみましょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「女の子は気になりますけど…一緒に言った方が安全ですしね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ではでは一緒に行きましょー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=65　聞き耳 
+Cthulhu : (1D100&lt;=65) ＞ 20 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝71　聞き耳 
+Cthulhu : (1D100&lt;=71) ＞ 52 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        何も聞こえませんでした 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「中に誰かいるわけではなさそうですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        （ナイフが飛んでくるかもしれないからちょっと怖いな…） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「特に何も聞こえませんねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「開けてみてもいいんじゃないでしょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…開けてみますか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「じゃあ開けてみますねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        扉を開くと、そこは赤を基調とした家具などが並ぶ部屋だった。<br>引き出し付きの小さなドレッサー、丸いローテーブル、柔らかそうなベッド。1人部屋のような空間だ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「はい…気を付けてくださいね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「可愛らしいお部屋ですねぇ。あの女の子のお部屋でしょうか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「そう…なんでしょうか？色合いがちょっと大人っぽい気もしますけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝50　目星 
+Cthulhu : (1D100&lt;=50) ＞ 72 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=70　目星 
+Cthulhu : (1D100&lt;=70) ＞ 31 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「引き出しは下から開けた方が効率がいいって小説で読んだことあるんですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        泥棒？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…その本、私も読んだ気がします…確か泥棒が主人公のお話でしたよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「面白いですよねぇ、あのシリーズ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        引き出しの中に小さな白い鍵と大きな黒い鍵が入っているのを見つける。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「なにかありましたか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「鍵が2つありましたけど……この黒い方は鳥籠に使えそうな気もしますねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「そうですか…早速その黒い鍵で鳥籠開けれるか試してみます？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「そうですねぇ、さっきの子も心配ですし行ってみます？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「私としてはもう少しこの部屋を調べたいなとは思うんですけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「らじゃーです、じゃあ私ももうちょっと調べますかね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        1人部屋によく置いてあるような何の変哲もない丸いローテーブル。<br>机の上を見ると、メモが置いてある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「メモが置いてありますね…えっと」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《ここもそろそろ飽きてきた。最後くらいは面白い展開を期待しているよ》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        大きな枕が乗った、寝心地の良さそうなふかふかのベッド。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=70　目星 
+Cthulhu : (1D100&lt;=70) ＞ 66 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ベッドの下で何か動いた気がした 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=65　聞き耳 
+Cthulhu : (1D100&lt;=65) ＞ 16 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        名状しがたい音が聞こえた気がした 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「（……？嫌な気配がしますねぇ）」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ベッドは新品同様で使われた事が無いのではないか？と思う。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「幸田さん、そっちにはなにかありましたか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「えーっと……こっちには新品のベッドがあっただけですねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「こっちにはメモがありましたよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ほうほう、なんてメモですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「これですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「飽き……？誰が書いたんでしょうかねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「さあ？女の子が書いたわけではなさそうですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…女の子に聞いてみた方がいいかも？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「そうですねぇ、女の子のところに戻ってみましょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「そうですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        戻ってきたがさっきと様子は変わらない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ではさっきの黒い鍵で鳥籠開けられるか試してみますねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「はい、お願いしますね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        開きました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「あっ、開きました」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「もしもーし、おきてくださーい（女の子のほっぺをつんつんします）」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        少女に声をかけると、やがて緩やかにその瞼を開き上体を起こして探索者を見つめる。<br>その身体の動きで、チョーカーに付いていた小さな鈴がチリンと澄んだ音を鳴らした。<br>彼女はしばし寝惚けたようにぼーっとこちらを眺めていたと思えば、やがてハッとした顔でこちらへ向き直りおずおずと切り出した。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+         
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>???<br></b>
+
+        「ヒト…？ねぇお願い、ここから出して。独りは寂しい……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「あ、起きたみたいですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「えぇと……まず、あなたのお名前を教えてもらっていいですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>???<br></b>
+
+        「私は…カナリアって名前で呼ばれてるよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>???<br></b>
+
+        「あなた達は...?」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「カナリアちゃんっていうんだね、私は出雲　鈴（いずも　りん）って言うの」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「こーだゆめこです。よろしくお願いしますカナリアちゃん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>???<br></b>
+
+        「出雲とこーだ...うん覚えた」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「早速一つ聞きたいんだけどいいかな？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「うんなに？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「ここってどこなのかな？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「わからない…私も早くここから出たい…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「カナリアちゃんはいつからここにいるんですかー？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「覚えてないの、でも随分長い間ここにいる……寂しい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「そっかー、じゃあカナリアちゃんはなんでこの鳥籠の中に居たの？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「この空間の主に捕まって…お願い、助けて。ここから出して」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「この空間の…主…カナリアちゃん以外にも誰かいたんだね？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「うん...怖い人だった...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        シークレットダイス ???
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        「嘘はついていないと思う」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「あの3色の扉の中に入ったことありますか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「ううん、ずっと鳥籠にいたから入ったことないよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ですよねぇ、私たちで調べに行くしかありませんねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「そうですねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「私達これから他の扉を調べるんだけど、カナリアちゃんも一緒に行く？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「うん！いく！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「一人は寂しいもんね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「では3人で一緒に行きましょー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「おー！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        白の扉は鍵がかかっている 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「幸田さん、もう一つ鍵もってませんでしたっけ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「そういえばありましたね、白い鍵」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「それ、使えるか試してみません？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「らじゃーです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        鍵はぴったりハマり扉は開くだろう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=65　聞き耳 
+Cthulhu : (1D100&lt;=65) ＞ 75 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝71　聞き耳 
+Cthulhu : (1D100&lt;=71) ＞ 60 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ピチャッピチャッと水が垂れるような音がする 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…水が落ちるような音がしますね…雨漏りしてるのかな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「雨漏り……？ここ古い建物なんでしょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「取り合えず開けてみましょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そこは先程までいた部屋と同じく真っ白な空間。部屋の隅には机や椅子、簡素なベッドがあるのが見て分かる。<br>そして何より目を引くのが、部屋の中央。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そこはペンキをぶちまけた様に赤く彩られており、中央には赤黒く塗り潰された“何か”が転がっている。<br>しかし、この部屋に充満する異臭はそれがペンキなどではないことを物語っていた。錆びた鉄のような匂いと腐敗臭。<br>それらが混ざり合う臭いの元凶は、赤黒い血液であり、それに塗れた１つの死体だ。発見してしまった探索者はSANc【1/1d3】 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝57　SAN 
+Cthulhu : (1D100&lt;=57) ＞ 76 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=60　SAN 
+Cthulhu : (1D100&lt;=60) ＞ 100 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        1ｄ3 
+Cthulhu : (1D3) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 出雲　鈴 ] SAN : 57 → 55 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「あ...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        1D3 
+Cthulhu : (1D3) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 幸田　夢子 ] SAN : 60 → 58 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「カナリアちゃん見ちゃダメ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「…………」（カナリアちゃんの目を手でふさぎます） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「......うん...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        木でできた簡素な机。白紙のノートや紙束、筆記用具が雑多に置かれている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝50　目星 
+Cthulhu : (1D100&lt;=50) ＞ 83 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「カナリアちゃん、ちょっと私にしがみついててもらってもいいですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「わかった...」(ギュッとしがみついてくる) 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「カナリアちゃん、一ついいかな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「では机の方に行きますよーついて来てくださいねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「なに？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…カナリアちゃんとカナリアちゃんを閉じ込めた人以外に誰かいたかな？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「......」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「わかんない」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        シークレットダイス ???
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        この男のことを間違いなく知っていると確信するだろう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「カナリアちゃん、ありがとね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「...うん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=70　目星 
+Cthulhu : (1D100&lt;=70) ＞ 62 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        机の上のものをどかすと、机自体に刃物で彫ったような字で「中途半端な同情は身を滅ぼす」と書いてある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「机に文字を彫るだなんて器用な事をする人もいるんですねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        シンプルなパイプベッド。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=70　目星 
+Cthulhu : (1D100&lt;=70) ＞ 60 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        枕の下に隠すように一冊のノートが挟まっていた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「このベッドの下にも何かありますかねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ベッドの下を覗くとGが大量にいるのが見える 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        SAN－1 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 幸田　夢子 ] SAN : 58 → 57 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ひっ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「幸田さん？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「あ……出雲さん……なんでもないですよ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「そうですか…そっちは何かありましたか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「それより枕の下にノートがあったんですよ、一緒に読みません？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「一緒にですか？…ちょっと嫌な予感はしますけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…そのノート、私が先に読んでもいいですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「その代わり幸田さんにはまた他の所捜してもらえると助かります」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「あ、はい。どうぞー」（ノートを手渡します） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「ありがとうございます」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        全体的に急いで書いたような、なおかつ震えた手で書いたような字で若干読み難い。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「他のところと言っても1つしかないんですけどねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        パッと見で男性のような死体。恐怖の表情そのままに絶命している。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=70　目星 
+Cthulhu : (1D100&lt;=70) ＞ 29 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        首元から大量の血が噴き出た様子が見て取れる。未だに血が流れ出ているようだ。また、手にはナイフが握られている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        【医学orアイデア1/2】 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=35　アイデア 
+Cthulhu : (1D100&lt;=35) ＞ 35 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        床には既に固まって黒ずんだ血痕もあればたった今溢れ出たばかりの血も付着しており、長い間血が流れ出続けている様子がわかる。通常では考えられない奇妙な死体にSANc【1/1d3＋1】 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=57　SAN 
+Cthulhu : (1D100&lt;=57) ＞ 12 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 幸田　夢子 ] SAN : 57 → 56 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「…………やっぱり見ていて気持ちのいいものではありませんねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「出雲さん、ノートにはなんて書いてありましたー？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「そうですね…見てもらった方が早いとは思いますが…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…大丈夫ですか？顔色悪いですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「……まあ、なんとか。大丈夫です」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「じゃあ、ノート見せてもらっていいですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「そうですね…その前にこの部屋からでませんか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「そうですね、嫌な臭いしますし」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        部屋から出ると探索者達は軽い目眩を感じます。しかしそれは一瞬の事で、その後は特に何も異常は見られません。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「...?大丈夫？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「…………？今の、何です……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「この部屋変な臭いがするしそのせいかも...なんだか嫌な感じ...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「大丈夫だよ、カナリアちゃんは？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「私は大丈夫だよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝71　聞き耳 
+Cthulhu : (1D100&lt;=71) ＞ 61 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        特に変な臭いはしないと思うだろう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=65　聞き耳 
+Cthulhu : (1D100&lt;=65) ＞ 99 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        転んだ勢い余って黄色の扉に突撃してしまう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        思いっきり頭をぶつけて1ダメージ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ついでに扉も開いた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「あっ！こ、幸田さん！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「あっ、痛っ、あう………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 幸田　夢子 ] HP : 9 → 8 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝60　応急手当 
+Cthulhu : (1D100&lt;=60) ＞ 100 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        2ｄ3 
+Cthulhu : (2D3) ＞ 4[3,1] ＞ 4
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 幸田　夢子 ] HP : 8 → 4 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=45　CON×5 
+Cthulhu : (1D100&lt;=45) ＞ 93 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        気絶しました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「こ、幸田さんしっかりしてください」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝60　応急手当 
+Cthulhu : (1D100&lt;=60) ＞ 63 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「...こーだ？どうしたのこーだ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「…………」（きゅう） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「出雲こーだ起きないよ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「……ちょっと疲れちゃったのかな…？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        扉を開くと、そこは壁一面に本が並べられている部屋だった。8畳ほどの空間ではあるが、ぎっしりと詰められた本は数日かけた程度では大抵読みきれるものではないと悟るだろう。<br>扉のみならず床も天井も、本を仕切る棚も黄色で構成されている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…こんなに本が」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝50　図書館 
+Cthulhu : (1D100&lt;=50) ＞ 71 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        何も見つからない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「特に…何もないかな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝60　応急手当 
+Cthulhu : (1D100&lt;=60) ＞ 29 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        1ｄ３ 
+Cthulhu : (1D3) ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 幸田　夢子 ] HP : 4 → 7 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「こーだ大丈夫？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ふわぁ……おはようございます？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「幸田さん…その……ごめんなさい…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「えぇと……何かありましたっけ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「えっと…まあ…その…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…あ、黄の扉の中に入ったんですけど、本しかなくて…図書館みたいでした」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「本ですか。気になるので私も見に行ってもいいですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「はい、いいですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=70　図書館 
+Cthulhu : (1D100&lt;=70) ＞ 86 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝50　図書館 
+Cthulhu : (1D100&lt;=50) ＞ 1 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        めぼしい本を3冊見つける。
+<br>金糸雀(カナリア)について
+<br>絵本「ことりのゆめ」
+<br>真っ黒の装丁の本 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        次の技能+20 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「あ、幸田さん、ノートの中知りたがってましたよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「あっ、そうでした。見せてほしいです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「はい、私はこの本読みますね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        金糸雀(カナリア)について<br>《金糸雀はヨーロッパで古くから愛玩鳥として飼育されており、現在では世界中で飼われている鳴き声の美しい鳥。<br>また、毒物に敏感であることから毒ガスの検知に用いられたり、実験動物としても用いられることもある。<br>飼育環境に適応した結果、野外で生き延びられないことが多い。しかし飼育下では比較的飼いやすく、人間に慣れやすいため雛から育てたりさし餌をしなくても手乗りになる》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        絵本「ことりのゆめ」<br>《鳥籠で独りぼっちの小鳥は、籠の外に出る事を夢見ていました。<br>空を飛び回る鳥たちを見上げては、自分もそうなりたいと憧れていたのです。<br>けれど、時々尋ねてきてくれる雀や鳩は「仕方ないよ、君は僕達とは違うから」と言って取り合ってくれません。<br>寂しくて泣いていた小鳥に、一羽の烏が話しかけます。「私と一緒に来るかい？」<br>これでやっと籠の外に出られる。そう思った小鳥は喜んで頷きました。それを見て、賢い烏は籠の入り口を開けて小鳥を外へ逃がしてあげます。<br>でも、そんな時。小鳥の飼い主がやってきて、恐ろしい形相で烏にナイフを振り下ろしたのです。「僕の小鳥に何をするんだ、余所者め！」と。<br>小鳥が外に出て振り返った頃には、烏の美しい黒の翼は赤に染まっていました。それでも、烏は笑って言うのです。「さぁ、早くお行きなさい。キミの夢は叶ったよ」》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        真っ黒の装丁の本<br>読んでいるだけで気分が悪くなってくるような冒涜的な文章が書き連ねられている。以下、巻末にメモしてあった手描きの文章<br><br>《特殊な材質を用いて、如何なる物理的攻撃も魔術も遮断する金属を生成した。これを用いれば、何者も逃す事のない堅牢な檻が創り出せる。さて、何を閉じ込めよう。普通のものではつまらない。とびきり美しいものを閉じ込めて、それを自分の物にしよう》<br>SANc【1/1d2】 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝55　SAN 
+Cthulhu : (1D100&lt;=55) ＞ 20 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 出雲　鈴 ] SAN : 55 → 54 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=56　SAN 
+Cthulhu : (1D100&lt;=56) ＞ 83 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        1D2 
+Cthulhu : (1D2) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 幸田　夢子 ] SAN : 56 → 54 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「…………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「.........こーだ？出雲？どうしたの？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…カナリアちゃん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        部屋から出ると気付けば探索者達の身体は重く、倦怠感を感じます。<br>探索に集中している時は感じなかった身体の不調も、いざ気付いてみるといつからそうだったのか分からない事が不思議なくらいです。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        カナリアもぐったりした様子で 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「…少し、具合が悪くなってきた……臭いも強くなってる。こんなに強い臭いなのにみんなには分からないの……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「うん…臭いはしないけど…何かは分かるよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        今まで何もなかった一辺の壁に黒い扉が現れます。また、扉には白い文字でEXITと書かれています。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        目星どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=70　目星 
+Cthulhu : (1D100&lt;=70) ＞ 43 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>出雲　鈴</div>
+	<div>
+	
+        ｃｃｂ＜＝50　目星 
+Cthulhu : (1D100&lt;=50) ＞ 18 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        目を凝らすと、扉には赤い文字で「手を取るか、払い退けるのかはキミたち次第」と書かれているのがわかる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「……一緒にでるか、置いていくか…ですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「…………出雲さん。どう、します……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「私は…連れて行きますよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…このまま見捨てたくはありませんから」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「私だってそうしたいですよ。カナリアちゃんも出たいって言ってますし……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「でも、でも…………死にたくないです、私は。生きて、ここを出たいんです……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…私だって死にたくはありませんよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「こーだ、出雲...ごめんね...私のせいで...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「いいんだよカナリアちゃん」（頭をなでる） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「カナリアちゃんは……悪くないんですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…私は連れて行きますよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「自分の命が惜しいとは思わないんですか？生きて、帰って、やりたいことが、出雲さんにはないんですか……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「もちろん、ありますよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…やりたい事…この三人でここから出ること…かな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「3人で出られたらいいとは、私も、思います……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「幸田さん、ずっとここに居ても私達は死ぬだけです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「なら…誰でもいいから…生きる方を私は選びたいです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「どうして……そんなに強いんですか、出雲さんは……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…もう、一緒に行きますよ幸田さん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「……………わかりました、ぐすっ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…ありがとう、幸田さん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「…………ここでそれ言うのは反則です。死んでも恨んでやりますよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        黒の扉を開こうとすると、背後から足音が聞こえてくる。それは探索者達のものでも、カナリアのものでもない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        カツン、カツンと地面を鳴らす音に振り返れば、そこには真っ赤なドレスに身を包んだ女性が立っていた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「私の大事な金糸雀をどうするおつもりですか、余所者さん？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        妖艶な笑みを浮かべる女性の表情に反し、探索者達は本能的に感じる恐怖に警戒心を抱くだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「さぁ、それをこちらにお返しください」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「や、やだ...」(幸田にしがみつく) 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「大丈夫。だい、じょうぶ、ですよ……カナリアちゃん……」（カナリアちゃんをぎゅっとします） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「あなたたちはそれをどうするつもりなのですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「そうですね…私は連れて行きたいと思いました」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「だって…このまま見殺しにするわけにはいきませんからね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「……私も、カナリアちゃんに生きててほしい、です」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「ふーん...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「もう一度だけ忠告します、それをこちらにお返しください。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…一つ、聞きたいことがあります」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「何でしょう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「何故大事な金糸雀を毒ガスで殺そうとしたのですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「もう用済みだからですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「用済み…ですか、なら私が貰っていくのはダメなのですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「私はこの子に用があります」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「ふふふ.....あははははははは！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「あなたはそれがなんなのか分かっているのですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「カナリアちゃん、ですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「いいえ、そもそもそこにいるのは人間ではありません、人の形を取っているだけの化け物です。いつあなた方を襲い始めるかも分かりませんよ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「化け物を外に解放してもいいというのですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「そうですね……なら」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「責任は私が取ります…もし、カナリアちゃんが襲うようなことがあれば…私がなんとかします」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「あなたごときに化け物の責任が負えると？あなたの周りがそれのせいで全て消え去ってしまってもまだそんな妄言を言えると？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「（出雲さんは、強いですね。私はまだこんなに震えてるのに……）」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…あなたは…カナリアちゃんのせいで何かを失ったのですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「いいえ、私はその子を抑えることが出来るからないわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「そうですか、なら…私にもカナリアちゃんを抑えることだって」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「何故ソレにそんなに執着するのですか？ついさっき会った程度の間柄でしょう？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「そうですね…とてもきれいで…欲しくなったからですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「………かわいそう、じゃないですか。ずっとここに閉じ込められてて。外の世界を見せてあげたいって思うのはおかしいですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「....私は人間の気持ちは分かりません」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「...しかし」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「あなた達は実に面白い。カナリアを預けるのもまた一興と思わせてくれました」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        「いいでしょう。私の気が変わらないうちに出ていきなさい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…ありがとうございます」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「わたし...外に出てもいいの？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「うん、いいんだよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「………！はい、一緒に出ましょう！3人で！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「...うん！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「…私達に金糸雀を預けてくれて…本当にありがとうございます」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        女性は何も言わず探索者達に背を向けた。そしてを瞬きをした瞬間には消えているだろう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「皆でこの扉あけよっか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「じゃ、せーので開けましょう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>カナリア</div>
+	<div>
+	<b>カナリア<br></b>
+
+        「楽しみだなー！外の世界！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>出雲　鈴</div>
+	<div>
+	
+        「じゃあ行きますよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ……扉の中は真っ暗で、先程まで隣にいた探索者達の姿も見えなくなってしまう。<br>声も聞こえない。手を伸ばしてみても触れられない。突然、自分一人で何処かに迷い込んでしまったように感じるだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        しかし、暫くすると視界に光が満ちる。眩しくて目を閉じた探索者が次に目を開くと、とある町の一角だった。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        隣を見ると苦難を共にした探索者とカナリアの姿がある 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        自分たちは無事に脱出出来たのだ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>?????</div>
+	<div>
+	
+        あなた達がそれの本当の姿を目にしてもなお虚勢を張れるか楽しみにしてますよ...ふふふふふ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そんな声が聞こえた気がした 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ▼クリア報酬▼
+<br>
+<br>・全員生還 SAN＋1d3
+<br>・鳥籠の鍵を開けた SAN＋1d2
+<br>・カナリアを差し出さなかった SAN＋1d2
+<br> 
+      
+	</div>
+</div>
+
+</div>
+<div id="log-end"></div>
+</body>
+</html>
