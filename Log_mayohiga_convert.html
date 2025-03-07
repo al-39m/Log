@@ -1,0 +1,6886 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>マヨヒガ</title>
+<meta http-equiv="content-type" charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<style>*{font-family:sans-serif;}:root{--header-back:0,0,0;--header-color:#FFF;--awesome:'Font Awesome 5 Free';}body{padding-top:80px;margin:0;}/* header */header{background:rgba(var(--header-back),0.5);color:var(--header-color);position:fixed;top:0;left:0;width:100%;overflow-x:hidden;transition:0.3s;}header:has(#menu[open]){background:rgba(var(--header-back),0.8);}summary{outline:none;}details > summary{display:inline-block;cursor:pointer;opacity:0.3;font-size:80%;font-weight:bold;padding:5px;margin:10px 0 0;}details > summary:hover,details[open] > summary{opacity:1;}details[open] > summary:hover{opacity:0.3;}details > summary:before{content:'\f138';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details[open] > summary:before{content:'\f13a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details > div{margin:10px 10px 30px 20px;word-break:break-all;}details > div > button{padding:3px 20px;margin:0 0 8px;font-size:80%;cursor:pointer;outline:none;border:2px solid var(--header-color);border-radius:3px;background:rgba(0,0,0,0);color:var(--header-color);opacity:0.3;}details > div > button:hover{opacity:1;}button.all.hide:before{content:'一括非表示';}button.all.hide:after{content:'\f070';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}button.all.show:before{content:'一括表示';}button.all.show:after{content:'\f06e';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}input[type="checkbox"]{display:none;}label{cursor:pointer;}input[type="checkbox"]+ label:before{content:'\f0c8';font-family:var(--awesome);font-weight:400;margin-right:0.5em;}input[type="checkbox"]:checked + label:before{content:'\f14a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open]{max-height:85vh;}#menu > summary{padding:0 10px 10px;}#menu[open] > summary{opacity:0.3;}#menu[open] > summary:hover{opacity:1;}#menu > summary:before{content:'\f0c9';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu > summary:after{content:'MENU';}#menu[open] > summary:before{content:'\f00d';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open] > summary:after{content:'CLOSE';}#menu > div{max-height:60vh;max-width:80vw;padding-bottom:50px;overflow-y: auto;}#menu > div::-webkit-scrollbar{display:none;}header a:link,header a:visited{color:var(--header-color);opacity:0.5;text-decoration: none;}header a:hover{opacity:1;}/* chat-log default style */#chat-log{margin:20px 0 20px 25px;}.chat{display:flex;flex-wrap:nowrap;flex-direction:column;padding-right:1em;}.chat > div{word-break:break-all;}.chat > div:nth-child(1){display:block;font-weight:bold;padding-top:0.2em;}.chat > div:nth-child(2){margin-left:1em;padding:0 0.2em 0.2em;}/* headline */[id^="index"]{margin-top:-90px;padding-top:90px;}/* hide-user style */.hide-user > div:nth-child(1),.hide-user2 > div:nth-child(1){display: none !important;}.hide-user > div:nth-child(2):not(:has(b)){margin-left:0;padding:0;}.hide-user + div:not(:has(.hide-user)){padding-bottom:0.5em;}.hide-user b,.hide-user2 b{ margin-left:-1.2em; }/* tab style */body{background:#2a2a2a;}/* diceroll */button.dice{outline:none;border:none;background:none;color:inherit;opacity:0.5;cursor:pointer;transition:0.3s;}button.dice:hover{opacity:1;letter-spacing:0.1em;}button.dice.select{opacity:1;}button.dice.select:hover{letter-spacing:0;cursor:default;}#dice-output-area{padding:10px 15px;background:#000;color:#888;border-radius:3px;font-size:80%;}#dice-output-area li{text-indent:-1.5em;padding-left:2.5em;}#dice-output-area li.sub{list-style-type:circle;padding-left:5em;}button.dice-output-area{display:none;padding:2px 8px;font-size:100%;}#dice-text-copy{display:none;}@media only screen and (orientation: portrait){button.dice{display:block;color:var(--header-color);background:rgba(var(--header-back),1);}span.dice-span{display:none;}}/* safari */summary::-webkit-details-marker {display:none;}/* mediaquery */@media only screen and (orientation: portrait){*{overflow-x:hidden !important;}html{width:100vw;overflow-x:hidden !important;}header{padding:50px 0 0 0;margin:0;width:100%;overflow-x:hidden !important;position:fixed;top:0;left:0;right:0;}#menu{padding-left:10px;}body{padding:120px 0 0 0;margin:0;;width:100%;font-size:90%;overflow-x:hidden !important;}#chat-log{width:90vw;overflow-x:hidden !important;margin:20px 0 20px 15px;}#chat-log div{word-break:break-all;overflow-x:hidden !important;padding-right:0;}.chat > div:nth-child(2){margin-left:0;overflow-x:hidden;}.hide-user b,.hide-user2 b{ margin-left:0em; }[id^="index"]{margin-top:-120px;padding-top:120px;}}</style>
+<script>$(function(){$(document).on('click','#tab-all,#user-all',function(){let tgt = $(this).attr('id').replace('-all','');let result = true;if( $(this).hasClass('hide') ){ result = false; }$('input[name="' + tgt + '"]').prop('checked',result);$(this).toggleClass('show hide');chatShowHide();});});$(function(){$(document).on('change','[name="user"],[name="tab"]',function(){ chatShowHide(); });});function chatShowHide(){$('.chat').show();let hide_list = [];$('[name="user"]:not(:checked),[name="tab"]:not(:checked)').each(function(){ hide_list.push('.' + $(this).attr('id').toLowerCase()); });hide_list = hide_list.join(',');$(hide_list).hide();$('#dice-output-area').html('').hide();$('.dice-output-area').hide();$('button.dice').removeClass('select');}</script><script>/* dice output */$(function(){$(document).on('click','button.dice',function(){if( $(this).hasClass('select') ){ return; }else{$('button.dice.select').removeClass('select');let tgt = $(this).attr('id');let user_ary = [];let dice_ary = [];let result_ary = [];let elm = $('#chat-log > div.diceroll:visible');for( i = 0 ; i < elm.length ; i++ ){let thisUser = elm.eq(i).attr('class').split(' ')[2];let txt = elm.eq(i).children().eq(1).html();try{let txt_re = txt.split('</b>');if( txt_re[1] == undefined ){ throw new Error(); }txt = txt_re[1];}catch(e){;}txt = txt.replace(/\n|\s|\t| |　| /g,'');let terms = false;if( tgt == 'diceroll' ){ terms = true; }else if( tgt == 'cf' && ( elm.eq(i).data('dice-result').split(',').indexOf('cr') !== -1 || elm.eq(i).data('dice-result').split(',').indexOf('fb') !== -1 ) ){ terms = true; }else if( elm.eq(i).data('dice-result').split(',').indexOf(tgt) !== -1 ){ terms = true; }if( terms ){if( user_ary.indexOf(thisUser) == -1 ){ user_ary.push(thisUser);dice_ary.push([]);result_ary.push([0,0]); }let user_num = user_ary.indexOf(thisUser);if( Boolean(elm.eq(i).data('dice-ccb')) && !Boolean(elm.eq(i).data('dice-x'))){try{let cbr_result = txt.split('&lt;=')[1].split('[')[1].split(']')[0].split(',');if( cbr_result[0].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[0].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }if( cbr_result[1].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[1].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}catch(e){;}}else if( Boolean(elm.eq(i).data('dice-x')) ){txt = txt.split(/#\d/);for( j = 0 ; j < txt.length ; j++ ){txt[j] = txt[j].replace(/<br>/g,'');if( j > 0 ){txt[j] = '<li class="sub">' + txt[j] + '</li>';if( txt[j].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt[j].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}}txt = txt.join('');}else{txt = txt.replace(/<br>/g,'');if( txt.match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt.match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}let tabspan = '<span>［' + $('#' + elm.eq(i).attr('class').split(' ')[1].toUpperCase()).next().text() + '］</span>';dice_ary[user_num].push(tabspan + txt);}}let output = '';for( i = 0 ; i < user_ary.length ; i++ ){output += '<b>▼ ' + $('#' + user_ary[i].toUpperCase() ).next().text();if( tgt == 'diceroll' || tgt == 'cf' ){ output += '（' + result_ary[i].join('C') + 'F）'; }output += '<br></b>';output += '<li>' + dice_ary[i].join('</li><li>') + '</li><br>';}$('#dice-output-area').html(output).show();$('.dice-output-area').show();$(this).addClass('select');}});});/* copy action */$(function(){$(document).on('click','button.dice-output-area',function(){$('#dice-text-copy').html($('#dice-output-area').html());$('#dice-text-copy span').remove();let li_elm = $('#dice-text-copy li.sub');for( i = 0 ; i < li_elm.length ; i++ ){ li_elm.eq(i).prop('outerHTML','　◦ ' + li_elm.eq(i).text() + '<br>'); }let copyTxt = $('#dice-text-copy').html();copyTxt = copyTxt.replace(/<br><b>/g,'\n\n').replace(/<li>|<b>|<\/b>/g,'').replace(/<\/li>|<br>/g,'\n').replace(/&lt;/g,'<').replace(/&nbsp;/g,' ');copyToClipboard(copyTxt);alert('クリップボードにコピーしました。');$('#dice-text-copy').html('');});});function copyToClipboard(txt){const pre = document.createElement('pre');pre.style.webkitUserSelect = 'auto';pre.style.userSelect = 'auto';pre.textContent = txt;document.body.appendChild(pre);document.getSelection().selectAllChildren(pre);const result = document.execCommand('Copy');document.body.removeChild(pre);return result;}</script>
+</head>
+<header>
+<details id="menu">
+<summary></summary>
+<div>
+<details>
+<summary>発言者別表示切替</summary>
+<div>
+<button id="user-all" class="all hide"></button><br>
+<input type="checkbox" name="user" id="USER0" checked><label for="USER0">system</label><br>
+<input type="checkbox" name="user" id="USER1" checked><label for="USER1">鳳美香子</label><br>
+<input type="checkbox" name="user" id="USER2" checked><label for="USER2">真昼野夕都</label><br>
+<input type="checkbox" name="user" id="USER3" checked><label for="USER3">八雲　初音</label><br>
+<input type="checkbox" name="user" id="USER4" checked><label for="USER4">幸田　夢子</label><br>
+<input type="checkbox" name="user" id="USER5" checked><label for="USER5">研究者</label><br>
+<input type="checkbox" name="user" id="USER6" checked><label for="USER6">KP</label><br>
+</div>
+</details>
+<details>
+<summary>ダイス出力機能</summary>
+<div>
+<button type="button" class="dice" id="diceroll">ダイス一括表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="sc">成功のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="fl">失敗のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="cf">CF表示</button>
+<div id="dice-output-area" style="display:none;"></div>
+<br>
+<button class="dice-output-area">コピー <i class="fa-regular fa-copy"></i></button><div id="dice-text-copy"></div>
+<br>
+<span style="font-size:70%;">
+※組み合わせダイス（CBR,CBRB）、繰り返しコマンド（Xn CCB等）は正しく判定できない可能性があります。<br>
+※ダイス結果のコピーではタブ名はコピーされません。
+</span>
+</div>
+</details>
+
+<br><br>
+<a href="#"><i class="fa-solid fa-angles-up"></i> ログの先頭へ</a><br>
+<a href="#log-end"><i class="fa-solid fa-angles-down"></i> ログの最後へ</a>
+</div>
+</details>
+</header>
+<body>
+<div id="chat-log">
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        2019年5月上旬の21:00。共通の友人の香染に誘われGWの休暇を使って遠出をしていた探索者たち。<br>あなた達は今、二つの町、宿裏市と浅尾市の境にある山道に車を走らせ帰路へと着いているところだ。<br>なお香染は風邪で来れなかった 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=10 ナビゲート 
+Cthulhu : (1D100&lt;=10) ＞ 14 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなたたちは慣れない道で辺りが暗く視界が悪いこともあり、見事に道に迷ってしまった。<br>カーナビを見ても道のない山の中を表示してしまっている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……迷った」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「え？いまなんて？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「え？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「迷った……ごめん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「…………まじですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「ごめん……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「そっかそっかー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「随分余裕あるね！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ま、まぁ山で迷うなんてよくある話ですよねぇ……オカルト話とかで」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「え？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「………面目ない」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        しばらく進むと探索者の行く先に現代にありふれた外見をした3軒の住宅が見える。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「ん？家がある……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「こんなとこにもお家はあるもんですねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「おお、こんな山奥に立派な」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「山奥にも住む人はいるもんだねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「道聞いてみようか…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「そうしましょっか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「そうしようそうしよう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「はいはーい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        電気は点いているようだが人気がまるでない。どの家も人が住んでいる気配が感じられずモデルハウスのような印象を受ける。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「さっむ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「人、いなさそうだよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ピンポンぐらいは押しときます？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ピンポーンと音が鳴り響くが何も反応がない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「むむ……やっぱり誰も出ませんね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「ここ誰も住んでないんじゃないの？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「困ったな…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「鍵は開いてるのか…？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ドアに手をかけるとすんなり開いた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「開いてるじゃん？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「どうする？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「開いてるの？じゃあさ入っちゃおうよ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「不用心ですねぇ、空き巣してくださいと言わんばかりに」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「寒いし朝になるまでここに居てから帰ってもよくない？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「ここに常識人はいないのか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「うーん、緊急時だしね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        どの住宅も同じ間取りの3LDK平屋。最小限の家具しかなく、日用雑貨や食料品などは一切見つからない。
+<br>食器棚や箪笥、収納スペースなどを確認しても中には何も入っていない。
+<br>電気は通っているようだが、水道は通っていない。
+<br>埃などはなく清潔に保たれている。
+<br>照明はリモコンやボタンでON,OFF切り替えても常にONになったまま。
+<br>玄関先にはボウリングボールほどの石が飾られている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「………どう考えても怪しくないか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 37 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 48 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=70　目星 
+Cthulhu : (1D100&lt;=70) ＞ 77 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＝＜25　目星 
+Cthulhu : (1D100) ＞ 28
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ボウリングボールほどの石に違和感を覚える 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……？この石何か変じゃないか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「はて……ふつうのボウリングのボールでは？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「うん、確かに違和感あるよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「そうかな～？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        探索者がボールに対して違和感を覚え始めたころに大きな地震が発生する。<br>あまりの揺れにその場に立っていられず、何かに捕まるか這わなければ動くことすらできない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「うわっ！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「なんだこれ！！」（地面に這いつくばる） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「うわっ！ちょ、ちょまま！」（棚にしがみつく） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「あわ、わわわ……」（地面にぺたっと張り付きます） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「地震！？」(机の下に隠れよう) 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        幸い、この住宅は耐震性能が高く、背の高い家具にも収納物はないため怪我することはないだろう。<br>揺れていたのは1分ほどだが、体感時間はそれ以上の長い揺れのあと、探索者はようやく動くことが出来る。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        聞き耳どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=45 聞き耳 
+Cthulhu : (1D100&lt;=45) ＞ 64 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=65　聞き耳 
+Cthulhu : (1D100&lt;=65) ＞ 84 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝25　聞き耳 
+Cthulhu : (1D100&lt;=25) ＞ 37 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=25 聞き耳 
+Cthulhu : (1D100&lt;=25) ＞ 68 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「みんな大丈夫……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「みんな、怪我はない？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「だいじょぶです……結構長い間揺れてましたねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「んまあ、この通り私は大丈夫ですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「一度外に出てみよう。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        探索者が再び行動を開始すると真っ先に気付くことがある。<br>この建物、住宅などではない。もっと別の……ビルの一室にある事務所や、なんらかの施設のような作りをしている。<br>なぜ先ほどまで“住宅”に見えていたのだろう。狐に化かされたような感覚に陥る探索者は《SANチェック0/1》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=94 
+Cthulhu : (1D100&lt;=94) ＞ 76 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=58　SAN 
+Cthulhu : (1D100&lt;=58) ＞ 72 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=58 SAN 
+Cthulhu : (1D100&lt;=58) ＞ 33 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝65　SAN 
+Cthulhu : (1D100&lt;=65) ＞ 4 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 幸田　夢子 ] SAN : 58 → 57 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「な、なんだこれ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「……！？どこですかここ……！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「どういうことだ……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「まってこここんな作りだったっけ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「山奥だったはずじゃ！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 50 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 2 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=70　目星 
+Cthulhu : (1D100&lt;=70) ＞ 10 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        玄関付近に地下へと降りられる螺旋階段を発見することが出来る。<br>真昼野くんは1.5リットルの水を見つけた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「階段……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「地下があるみたいですねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「水……？一応拝借しとこうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「地下、行ってみる？どうする？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「うーん、ここからじゃ下が見づらいねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「それに、外はどうなってるんだろう？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「他に何か探れるところないかな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「窓から外が見れたら見ておきたいですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        窓も出口もシャッターが降りている。これは完全に閉じ込められていると気づく。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「これは階段降りろってことなのかな……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……閉じ込められてないか？アタシたち」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「行くしかないみたいですねぇ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「降りるしかないか…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「まずはここが安全かどうか確かめてみるのが一番じゃない？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「というわけで地下にごーごー！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「元気だね……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「こんな状況でも初音ちゃんはマイペースだねえ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ごーごー、です」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        螺旋階段は近未来的な施設に繋がっていた。まるで映画に出てくる組織の秘密基地のようだ。<br>正面の個室の扉が開放されていることが分かる。また右手側にある階段からその部屋に向けて血痕が続いている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「SFちっくですねぇ……ちょっぴりわくわくします」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=45 聞き耳 
+Cthulhu : (1D100&lt;=45) ＞ 93 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=25 聞き耳 
+Cthulhu : (1D100&lt;=25) ＞ 81 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=65　聞き耳 
+Cthulhu : (1D100&lt;=65) ＞ 1 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        間違いなく人の気配がする。とりあえず危険はなさそうだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「………。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「夢子ちゃん、なんかわかった？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「どう？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「どうどう？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「むむ…………人の気配がしますねぇ……たぶん安全だとは思いますけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「人が居るならさ、ここに詳しいんじゃないの？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……なるほど？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「だって私達ここ知らないからねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「幸田さんの勘を信用してみますか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「入って聞いてみます？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「じゃあ、行ってみよう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        中に入ると壁に背を預けた血まみれの男がいる。<br>応急手当が施されているとはいえ、息は絶え絶えで素人の目から命に関わる傷を負っていることがわかるだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「ちょっと、大丈夫か！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#888888;">
+	<div>研究者</div>
+	<div>
+	
+        「なんだ...お前たちは...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「ちょっと、迷子になってしまって」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「僕ら全員迷子なんですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「あんた、大丈夫か？けがの手当てを…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#888888;">
+	<div>研究者</div>
+	<div>
+	
+        「ああ...ゲホッゲホッ...治療は必要ない自分で処置はしたからな...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#888888;">
+	<div>研究者</div>
+	<div>
+	
+        「私のことはいい。それより君たち、ここへは迷い込んできてしまったのだろう？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「んーまあ迷い込んできた、の方が正しいね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「ああ、帰り方もわからなくて困っているんです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「気がついたら1階にいたんですよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「はい、僕たちも状況がよく飲み込めてないんですけど……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#888888;">
+	<div>研究者</div>
+	<div>
+	
+        「……落ち着いて、よく聞いてくれ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……はい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        話を要約すると
+<br>●保管されていた実験体たちが解放され、これより地下の施設内を徘徊している。
+<br>●実験体が嫌う薬品を散布して足止めはしたが、突破されるのも時間の問題である。
+<br>●非常事態でセキュリティシステムがが作動された今、ここから脱出するには地下３階にあるメインコンピューター室でロックを解除しなければならない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「な……なんだそれ……映画の世界じゃないか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「その薬品ってもうないんですかー？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「でも僕たちはそれがフィクションじゃないって思える経験してるよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「そ、そうだけど……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「……私たち実験体に殺されてしまうんですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「でも、このままここにいてもやられるだけだし、やるしかないか…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「………そうですね、やれるだけやってみますか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「うん、急ごう。話を聞く限り時間もなさそうだし」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#888888;">
+	<div>研究者</div>
+	<div>
+	
+        「待て...これを...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        〇研究施設の地図<br>〇レベル1のカードキー<br>〇引き金を引くことでカートリッジ内の薬を打ち込むことが出来る拳銃型注射器。<br>〇カートリッジに入ったSH細胞融解剤3本。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        を渡された 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「………………。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「この注射器……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「これ……桃華ちゃんの……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《拳銃型注射器》<br>基本命中率：＜こぶし＞ ダメージ：2d6 
+<br>1Rの攻撃回数：1 装弾数：2  耐久力：8  故障ナンバー：98
+<br>カートリッジ1本で1発分。撃ったあとは別のカートリッジにリロードしなければならない。<br>リロードする際は＜DEX*5＞で判定する。判定に成功すれば直ちに命中判定を行うことが出来るが、失敗した場合は1R消費する。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《SH細胞融解剤》<br>その名の通り、SH細胞を破壊する薬。<br>この薬を打たれたSH細胞を持つ生命体は打たれた部分から壊死を始め、融解するように元のコールタール状の姿に変わる。
+<br>人体に対しては無害。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「鍵も注射器もひとつずつしかないからみんなで固まって行動した方がよさそうだね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「そうだね…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……よし！とりあえずやるしかない！」<br>「腹決めよう！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「注射器は鳳さんに預けときたいなって思う」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「さんせーい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「私も賛成です」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「なんか知ってるみたいだしー？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「わかった。じゃあ、持っておくよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「あの注射器は簡単に言ったら怪物たちにとっての毒みたいなものなんだ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「うんうん、さっきそこの人が言ってたねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「つまり注射器で怪物を撃てば無力化できる、って感じです？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「たぶん、おそらく、きっと」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「なるほどなるほど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「そう。でも、3本しかないから基本戦うのは避けよう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「命大事に！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「いっぱい撃てるようになるといいねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「いえす、まむ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「じゃあ……とりあえずこのフロアから調べてみる？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「うん、そうだね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「それとも、さっさと降りる？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「アタシは調べたいと思うな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「私もこの階から調べたいですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「ちょっと今のままじゃ情報が少なすぎるしね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「僕も賛成」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「研究者さん、この部屋のほかにはどんな部屋があるの？このフロアだけでも何個か部屋あるみたいだしさー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#888888;">
+	<div>研究者</div>
+	<div>
+	
+        「ここは研究者たちの生活する階だ...他の奴らは皆化け物にやられちまったよ...。あのくそったれの上司も...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……でも一応調べておこう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「そうですねぇ、手がかりがあるかもしれないですし」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「何があるかわからないし、少しでも役に立つものがあればいいし」
+<br>「ないならないで損にはならない」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「そうだねー、私も調べるのは賛成かな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「研究者さんありがとねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#888888;">
+	<div>研究者</div>
+	<div>
+	
+        「ああ、俺は怪我のせいで動けない...幸運を祈ってるよ...ゲホッゲホッ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「とりあえず隣の部屋から行こう。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「階段から近い方がいいかもねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「時計周りでいこうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        レベル1のカードキーが必要ですと表示される 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「カードキーいるって」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「カードキー……さっきのだね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「よしじゃあ開けるよ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「ああ、頼むよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「ごーごー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「どきどき」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ただの洗濯室と浴室。浴室に血が溜まっていたりしない。もしかしたら洗濯機の中にパンツ（♂）が入っているかもしれない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        目星どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 77 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=70　目星 
+Cthulhu : (1D100&lt;=70) ＞ 51 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 44 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝25　目星 
+Cthulhu : (1D100&lt;=25) ＞ 41 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        手記を見つけた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「なにかありそう？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「何か出てきましたよ……これは手記、ですかね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「手記？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「何が書いてあるんだろうね？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「どれどれ、見せて」（覗き込もう） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「中を見てみましょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+<br>洗濯室＆浴室の手記
+<br>2019/03/05
+<br>私と同じように連れてこられた二人が実験の材料にされてしまった。
+<br>博識で聡明な方たちだったというのに、なぜ彼らが死ななければならない。
+<br>なぜ……どうしてだ……。
+<br>命をなんだと思っているんだ、あのヘビどもは。
+<br>私は生き延びてみせる、彼らの分まで。
+<br>＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「僕たち以外にもこうやって迷い込んだ人が居るのかな？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「………、これ研究者の手記じゃないみたいだね？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「実験…材料…ねえ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「給湯室いく？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「急ごう、あまり悠長にしてられないだろうし」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        レベル1のカードキーを(ry 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ただの給湯室。また小型の冷蔵庫も設置されており、中には軽食が詰め込まれている。<br>軽い料理が出来るように調理器具もいくつか用意されているようだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 38 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=70　目星 
+Cthulhu : (1D100&lt;=70) ＞ 39 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 44 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝25　目星 
+Cthulhu : (1D100&lt;=25) ＞ 41 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        インスタントコーヒーや茶葉などが収納されている戸棚から走り書きの手記を見つける。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「！手記がある…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「読んでみよう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+<br>給湯室の手記
+<br>2019/02/15
+<br>仮面をつけた研究員の正体を見た。
+<br>彼らが仮面を外すと、その姿はぼやけ、私がまばたきをした次の瞬間には異形の姿になっていたのだ！
+<br>あれはトカゲ、いやヘビ人間と呼ぶべきか。爬虫類の頭とまだら色の鱗にしなやかな尾を持っていた。
+<br>地球上にホモ・サピエンス以外の知的生命体がいたとは……。
+<br>＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「他には……何もないのかな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「次の部屋に行こう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「次行きましょっか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「ここも同じカードキーかな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        レベル2のカードキーが必要です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「レベル2？もってないな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「レベル２？そんなのあったっけ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「レベル2……持ってないよ。入れないなら仕方ない」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「他の部屋にあるかも」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「他の部屋見てみよう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「あらら、次行きましょう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=45 聞き耳 
+Cthulhu : (1D100&lt;=45) ＞ 82 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=65　聞き耳 
+Cthulhu : (1D100&lt;=65) ＞ 98 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=25 聞き耳 
+Cthulhu : (1D100&lt;=25) ＞ 1 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝25　聞き耳 
+Cthulhu : (1D100&lt;=25) ＞ 26 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        人の気配は感じない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「人の気配は感じないね……開けてもいいかな？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「行こう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「人の…って事はトカゲ人間はいるんじゃない？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「不安を煽るなよ…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「警戒しつつ入りましょっか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「う、うん。わかった」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        最低限の家具しかなく安いビジネスホテルのようにただ寝泊まりするだけの部屋、という印象を受ける。<br>研究員たちの私物もあまりなさそうだ。<br>ロッカーには換えの白衣が数着収納されている。<br>各部屋に一つずつ机の上にライターがある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「ライター…持っていく？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「とりあえず調べてみよう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「何かの役に立つかも……？持っていきます？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 65 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 1 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=70　目星 
+Cthulhu : (1D100&lt;=70) ＞ 62 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝25目星 
+Cthulhu : (1D100&lt;=25) ＞ 84 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ロッカーに収納されていた白衣のポケットからしっかりとした筆跡の手記が見つかる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        またSH細胞融解剤を一本見つける 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「また手記見つけたよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「それに……もう一本見つけたよ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「今度はなんて書いてあるのー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「おお！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「お、いいですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「やるじゃん！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「おっ、弾ふえたねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+<be>白衣ポケットの手記
+<br>2019/02/13
+<br>夜道、帰宅途中に知らない男たちに襲われ気付けばここにいた。
+<br>私の他にも3名の人たちが連れてこられたようだ。我々の共通点は医学の造詣が深い学者だということ。我々になにをさせるつもりなのだろうか。
+<br>それにあの仮面をつけ全身を着込み、肌を一切見せない4人の研究員たち。……妙な胸騒ぎがする。
+<br>＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……仮面をつけた研究者には気を付けた方がいいのかもな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「要注意、ですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「うん、十中八九怪物だよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……ライター持って行こう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「念のため」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「そうだねー、そして4人はここに居たんだね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「この手記みせてさー、さっきの研究者さんに見せてみたら？何かわかるかも」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……確かに。見せに行ってみよう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        研究者はベッドで横になって眠っている。相変わらず顔色はよくない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「もしもーし、研究者さーん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「…大怪我だし仕方ないけど… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        声をかけたが起きない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「すやすやだねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……仕方ない、降りようか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「うん、みんな気をつけて」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「アンタも気を付けるんだよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「そうだよー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「うん、頑張る」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「気を引き締めないとですねぇ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        B1Fから降りてきて正面突き当りに赤い粉末が撒かれている。<br>粉末を境に、その先にはコールタールのような黒いゲル状の物体が広がっていた。<br>飯島が言っていた足止めの薬品は恐らく赤いあれのことだろう。今すぐに突破されるということはなさそうだ。<br>よく見ると溜まりの一つにレベル2と思われるカードキーが浮いている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「………カードキー、あるけど……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「…触りたくはないなあ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「扉の方は…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        どちらの扉もレベル1のカードキーが必要ですと書いてある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「レベル1でいけるみたいだ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「入れそうみたいですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「カードキー拾ってくるから、少し待ってて」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「気を付けて」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「がんばってねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        カードキーを取ろうと探索者が近づくと、カードキーを中心としたコールタールのような物体が泡立ちながら人型の身体を形成した。<br>身体の至る所に様々な動物の器官らしきものが浮んでは消え、またたく間に姿を二転三転させてしまう。<br>腕に見える部位を正面に伸ばし、ゆらりゆらりと覚束ない足でこちらに向かって進んでくる。<br>その姿は母を探す幼児を連想させ、探索者に生理的嫌悪を抱かせるには十分な光景だった。<br>《SANチェック1/1d8》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        戦闘開始です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=94 SAN 
+Cthulhu : (1D100&lt;=94) ＞ 97 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        1d8 
+Cthulhu : (1D8) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 鳳美香子 ] SAN : 94 → 92 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝65　SAN 
+Cthulhu : (1D100&lt;=65) ＞ 79 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        1ｄ8 
+Cthulhu : (1D8) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 八雲　初音 ] SAN : 65 → 63 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=57　SAN 
+Cthulhu : (1D100&lt;=57) ＞ 95 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        1d8 
+Cthulhu : (1D8) ＞ 7
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        1D8 
+Cthulhu : (1D8) ＞ 4
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 真昼野夕都 ] SAN : 58 → 51 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 幸田　夢子 ] SAN : 57 → 53 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=70 アイデア 
+Cthulhu : (1D100&lt;=70) ＞ 46 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        1d10 
+Cthulhu : (1D10) ＞ 5
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「真昼野くん！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「そんなまじまじと見てどうしたのー？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝70　こぶし 
+Cthulhu : (1D100&lt;=70) ＞ 18 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        1ｄ4 
+Cthulhu : (1D4) ＞ 4
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        1ｄ３ 
+Cthulhu : (1D3) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 真昼野夕都 ] HP : 12 → 7 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「しっかりしてよねー」（右ストレート） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「いっっっっだああああああ！？！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「え、なに、なに！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「うわっ、痛そう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ひえぇ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……じゃなくて！！」注射打つ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=80 こぶし 
+Cthulhu : (1D100&lt;=80) ＞ 48 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>KP</div>
+	<div>
+	<b>???<br></b>
+
+        ccb&lt;=6 回避 
+Cthulhu : (1D100&lt;=6) ＞ 85 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        2d6 
+Cthulhu : (2D6) ＞ 9[6,3] ＞ 9
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        化け物はどろどろに溶けました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        戦闘終了です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「やったか！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……とりあえず鍵を！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「カードキー……！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「えらい！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「よくやった！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「さすがー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ナイスファインプレーですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=60 応急手当 
+Cthulhu : (1D100&lt;=60) ＞ 91 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「はぁ、はぁ、みんな大丈夫？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「大丈夫、むしろあんたが一番重傷だ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「あなたが一番やばそうだけどー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝30　応急手当 
+Cthulhu : (1D100&lt;=30) ＞ 30 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「僕は……なんとか大丈夫」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        1ｄ3 
+Cthulhu : (1D3) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 真昼野夕都 ] HP : 7 → 7 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 真昼野夕都 ] HP : 7 → 6 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「はい、これどうぞー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 真昼野夕都 ] HP : 6 → 9 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=30　応急手当 
+Cthulhu : (1D100&lt;=30) ＞ 78 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「八雲さん、ありがとう。元気出たよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「とりあえず」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「薬品室？行ってみよう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「行きましょー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「うん、開けるね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「ごーごー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        様々な種類の薬品が棚に保管されている。中には引火性液体もあるかもしれない。<br>一般的な薬品とは別の棚に厳重保管されている薬品がある。<br>レベル2のカードキーで解錠できるようだが、すでに解放されており中に保管されていたであろう薬品も一部ごっそりなくなっている。<br>残っているものは青い液体の薬品が16本。赤い液体が2本のみだ。<br>青い薬品にはSH細胞増殖調整剤、赤い薬品にはSH細胞断裂剤と名前が書かれている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「…！赤い薬！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「あ、そうだ真昼野くん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「うん？どうしたの？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「これリロードしてもらっていい？」<br>「アタシ不器用だから壊しそうだし」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「料理人だから器用そうってだけなんだけどね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「そういえばそうだったねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「何にでもオリーブオイルかけちゃいますけどね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「オリーブオイルは万能だぞ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「任せて、やってみるよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 DEX×5 
+Cthulhu : (1D100&lt;=65) ＞ 85 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「ごめん、ダメだった」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 70 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 29 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=70　目星 
+Cthulhu : (1D100&lt;=70) ＞ 40 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝25　目星 
+Cthulhu : (1D100&lt;=25) ＞ 24 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        棚から使えそうな拳銃型注射器を一つ発見する。シリンダーはセットされていない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝55　リロード 
+Cthulhu : (1D100&lt;=55) ＞ 51 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「これで使えるねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「武器が増えましたねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「とりあえず上の開かなかった部屋見て見ない？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「青いの一応もってっとこうか。幸田さん半分持てる？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「この青いのは注射器とは間逆に怪物たちにとっての回復薬みたいなものだから、置いとくのも嫌なんだよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「わかりましたー持ってきますね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「ありがとう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「この個室…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「開けるよ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「お願い」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        レベル2のカードキーが必要です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        個室1、2、3と変わらず至って普通の部屋だ。
+<br>机の上に手記が置いてある。内容はラテン語で書かれているため読むには＜ラテン語＞または＜EDU*2＞に成功する必要がある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=32 
+Cthulhu : (1D100&lt;=32) ＞ 77 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=22 EDU×2 
+Cthulhu : (1D100&lt;=22) ＞ 39 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝28　EDU×2 
+Cthulhu : (1D100&lt;=28) ＞ 43 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=28　EDU×2 
+Cthulhu : (1D100&lt;=28) ＞ 83 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「読めないな…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        中身はさっぱりわからない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「しょうがない、手記だけ持って下に降りよう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「全然よくわからないねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        レベル1(ry 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=45 聞き耳 
+Cthulhu : (1D100&lt;=45) ＞ 13 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=25 聞き耳 
+Cthulhu : (1D100&lt;=25) ＞ 89 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        何も聞こえない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「なにも聞こえないね、開けようか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……入ってみよう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        部屋はいくつものオフィスデスクが並べられ、その上には積まれた書類、付箋が貼られたデスクトップパソコンがある。<br>向かって奥は少しスペースがあり、ホワイトボードや大きめのサークルテーブルが置いてあることから、会議室としても兼用しているようだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        目星　経理　コンピューターで情報が出る 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 74 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=70　目星 
+Cthulhu : (1D100&lt;=70) ＞ 72 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 12 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝10　経理 
+Cthulhu : (1D100&lt;=10) ＞ 37 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        デスクの引き出しからしっかりとした筆跡の手記を発見する。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「なにかあった？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「また手記だね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「読んでみよう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+<br>事務室兼会議室の手記
+<br>2019/02/28
+<br>驚くべきことにこの研究施設は数十年も昔から存続してきたようだ。
+<br>つまり、ここで行われている研究は数十年以上に渡り、続けられているということだ。<br>私が知る限り、このような生物に細胞、技術は見たことも聞いたこともない。
+<br>幸い、ヘビ人間は私が彼らの正体を知ったことに気付いてはいなさそうだ。もう少し、調べてみるとする。
+<br>＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「反対側にも扉がある…出てみる？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=45 聞き耳 
+Cthulhu : (1D100&lt;=45) ＞ 45 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=25 聞き耳 
+Cthulhu : (1D100&lt;=25) ＞ 37 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=65　聞き耳 
+Cthulhu : (1D100&lt;=65) ＞ 84 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        特に何も聞こえない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「何も聞こえないみたいだけど…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        シークレットダイス ???
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        上からべチャっと何かが降ってきた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「うわっ！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「な、なんだ！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「うわ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ひえ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        コールタールのような物体が泡立ちながら腕に見える部位を正面に伸ばし、ゆらりゆらりと覚束ない足でこちらに向かって進んでくる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「まただ！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        戦闘開始です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「またですかー？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「八雲ちゃん、注射頼んでいい？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「八雲さん、注射器お願い！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「りょーかい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「……お願いします」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝70　注射器 
+Cthulhu : (1D100&lt;=70) ＞ 45 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>KP</div>
+	<div>
+	<b>???<br></b>
+
+        ccb&lt;=6 回避 
+Cthulhu : (1D100&lt;=6) ＞ 91 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        2ｄ6 
+Cthulhu : (2D6) ＞ 11[6,5] ＞ 11
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        化け物は消し飛んだ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「おお～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「お見事！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「さすがですね……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「わあ……僕あの勢いで殴り飛ばされてたんだ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「と、とにかく倉庫に行ってみよう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「えっと、会議室のパソコンが気になるのでもう一回見てきていいですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「いいと思うけどー、一人で行くのは良くはないかなあ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「そう…だね。お願いしてもいいかい？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「八雲さん注射器持ってるしついて行ってあげてよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「そだねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「じゃあアタシと真昼野くんで倉庫だね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「助かりますー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「二人とも気を付けてねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「あとこれ、リロードしといて」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「はーい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 リロード 
+Cthulhu : (1D100&lt;=65) ＞ 5 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝55　リロード 
+Cthulhu : (1D100&lt;=55) ＞ 75 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「うん、なんとなくコツが分かってきた」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「八雲さん出来た？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「うーん…できないかな～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「わかった、貸してみて？　……よしできた。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「お～、ありがとー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「手分けだから2人とも気をつけてね、それじゃあ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        こうして真昼野くんの好感度は上がったのだった 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        1d100 
+Cthulhu : (1D100) ＞ 20
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        20好感度上がった！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ここには生活雑貨や道具、携帯食料に水などが保管されている。<br>灯油などの燃料や銃火器はなさそうだが、除菌消臭スプレーにヘアスプレー、ライターくらいならある。<br>もちろん探索者御用達のバールのようなものもある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「お。武器っぽいもの（バールのようなもの）もあるね。」
+<br>「……何かないかな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「薬品……赤い奴ないかな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「探してみよっか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 66 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=85 幸運 
+Cthulhu : (1D100&lt;=85) ＞ 23 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        赤い薬を1本見つけた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「お、一本だけだけどあったよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「ほんと？やったね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「ライターとスプレーも一応持っていかない？」<br>「確かスプレー缶に火を近づければ、すごく燃えたはずだよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「うん、使えそうだねそれ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「こう、ぼわっと。」<br>「幼馴染…まあのののお姉ちゃんが悪戯でやってたよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 70 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=85 幸運 
+Cthulhu : (1D100&lt;=85) ＞ 98 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では倉庫の隙間からじゅるじゅるとコール―タール状の物体が染み出してきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「！？！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        戦闘開始です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野夕都</div>
+	<div>
+	
+        RESB(13-3) 
+Cthulhu : (1d100&lt;=100) ＞ 自動成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>鳳美香子</div>
+	<div>
+	
+        RESB(8-3) 
+Cthulhu : (1d100&lt;=75) ＞ 64 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「逃げろー！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        シークレットダイス ???
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「戻ってきたけどどうするー？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「そうですねぇ、じゃあ手分けして作業しますか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「まあ…同じ部屋なら大丈夫かなー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝10　経理 
+Cthulhu : (1D100&lt;=10) ＞ 42 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=31　コンピューター 
+Cthulhu : (1D100&lt;=31) ＞ 9 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        デスクに置いてあるPCから施設の共有サーバーに接続すると、施設に保管されている実験体の研究レポート。<br>また、研究施設の活動記録を発見することができる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「こっちには何もないなー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「これは……実験体のレポート……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「八雲さん、いい情報みつけましたよ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「お、やるねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「えへへ…………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「だぁぁぁあぁああ！！！！！危なかった！！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ど、どうしたんですかお二人とも……！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「もうしんどいいいいいい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「そ、倉庫漁ってたらあの化物が……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「死ぬかと思った…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「また出たんですか！？よくご無事で……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「うわっ、びっくりしたなー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「今度はトカゲ人間かと思ったじゃん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「そ、そっちは何かあった？」<br>「こっちは赤い薬を見つけられたけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「私は何もー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「パソコンでこんなレポートを見つけたんですけど……読んでみます？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「うん、読む」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「レポート…？どれどれ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「…………、」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「これ……もしかして、」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……桃華ちゃんが関係してる…？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「…………？桃華、さん？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「あー、ずーちゃんからそんな子の名前聞いたようなー…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「ああ、その実は僕たちは前にも似たような経験をしてて……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「ん。えっと、うちで引き取ってる子なんだけどね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「その前の時に知り合って、えーと……」<br>「そのときに同じ薬を見たんだ。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「だからもしかしたら関係あるのかなってだけだよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「そういえばそんな反応もしてましたねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「同じ薬……なるほど、無関係とは言い切れませんね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「そういうこと。」<br>「それに今、香染に預けてるから、早く帰らないとね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        シークレットダイス ???
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「とりあえず、もう一部屋あったよね？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……行ってみる？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「ありましたっけ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「資料室、まだ見てませんでしたね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        廊下に出るとどろどろのコールタールが(ry 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「やっぱり…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「みんな気をつけて」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「ひとつ試してみても良いですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「スプレーとライターで即席火炎放射器！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=39 火炎放射器 
+Cthulhu : (1D100&lt;=39) ＞ 79 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        当たらない卍 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「火力足りませんねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「あ、当てるの難しいしね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「うぐぐ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝70　注射器 
+Cthulhu : (1D100&lt;=70) ＞ 33 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>KP</div>
+	<div>
+	<b>???<br></b>
+
+        ccb&lt;=6 回避 
+Cthulhu : (1D100&lt;=6) ＞ 23 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        2ｄ6 
+Cthulhu : (2D6) ＞ 6[3,3] ＞ 6
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        化け物はのたうちまわり静かになった 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        戦闘終了です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「さすが…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「見事なお手並みですねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「さっきみたいに吹き飛びませんでしたねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「と、とにかく資料室行こっか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「いろんな意味で凄いなこの子……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「よし、行こう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ごーごー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        資料室には研究内容をまとめたレポートや研究に関する資料、細胞医学に関する医学書などが多く蔵書されているようだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 25 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝70　図書館 
+Cthulhu : (1D100&lt;=70) ＞ 30 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 12 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=70　図書館 
+Cthulhu : (1D100&lt;=70) ＞ 81 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+<br>資料室の手記
+<br>2019/04/07
+<br>SH細胞を動物に直接投与するとドロドロのスライムのようになってしまった。<br>ヘビ人間はそれのことを《失敗作》と呼んでいるみたいだ。
+<br>先ほど、失敗作に誤って水をかけてしまったが動きが鈍ったように見えた。<br>試しに水の中に入れてみると水中に溶け失敗作は完全に活動を停止した。
+<br>資料を読む限りDemi-Shoggothにそのような特徴はない。
+<br>失敗作は水に弱い。覚えておいて損はないだろう。
+<br>＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        軽く資料を漁ってみると以下の興味深い情報を手に入れることが出来る。<br>『SH細胞について』<br>『Demi-Shoggothについて』<br>『foodsについて』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「そっち、なにかわかった？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「そうですねー、あのよくわからないのについてと、二人に少々関係してる事が書いてありますねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「まあまあ、読んだらわかりますよー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「聞かせてくれる？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「まあいいや、とりあえず見せて」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「…………」（読んでいる保護者） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「………、…………帰るときにさ、あの青い薬もらってもいい？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「もちろんだよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「絶対生きて帰る。」（決意） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「まあそこらへんに居る化け物に使わないならいいんじゃないんですかねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「こっちはこのメモ見つけたよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ふむふむ……お水、用意しておいた方がいいかもですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「そうだね……そういえば倉庫にあったような」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「倉庫見に行ってみます？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「一回みんなで倉庫に戻ってみよう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「うん、確保できるだけ確保しよう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        シークレットダイス ???
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では中にさっきのどろどろのコールタールが 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 DEX×5 
+Cthulhu : (1D100&lt;=65) ＞ 47 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        1d6 
+Cthulhu : (1D6) ＞ 6
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        苦しそうに身もだえし動かなくなった 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「今のうちに水と……それからなるべく荷物を詰め込める鞄を探そう！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「はいはーい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「よし！探そう！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「おー！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝65　幸運 
+Cthulhu : (1D100&lt;=65) ＞ 58 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=85 幸運　鞄探す！ 
+Cthulhu : (1D100&lt;=85) ＞ 15 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=55　幸運 
+Cthulhu : (1D100&lt;=55) ＞ 74 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 目星 
+Cthulhu : (1D100&lt;=65) ＞ 64 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「誰が水持つ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「私一本貰おうかなー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「鞄は僕が持ってくよ」<br>「幸田さんは注射器持ってないから二本持って、鳳さんと八雲さんは注射器持ってるから一本、残りは僕が鞄に入れるね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「じゃあ私は手が空いてるので2本持っていきますね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「分かった。お願いね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「らじゃーです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        シークレットダイス ???
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「下に急ごう！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        シークレットダイス ???
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では階段の前にコールタールが 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 DEX×5 
+Cthulhu : (1D100&lt;=65) ＞ 36 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        1d6 
+Cthulhu : (1D6) ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        まだ生きてます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝55　水 
+Cthulhu : (1D100&lt;=55) ＞ 53 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        1ｄ6 
+Cthulhu : (1D6) ＞ 4
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        動かなくなりました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「水すごいな…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「よーし、今のうちにごーごー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「ちゃんと効くんですねぇ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「ここは……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=85 幸運 
+Cthulhu : (1D100&lt;=85) ＞ 5 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=55　幸運 
+Cthulhu : (1D100&lt;=55) ＞ 12 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=40 幸運 
+Cthulhu : (1D100&lt;=40) ＞ 9 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        血がべったりと付いているのが分かる向こう側は見えない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「………、よしコンピューター室に急ごう！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        レベル2のカードキーが必要です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「開けるよ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=25 聞き耳 
+Cthulhu : (1D100&lt;=25) ＞ 21 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=45 聞き耳 
+Cthulhu : (1D100&lt;=45) ＞ 3 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=65　聞き耳 
+Cthulhu : (1D100&lt;=65) ＞ 23 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        サーバーを初めとして、施設のメインコンピューターが集まっている。<br>ここからセキュリティシステムを操作するが可能。<br>シャッターのロックを解除するには＜コンピューター＞に成功する必要がある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ここで美香子は夢子の手助けが出来る 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「手伝うよ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        コンピューター+20 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「鳳さん……！ありがとうございます」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=51　コンピューター 
+Cthulhu : (1D100&lt;=51) ＞ 46 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        するととてつもない破砕音が廊下から聞こえた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「なんだ今の音！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=45 聞き耳 
+Cthulhu : (1D100&lt;=45) ＞ 98 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=65　聞き耳 
+Cthulhu : (1D100&lt;=65) ＞ 55 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=25 聞き耳 
+Cthulhu : (1D100&lt;=25) ＞ 51 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝25　聞き耳 
+Cthulhu : (1D100&lt;=25) ＞ 61 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        美香子は勢い余って扉を開けてしまった 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「あっ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「鳳さん危ないですよ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「ごめん！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「ちょっ！ちょっと！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        コンピューター室から出ると、生体実験室側の壁が土煙をあげながら崩壊していた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「それはだめです……だめなやつです……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「………あのガラスのとこ、壊れてる」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        土煙の中に子供くらいの人影が見えるも、すぐに奥へ消えて行ってしまう。<br>追いかけようとすると、空いた穴からこれまでに遭遇した失敗作より4、5倍はする大きさの失敗作が現れ、探索者たちの前に立ちはだかる。<br>その巨体からは取り込まれたであろう3人のヘビ人間が生えていた。<br>あまりの大きさに通路は埋め尽くされ、上階へ逃げることは出来ない。<br>《SANチェック1d3/1d10》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=92 SANチェック 
+Cthulhu : (1D100&lt;=92) ＞ 38 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝63　SAN 
+Cthulhu : (1D100&lt;=63) ＞ 18 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        1d3 
+Cthulhu : (1D3) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=53　SAN 
+Cthulhu : (1D100&lt;=53) ＞ 83 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 鳳美香子 ] SAN : 92 → 90 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        1ｄ3 
+Cthulhu : (1D3) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=51 SAN 
+Cthulhu : (1D100&lt;=51) ＞ 100 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 八雲　初音 ] SAN : 63 → 61 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        1D10 
+Cthulhu : (1D10) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 幸田　夢子 ] SAN : 53 → 52 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 幸田　夢子 ] SAN : 52 → 51 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        1d10 
+Cthulhu : (1D10) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 真昼野夕都 ] SAN : 51 → 49 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        戦闘開始です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 DEX×5 
+Cthulhu : (1D100&lt;=65) ＞ 68 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「ごめん！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝70　注射器 
+Cthulhu : (1D100&lt;=70) ＞ 74 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=80 こぶし 
+Cthulhu : (1D100&lt;=80) ＞ 92 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「真昼野さん、私が持ってる水も使ってください」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「わかった、まかせて！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>>!＄％＆？＆<br></b>
+
+        1d2 
+Cthulhu : (1D2) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>KP</div>
+	<div>
+	<b>>!＄％＆？＆<br></b>
+
+        ccb&lt;=50 触手 
+Cthulhu : (1D100&lt;=50) ＞ 19 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>>!＄％＆？＆<br></b>
+
+        1d2 
+Cthulhu : (1D2) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>>!＄％＆？＆<br></b>
+
+        1ｄ6 
+Cthulhu : (1D6) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 八雲　初音 ] HP : 13 → 11 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 DEX×5 
+Cthulhu : (1D100&lt;=65) ＞ 81 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝70　注射器 
+Cthulhu : (1D100&lt;=70) ＞ 7 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        1d2 
+Cthulhu : (1D2) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        2ｄ6 
+Cthulhu : (2D6) ＞ 6[5,1] ＞ 6
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=80 注射器 
+Cthulhu : (1D100&lt;=80) ＞ 53 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        2d6 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        2d6 
+Cthulhu : (2D6) ＞ 8[2,6] ＞ 8
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=30　応急手当 
+Cthulhu : (1D100&lt;=30) ＞ 89 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>>!＄％＆？＆<br></b>
+
+        1d2 
+Cthulhu : (1D2) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>KP</div>
+	<div>
+	<b>>!＄％＆？＆<br></b>
+
+        ccb&lt;=50 触手 
+Cthulhu : (1D100&lt;=50) ＞ 64 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 DEX×5 
+Cthulhu : (1D100&lt;=65) ＞ 55 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        1d6 
+Cthulhu : (1D6) ＞ 5
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「八雲ちゃん、これリロードして！」（渡しに行きます） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「はいはーい、ありがたく貰うね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝55　リロード 
+Cthulhu : (1D100&lt;=55) ＞ 97 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>>!＄％＆？＆<br></b>
+
+         
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        薬をぶっ壊した 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#354cc7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田　夢子</div>
+	<div>
+	
+        ccb&lt;=30　応急手当 
+Cthulhu : (1D100&lt;=30) ＞ 79 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>>!＄％＆？＆<br></b>
+
+        1d2 
+Cthulhu : (1D2) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>KP</div>
+	<div>
+	<b>>!＄％＆？＆<br></b>
+
+        ccb&lt;=25 捕食 
+Cthulhu : (1D100&lt;=25) ＞ 91 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=65 DEX×5 
+Cthulhu : (1D100&lt;=65) ＞ 38 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        1d6 
+Cthulhu : (1D6) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「このスプレー缶借りるねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「良いですけど……どうするんですか？あんなでかいのに効きそうもないですけど……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「ほらー、この化け物水に弱いじゃん？だからこれでスプリンクラー動かないかなーって」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「……！　なるほど……任せましたよ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=80 注射器 
+Cthulhu : (1D100&lt;=80) ＞ 76 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        2d6 
+Cthulhu : (2D6) ＞ 9[3,6] ＞ 9
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        探索者の一撃で《失敗は成功の母》は身体を大きく震わせると、不審な挙動を繰り返したのちバシャリとその場に広がった。<br>……どうやら活動停止したようだ。<br>ホッとしたのもつかの間、新たな失敗作が次々と生体実験室から溢れ出てくる。<br>探索者たちは今の戦闘でずいぶん疲弊してしまっている。この量の失敗作を相手するにはSH細胞融解剤の数も足りない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        選択を決めあぐねている探索者たちに声がかかる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#888888;">
+	<div>研究者</div>
+	<div>
+	
+        「大丈夫か！君たち！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「さっきの……！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「研究者さんおはよー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「おじさん……あぶないですよ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「け、研究者さん……！無事だったんですか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#888888;">
+	<div>研究者</div>
+	<div>
+	
+        「君たちは早く上に上がり、この施設から脱出しなさい！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#888888;">
+	<div>研究者</div>
+	<div>
+	
+        「私はこいつらを引き付けておく。それにこんな怪物どもを外の世界に出すわけにもいかないだろう？」<br>「今から1分後に施設の隔壁とシャッターを全て作動させる」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#888888;">
+	<div>研究者</div>
+	<div>
+	
+        「こんなことに無関係の君たちを巻き込むことは出来ない。早く逃げるんだ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そうこうしているうちに、階段へ向かう通路は失敗作たちに塞がれていく。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        「おじさん……そんな！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        「くそっ、逃げるしかない…！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「研究者さん、その選択に後悔はないんですかー？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        「研究者さんのこと忘れませんから……！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#888888;">
+	<div>研究者</div>
+	<div>
+	
+        「私の意思は揺るがないよお嬢ちゃん　こんなおじさんより未来ある子供たちに後を託すさ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#888888;">
+	<div>研究者</div>
+	<div>
+	
+        「さあ早く行け！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        探索者たちは息を切らして地上へ走る。外に出ると後ろでシャッターが物々しい音を立てながら閉まった。<br>飯島は無事セキュリティシステムを再起動できたのだろう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        いくつかの謎は残ったが探索者たちは無事帰還することが出来るのだった 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        SAN回復<br>シナリオクリア：+1d6<br>《徘徊する失敗作》n回討伐：+n<br>神話技能：+1d4 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        1d6 
+Cthulhu : (1D6) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 鳳美香子 ] SAN : 90 → 91 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 鳳美香子 ] SAN : 91 → 94 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 鳳美香子 ] SAN : 94 → 95 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        1ｄ6 
+Cthulhu : (1D6) ＞ 6
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        1d4 
+Cthulhu : (1D4) ＞ 4
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        1d6+4 
+Cthulhu : (1D6+4) ＞ 2[2]+4 ＞ 6
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        1D6+4 
+Cthulhu : (1D6+4) ＞ 5[5]+4 ＞ 9
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        1ｄ4 
+Cthulhu : (1D4) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 幸田　夢子 ] SAN : 51 → 60 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        1D4 
+Cthulhu : (1D4) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 八雲　初音 ] SAN : 61 → 71 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        1d4 
+Cthulhu : (1D4) ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#f44336;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>鳳美香子</div>
+	<div>
+	
+        ccb&lt;=9 クトゥルフ神話 
+Cthulhu : (1D100&lt;=9) ＞ 38 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>真昼野夕都</div>
+	<div>
+	
+        ccb&lt;=9 クトゥルフ神話 
+Cthulhu : (1D100&lt;=9) ＞ 59 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#f44336;">
+	<div>鳳美香子</div>
+	<div>
+	
+        2d100 
+Cthulhu : (2D100) ＞ 53[41,12] ＞ 53
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        3d100 
+Cthulhu : (3D100) ＞ 147[71,21,55] ＞ 147
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>真昼野夕都</div>
+	<div>
+	
+        1d10 
+Cthulhu : (1D10) ＞ 5
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        2D100 
+Cthulhu : (2D100) ＞ 89[18,71] ＞ 89
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#354cc7;">
+	<div>幸田　夢子</div>
+	<div>
+	
+        1D10 
+Cthulhu : (1D10) ＞ 2
+      
+	</div>
+</div>
+
+</div>
+<div id="log-end"></div>
+</body>
+</html>
