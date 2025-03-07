@@ -1,0 +1,10710 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ad extremum etmain</title>
+<meta http-equiv="content-type" charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<style>*{font-family:sans-serif;}:root{--header-back:0,0,0;--header-color:#FFF;--awesome:'Font Awesome 5 Free';}body{padding-top:80px;margin:0;}/* header */header{background:rgba(var(--header-back),0.5);color:var(--header-color);position:fixed;top:0;left:0;width:100%;overflow-x:hidden;transition:0.3s;}header:has(#menu[open]){background:rgba(var(--header-back),0.8);}summary{outline:none;}details > summary{display:inline-block;cursor:pointer;opacity:0.3;font-size:80%;font-weight:bold;padding:5px;margin:10px 0 0;}details > summary:hover,details[open] > summary{opacity:1;}details[open] > summary:hover{opacity:0.3;}details > summary:before{content:'\f138';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details[open] > summary:before{content:'\f13a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details > div{margin:10px 10px 30px 20px;word-break:break-all;}details > div > button{padding:3px 20px;margin:0 0 8px;font-size:80%;cursor:pointer;outline:none;border:2px solid var(--header-color);border-radius:3px;background:rgba(0,0,0,0);color:var(--header-color);opacity:0.3;}details > div > button:hover{opacity:1;}button.all.hide:before{content:'一括非表示';}button.all.hide:after{content:'\f070';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}button.all.show:before{content:'一括表示';}button.all.show:after{content:'\f06e';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}input[type="checkbox"]{display:none;}label{cursor:pointer;}input[type="checkbox"]+ label:before{content:'\f0c8';font-family:var(--awesome);font-weight:400;margin-right:0.5em;}input[type="checkbox"]:checked + label:before{content:'\f14a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open]{max-height:85vh;}#menu > summary{padding:0 10px 10px;}#menu[open] > summary{opacity:0.3;}#menu[open] > summary:hover{opacity:1;}#menu > summary:before{content:'\f0c9';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu > summary:after{content:'MENU';}#menu[open] > summary:before{content:'\f00d';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open] > summary:after{content:'CLOSE';}#menu > div{max-height:60vh;max-width:80vw;padding-bottom:50px;overflow-y: auto;}#menu > div::-webkit-scrollbar{display:none;}header a:link,header a:visited{color:var(--header-color);opacity:0.5;text-decoration: none;}header a:hover{opacity:1;}/* chat-log default style */#chat-log{margin:20px 0 20px 25px;}.chat{display:flex;flex-wrap:nowrap;flex-direction:column;padding-right:1em;}.chat > div{word-break:break-all;}.chat > div:nth-child(1){display:block;font-weight:bold;padding-top:0.2em;}.chat > div:nth-child(2){margin-left:1em;padding:0 0.2em 0.2em;}/* headline */[id^="index"]{margin-top:-90px;padding-top:90px;}/* hide-user style */.hide-user > div:nth-child(1),.hide-user2 > div:nth-child(1){display: none !important;}.hide-user > div:nth-child(2):not(:has(b)){margin-left:0;padding:0;}.hide-user + div:not(:has(.hide-user)){padding-bottom:0.5em;}.hide-user b,.hide-user2 b{ margin-left:-1.2em; }/* tab style */body{background:#2a2a2a;}/* diceroll */button.dice{outline:none;border:none;background:none;color:inherit;opacity:0.5;cursor:pointer;transition:0.3s;}button.dice:hover{opacity:1;letter-spacing:0.1em;}button.dice.select{opacity:1;}button.dice.select:hover{letter-spacing:0;cursor:default;}#dice-output-area{padding:10px 15px;background:#000;color:#888;border-radius:3px;font-size:80%;}#dice-output-area li{text-indent:-1.5em;padding-left:2.5em;}#dice-output-area li.sub{list-style-type:circle;padding-left:5em;}button.dice-output-area{display:none;padding:2px 8px;font-size:100%;}#dice-text-copy{display:none;}@media only screen and (orientation: portrait){button.dice{display:block;color:var(--header-color);background:rgba(var(--header-back),1);}span.dice-span{display:none;}}/* safari */summary::-webkit-details-marker {display:none;}/* mediaquery */@media only screen and (orientation: portrait){*{overflow-x:hidden !important;}html{width:100vw;overflow-x:hidden !important;}header{padding:50px 0 0 0;margin:0;width:100%;overflow-x:hidden !important;position:fixed;top:0;left:0;right:0;}#menu{padding-left:10px;}body{padding:120px 0 0 0;margin:0;;width:100%;font-size:90%;overflow-x:hidden !important;}#chat-log{width:90vw;overflow-x:hidden !important;margin:20px 0 20px 15px;}#chat-log div{word-break:break-all;overflow-x:hidden !important;padding-right:0;}.chat > div:nth-child(2){margin-left:0;overflow-x:hidden;}.hide-user b,.hide-user2 b{ margin-left:0em; }[id^="index"]{margin-top:-120px;padding-top:120px;}}</style>
+<script>$(function(){$(document).on('click','#tab-all,#user-all',function(){let tgt = $(this).attr('id').replace('-all','');let result = true;if( $(this).hasClass('hide') ){ result = false; }$('input[name="' + tgt + '"]').prop('checked',result);$(this).toggleClass('show hide');chatShowHide();});});$(function(){$(document).on('change','[name="user"],[name="tab"]',function(){ chatShowHide(); });});function chatShowHide(){$('.chat').show();let hide_list = [];$('[name="user"]:not(:checked),[name="tab"]:not(:checked)').each(function(){ hide_list.push('.' + $(this).attr('id').toLowerCase()); });hide_list = hide_list.join(',');$(hide_list).hide();$('#dice-output-area').html('').hide();$('.dice-output-area').hide();$('button.dice').removeClass('select');}</script><script>/* dice output */$(function(){$(document).on('click','button.dice',function(){if( $(this).hasClass('select') ){ return; }else{$('button.dice.select').removeClass('select');let tgt = $(this).attr('id');let user_ary = [];let dice_ary = [];let result_ary = [];let elm = $('#chat-log > div.diceroll:visible');for( i = 0 ; i < elm.length ; i++ ){let thisUser = elm.eq(i).attr('class').split(' ')[2];let txt = elm.eq(i).children().eq(1).html();try{let txt_re = txt.split('</b>');if( txt_re[1] == undefined ){ throw new Error(); }txt = txt_re[1];}catch(e){;}txt = txt.replace(/\n|\s|\t| |　| /g,'');let terms = false;if( tgt == 'diceroll' ){ terms = true; }else if( tgt == 'cf' && ( elm.eq(i).data('dice-result').split(',').indexOf('cr') !== -1 || elm.eq(i).data('dice-result').split(',').indexOf('fb') !== -1 ) ){ terms = true; }else if( elm.eq(i).data('dice-result').split(',').indexOf(tgt) !== -1 ){ terms = true; }if( terms ){if( user_ary.indexOf(thisUser) == -1 ){ user_ary.push(thisUser);dice_ary.push([]);result_ary.push([0,0]); }let user_num = user_ary.indexOf(thisUser);if( Boolean(elm.eq(i).data('dice-ccb')) && !Boolean(elm.eq(i).data('dice-x'))){try{let cbr_result = txt.split('&lt;=')[1].split('[')[1].split(']')[0].split(',');if( cbr_result[0].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[0].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }if( cbr_result[1].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[1].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}catch(e){;}}else if( Boolean(elm.eq(i).data('dice-x')) ){txt = txt.split(/#\d/);for( j = 0 ; j < txt.length ; j++ ){txt[j] = txt[j].replace(/<br>/g,'');if( j > 0 ){txt[j] = '<li class="sub">' + txt[j] + '</li>';if( txt[j].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt[j].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}}txt = txt.join('');}else{txt = txt.replace(/<br>/g,'');if( txt.match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt.match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}let tabspan = '<span>［' + $('#' + elm.eq(i).attr('class').split(' ')[1].toUpperCase()).next().text() + '］</span>';dice_ary[user_num].push(tabspan + txt);}}let output = '';for( i = 0 ; i < user_ary.length ; i++ ){output += '<b>▼ ' + $('#' + user_ary[i].toUpperCase() ).next().text();if( tgt == 'diceroll' || tgt == 'cf' ){ output += '（' + result_ary[i].join('C') + 'F）'; }output += '<br></b>';output += '<li>' + dice_ary[i].join('</li><li>') + '</li><br>';}$('#dice-output-area').html(output).show();$('.dice-output-area').show();$(this).addClass('select');}});});/* copy action */$(function(){$(document).on('click','button.dice-output-area',function(){$('#dice-text-copy').html($('#dice-output-area').html());$('#dice-text-copy span').remove();let li_elm = $('#dice-text-copy li.sub');for( i = 0 ; i < li_elm.length ; i++ ){ li_elm.eq(i).prop('outerHTML','　◦ ' + li_elm.eq(i).text() + '<br>'); }let copyTxt = $('#dice-text-copy').html();copyTxt = copyTxt.replace(/<br><b>/g,'\n\n').replace(/<li>|<b>|<\/b>/g,'').replace(/<\/li>|<br>/g,'\n').replace(/&lt;/g,'<').replace(/&nbsp;/g,' ');copyToClipboard(copyTxt);alert('クリップボードにコピーしました。');$('#dice-text-copy').html('');});});function copyToClipboard(txt){const pre = document.createElement('pre');pre.style.webkitUserSelect = 'auto';pre.style.userSelect = 'auto';pre.textContent = txt;document.body.appendChild(pre);document.getSelection().selectAllChildren(pre);const result = document.execCommand('Copy');document.body.removeChild(pre);return result;}</script>
+</head>
+<header>
+<details id="menu">
+<summary></summary>
+<div>
+<details>
+<summary>タブ別表示切替</summary>
+<div>
+<button id="tab-all" class="all hide"></button><br>
+<input type="checkbox" name="tab" id="TAB0" checked><label for="TAB0">メイン</label><br>
+</div>
+</details>
+<details>
+<summary>発言者別表示切替</summary>
+<div>
+<button id="user-all" class="all hide"></button><br>
+<input type="checkbox" name="user" id="USER0" checked><label for="USER0">system</label><br>
+<input type="checkbox" name="user" id="USER1" checked><label for="USER1">幸田 みこ</label><br>
+<input type="checkbox" name="user" id="USER2" checked><label for="USER2">天阜 御門</label><br>
+<input type="checkbox" name="user" id="USER3" checked><label for="USER3">咲坂 一年</label><br>
+<input type="checkbox" name="user" id="USER4" checked><label for="USER4">？？？？</label><br>
+<input type="checkbox" name="user" id="USER5" checked><label for="USER5">？？？</label><br>
+<input type="checkbox" name="user" id="USER6" checked><label for="USER6">ぬいぐるみ</label><br>
+<input type="checkbox" name="user" id="USER7" checked><label for="USER7">KP</label><br>
+</div>
+</details>
+<details>
+<summary>ダイス出力機能</summary>
+<div>
+<button type="button" class="dice" id="diceroll">ダイス一括表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="sc">成功のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="fl">失敗のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="cf">CF表示</button>
+<div id="dice-output-area" style="display:none;"></div>
+<br>
+<button class="dice-output-area">コピー <i class="fa-regular fa-copy"></i></button><div id="dice-text-copy"></div>
+<br>
+<span style="font-size:70%;">
+※組み合わせダイス（CBR,CBRB）、繰り返しコマンド（Xn CCB等）は正しく判定できない可能性があります。<br>
+※ダイス結果のコピーではタブ名はコピーされません。
+</span>
+</div>
+</details>
+
+<br><br>
+<a href="#"><i class="fa-solid fa-angles-up"></i> ログの先頭へ</a><br>
+<a href="#log-end"><i class="fa-solid fa-angles-down"></i> ログの最後へ</a>
+</div>
+</details>
+</header>
+<body>
+<div id="chat-log">
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ────だるい。怠い。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        まるで水の底にいるように、身体が怠く、重く、押し潰される。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        泡が弾ける音がする。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        身体が沈む。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        浮き上がった意識が沈む。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        沈む。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《聞き耳》どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=77　《聞き耳》 
+Cthulhu : (1D100&lt;=77) ＞ 45 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=75《聞き耳》 
+Cthulhu : (1D100&lt;=75) ＞ 49 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        声が聞こえた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        誰かの声が。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ────手を引かれる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        浮き上がる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        手を引かれて浮かび上がる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        意識が浮かぶ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        泡の音がした。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        浮かんだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        水中から水面へ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そうして──── 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ｡oＯo｡.:*:.｡oＯo｡.:*:.｡oＯo｡.:*:.｡oＯo｡.:*:.｡oＯo｡.:*:.｡oＯo｡.:*:. 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『Ad extremum et』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ｡oＯo｡.:*:.｡oＯo｡.:*:.｡oＯo｡.:*:.｡oＯo｡.:*:.｡oＯo｡.:*:.｡oＯo｡.:*:.<br> 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ────ぱち、と目が覚める。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなたは身を起こす。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        痛みも疲れもない。意識もハッキリとしている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        自分は、何をしていたんだろうか。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        周囲を見渡すとそこは、薄暗い水族館だった。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        隣にはお互いがいる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        どうしてこんな所に？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなた達の手には掌に収まる大きさのハート型のハーバリウムが握られている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        まずは目が覚めると知らない場所であったことによる《SANチェック 0/1》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=85 《SANc》 
+Cthulhu : (1D100&lt;=85) ＞ 87 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 天阜 御門 ] SAN : 85 → 84 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=60 《SANc》 
+Cthulhu : (1D100&lt;=60) ＞ 14 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《アイデア》どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=80　《アイデア》 
+Cthulhu : (1D100&lt;=80) ＞ 17 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=65 《アイデア》 
+Cthulhu : (1D100&lt;=65) ＞ 71 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ……直前まで自分が何をしていたか、あなたは思い出そうとする。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        しかし、ズキリと頭痛がした。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        修学旅行に出かける日の朝までは思い出すことが出来たが、それ以上思い出そうとすれば酷い頭痛が邪魔をする。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        記憶を失っていることに《SANチェック 1/1d2》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=60 《SANc》 
+Cthulhu : (1D100&lt;=60) ＞ 85 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        1d2 
+Cthulhu : (1D2) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 幸田 みこ ] SAN : 60 → 59 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「…………」ぼーっとしてる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「…………あれ？……みこ、どうしてこんなところにいるんでしょう？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……うーん、なにも思い出せないです」むむむ… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなた達は周囲を見渡す。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        薄暗く、青く光る水槽ばかり。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        水槽の中には何も泳いでいない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《目星》どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=77　《目星》 
+Cthulhu : (1D100&lt;=77) ＞ 41 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=75《目星》 
+Cthulhu : (1D100&lt;=75) ＞ 78 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ではみこちゃんは近くの床に白いカードが落ちていることに気が付きます。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「これは水槽……？でしょうか。」ぼーっとは辞めてきょろきょろしはじめます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「ん、なにか落ちてますよ。白い……カード？」ひろって見てみます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『そのハートは大切にして。壊さないように』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        と書いてある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「幸田さん何が書いてあったんですか？それ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「会長さんも見ます？ハートってなんでしょう……？」会長に紙をわたします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「ハート……ですか。なんでしょうね？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「んー……、これハートの形ですけど関係あるんでしょうかね？」ハーバリウムをちらっと見ます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [みこちゃんのハーバリウム] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ハート型のハーバリウムだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        中には透き通った青い液体と、白い花、夜明けの空のような色の宝石が入っている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「キレーな色してますね。中の花は何なんでしょう…？」アイデアでわかります？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《博物学》か《生物学》ですわね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        じゃ生物学振ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=44　《生物学》 
+Cthulhu : (1D100&lt;=44) ＞ 2 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        は？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        花はフリージア、宝石はアメトリンという種類であることが分かる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        また、それらは1月24日の誕生花と誕生日石である事に気が付くだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……！これ、みこの誕生花のフリージアですよ。あとは、誕生石のアメトリン……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「これ、気づいたら持ってましたけど……なんなんでしょうか……」ハーバリウムに目を向けよう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [御門くんのハーバリウム] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ハート型のハーバリウムだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        中には透き通ったクリーム色の液体と、ピンク色の花、ミントグリーンの宝石が入っている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        花はスイートピー、宝石はクリソプレーズであることが分かる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        それらは6月9日の誕生花と誕生日石である事に気が付くだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「私の方も誕生花と誕生石のようです、どういうことなんでしょうか……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「とりあえず、このハーバリウムを大事にしておけばいいのでは？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「ではその白いカードを書いた人物がここに我々を連れてきたと考えて良いのではないでしょうか。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなた達がハーバリウムを眺めていると、ふと、あなた達の目の前に水色の蝶が現れた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        その蝶はあなた達の注意を惹くように飛び回り、水族館の奥へ飛んでいってしまう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「あ、今キレーな蝶々が飛んでいきましたよ」てててーっと追いかけます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「こんなところに……蝶？気になりますね、追いかけてみますか？……ってもう居ないし……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        水族館の奥、暗闇へ目を向けると、向こうから足音が聞こえてくる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        こつ、こつという心地よいパンプスの音だ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        やがて薄らとその人影が見えてくる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ────それは、あなた達の先生だ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「あなた達……！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼女はあなた達に気が付くと驚いた顔をしてあなた達に駆け寄ってくる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そして、嬉しそうにあなた達を抱き締めるだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        その目には薄らと涙が浮かんでいる気がする。<br> 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「よかった、あなた達もここにいたんですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「さ、咲坂教諭……？突然どうしたんですか……？そ、それよりどうしてここに？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「目が覚めたらこの水族館にいて……蝶を追いかけていたらあなた達がいたんですよ。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        心理学振って良いですか 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        sccb&lt;=55　《心理学》 
+Cthulhu : (1D100&lt;=55) ＞ 72 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        本当のことを言っているように思う 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        幸田さんは《聞き耳》どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=77　《聞き耳》 
+Cthulhu : (1D100&lt;=77) ＞ 79 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あ～～～～残念！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……？どうかしましたか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……二人とも、異常はなさそうですね。よかった」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「蝶ならさっきちょうど咲坂教諭とすれ違いというか入れ替わりで向こうに飛んでいっちゃったんですよね……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「ふむ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……、……とう！」二人が話してる隙に後ろから先生に抱き着きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「あら、どうしたんですか幸田さん」あらあら 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        かわいいので《聞き耳》再挑戦していいよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=77　《聞き耳》リベンジ！ 
+Cthulhu : (1D100&lt;=77) ＞ 6 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        先生の胸に身を預けているあなたは、ふと違和感を覚える。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        こんなにも彼女と密着していると言うのに、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ────心臓の音が、聞こえない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「えへ、みこ達以外の人がいて安心しましたよ。センセも来てたんですね」にこっとしてます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「(……気のせい、ですよね)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「ええ、……起きたらこんな場所で驚きましたよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        突然、薄暗かった水族館に色とりどりの光が溢れる。水槽がライトアップされたのだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        気が付けば、水槽の中に様々な生き物がいる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「いつの間に……さっきまで水槽は空でしたよね？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「わぁ、おさかなさんがいっぱいいますよ。さっきまで何もいなかったのに……」近くの水槽を見に行きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [生き物] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        それは魚やクラゲなど、一般的な海にいる生き物と変わらないように見える。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼らは水槽の中を自由気ままに泳ぎ回っている。<br> 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《生物学》が振れます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=44　《生物学》 
+Cthulhu : (1D100&lt;=44) ＞ 37 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        よく見ると、それらは地球上には存在しない生物ばかりだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        魚やクラゲである事は明らかであるが、こんな生き物、見たことがない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《SANチェック 0/1》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=59 《SANc》 
+Cthulhu : (1D100&lt;=59) ＞ 18 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「綺麗ですよね……」きょろきょろしてます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「ふしぎな生き物がいっぱいですね……。初めてみるのばっかりです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「ええ。…どのお魚もかわいいです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「あ……そういえば咲坂教諭は目が覚めたときに、こんな感じのもの持ってなかったんですか？」ハーバリウムを見せる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……？いえ、持っていないですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        心理学振っとこ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        sccb&lt;=55　《心理学》 
+Cthulhu : (1D100&lt;=55) ＞ 55 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        持っていないのは本当のことのようだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなた達が話していると、先程の水色の蝶がひらひらと飛んで戻ってくる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        その蝶はあなた達を水族館の奥へ誘うように、あなた達の前で舞っている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「あ……また先ほどの蝶……」追いかけてみましょう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「追いかけてみましょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「あ、また蝶々ですよ。見失わないようにしないと……」おいかけます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        蝶を追いかけて水族館を進んでいくと、開けた部屋のような展示室に出た。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        入ってきた通路の他にもう一つ通路があるようだが、扉で塞がれている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ふと、あなたの横を何かが通り過ぎる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        それは薄く透き通る骨のような魚であったり、クラゲであったりする。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        気が付けば周囲には、薄く透き通る魚が自由に泳ぎ回っていた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        もちろん、水槽の中にも生き物がいる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ライトアップされたその空間は、とても綺麗だ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《聞き耳》よ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=77　《聞き耳》 
+Cthulhu : (1D100&lt;=77) ＞ 45 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=75《聞き耳》 
+Cthulhu : (1D100&lt;=75) ＞ 66 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        こつん、とどこからかヒールの音がした。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ただし、周囲を見渡しても、そこにはあなた達と先生しかいない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「今何か聞こえませんでしたか？」2人に確認してみるかな 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「いえ、特に聞こえませんでしたよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「あ、みこには聞こえましたよ。こつんこつん、って靴みたいな音」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「………そうですか…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        先生に心理学をふりたいです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        ダブル心理学 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        sccb&lt;=55　《心理学》 
+Cthulhu : (1D100&lt;=55) ＞ 4 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        sccb&lt;=55　《心理学》 
+Cthulhu : (1D100&lt;=55) ＞ 49 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        先生は何か隠し事をしていて、そして何かを心配しているように見える。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「聞こえましたよね。やっぱり我々以外にも誰か居る……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……はやくここから出る方法を探さないと」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「そうですね……、とても綺麗な場所ですけど……気がついたら突然ここに居るって言うのは少し不気味です。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……ええ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「この水槽の外に浮いてるおさかなってホログラムなんでしょうか……だとしたらすごい技術ですよ」水槽周りをうろうろしてますね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [周囲の魚] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        薄く透き通っていて、手で触れようとすればすり抜けてしまう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        だが、横を通った時にはひやりとした空気が肌を撫でるだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [水槽の魚] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        生きているようだ。呼吸をするたびに水の泡を吐いている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……おさかなのちょっとひやっとするとこまで再現してるんですかね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……どうなんでしょうね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「皆さん、あっちに扉がありますよ。開くかはわかりませんけど……」扉の方を指差す 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……そうですね。調べてみますか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「ええ、出口かもしれませんし。」近づいてみます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「順路的にはあの扉の先ですよね」行ってみます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [扉] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        しっかりと施錠され、開く気配は無さそうだ。プレートが掛けられている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        プレートにはなんて書いてある？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「あ、鍵がかかってますよ。むむ……」うなりながらプレートをみます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『選んで。あなたが正しいと思う方を。』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        また、白いメッセージカードが貼られている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        カードは取る事が出来そうだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「あ、また白いカード……」カードをとります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+         問題なく取れます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+         
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「ここにもカードですか……?」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        白いメッセージカード。黒い蝶が描かれている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『その人はあなた達にとって、何？』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「裏面に何か書いてありませんか……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        裏面は黒く、水色の蝶が描かれている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『恩人なら左へ。嘘つきなら右へ。』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        メッセージカードを裏面まで読むと、目の前の扉からカチリと鍵の開く音がした。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「さ、さっきのカードの裏面にも何か書いてあったのでは……？」書いてありますか 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        さっきの奴持ってきてるの？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「幸田さんから渡されて表しか見なかったですけど……もしかしたらこっちにも何か書いてあるのでは……」ポケットから取り出してみます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『それは仮初のもの。だけど大事なもの』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……お二人とも？どうかしました？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「鍵が開いたような音がしましたけれど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「い、いえ……カードの内容について少し考え込んじゃってました」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……？」首を傾げます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「先に進んでみますか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「それはもちろんですけど……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「うーん、うーん……？センセ、これ何でしょう？恩人とか、噓つきとか……」カードを先生にみせます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「…………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……右、ではないでしょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        心理学振りたいです！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        心理学の振りどころさん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        sccb&lt;=55　《心理学》 
+Cthulhu : (1D100&lt;=55) ＞ 43 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        sccb&lt;=55　《心理学》 
+Cthulhu : (1D100&lt;=55) ＞ 22 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        本心からそう思っているようだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「メッセージカードのその人って言うのは……咲坂教諭のことですよね？でしたら恩人ではないでしょうか？少なくとも嘘をつくような方ではないですし。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「………私とは限らないでしょう？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「だって、私だって目が覚めたらここにいたんですし…おかしいでしょう？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        一個目のセリフに心理学振りたいです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        sccb&lt;=55　《心理学》 
+Cthulhu : (1D100&lt;=55) ＞ 95 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        本心から言っているように思う。ちょっと呆れているのかな…？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……みこも左だと思いますよ。いつもみこみたいな生徒の事気にかけてくれてるじゃないですか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……そりゃ、怒られるのは嫌ですけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……なら、怒らせないようにいい子になってくださいね」なでなで 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……努力は、しますよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……ええ、そうしてくださいね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「とりあえず先に進んでから考えますか。」扉開けます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        扉を開けると、通路が二手に分かれている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        見た感じの印象はどちらの通路も変わらない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「どちらも変わらないように見えますね。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「なんの変哲もない通路に見えますね……」メッセージカードはもうないか辺りを見回してます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ねえわ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「分かれ道みたいですよ。カードに書かれてたのはこのことでしょうか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「咲坂教諭はどうして先ほど右だと仰ったんですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「え………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……なんとなくでしょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        心理学チャーンス 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        だぶるちゃんす 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        sccb&lt;=55　《心理学》 
+Cthulhu : (1D100&lt;=55) ＞ 35 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        sccb&lt;=55　《心理学》 
+Cthulhu : (1D100&lt;=55) ＞ 59 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼女は何かを知っているように思う。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「咲坂教諭、何か知っていることがあるなら私たちにも話してくれませんか？」信用振りたいです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        振っていいよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=60 《信用》 
+Cthulhu : (1D100&lt;=60) ＞ 100 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        おめでとうございます！！！！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#f0908d;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>咲坂 一年</div>
+	<div>
+	
+        sccb&lt;=65　《心理学》 
+Cthulhu : (1D100&lt;=65) ＞ 8 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「…………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……先生を疑ってるんですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「先生だって…何も知りませんよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        次の技能自動失敗ね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        会長だけ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「そういうわけでは……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「えーっと……多数決、にしましょう！みこは左に行きたいですよ」あせあせ… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「………二人にお任せしますよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「私も当初言った通り左でしょうか……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        じゃあ左でおｋ？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        おk 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        左でいいわよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなた達は左の通路を進む。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        通路の両脇の水槽には、相変わらず生き物が自由気ままに泳いでいる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ふと見ると、咲坂一年は少し悲しそうな顔をしていた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        なんだか落ち着きがないようにも思える。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        だが、黙って付いてきているのであなた達を止めたりはしないだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《聞き耳》どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=77　《聞き耳》 
+Cthulhu : (1D100&lt;=77) ＞ 39 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=75 《聞き耳》 
+Cthulhu : (1D100&lt;=75) ＞ 45 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「………私が、なんとかしないと」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなた達の後ろを歩く先生が、小さな声でそう言ったのが聞こえた。  
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        通路を進んでいくと、また小さな展示室に出た。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        部屋の中央には中型の水槽が1つあり、奥の壁にはまた閉ざされた扉が一つだけある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そして小さな本棚と、書き物机があるだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「ここにはどんなおさかなさんがいるんでしょう」水槽に駆け寄っていきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [水槽] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ゆらゆらと泡が揺れる水槽。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        中には熱帯魚らしきカラフルな魚が泳いでいる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《目星》どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=77　《目星》 
+Cthulhu : (1D100&lt;=77) ＞ 31 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        水槽の底に何か文字が書いてある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『Et quis novit quid？』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……ん？底の方に何か書いてありますよ。……みこには読めないですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        何語か知りたいなら《知識》か《アイデア》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        アイデア振ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=80　《アイデア》 
+Cthulhu : (1D100&lt;=80) ＞ 28 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ラテン語だなこれ… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「センセ、センセ、あの水槽の底に書いてあるの、ラテン語だと思うんですけど読めます？」先生のところに聞きに行きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……？」水槽を覗き込みます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……………ふむ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……ごめんなさい、ちょっと難しくて先生にも読めないです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        えぇ～ほんとに～～？？　心理学 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        sccb&lt;=55　《心理学》 
+Cthulhu : (1D100&lt;=55) ＞ 64 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        本当に読めないっぽいなあ… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「センセでもわからないことがあるんですね、びっくりしました」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……ごめんなさい、役に立てなくて」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        会長のターンよ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「メッセージカードはここで書かれたものなのでしょうか。」机のほうに向かうよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [書き物机] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        紙が一枚だけ置かれている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「これは……」手にとって読んでみます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『人の命。その価値はすべて等しい』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        裏面もチェックします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『ひとつはふたつになり得ない』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「意味深なメッセージですが……私だけで読んでてもしょうがないですし2人にも見せてみましょうか。」紙持って合流しにいこうかな 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        合流できるよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「お二人は何か見つけましたか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「みこは水槽を見てきたんですけど、水槽の下にラテン語っぽい文字が書いてありましたよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「でもこれ、センセにも読めないみたいで……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「ええ、ごめんなさい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        s2d100 
+Cthulhu : (2D100) ＞ 35[9,26] ＞ 35
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「咲坂教諭にも読めないラテン語ですか……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「机の方にはこんな紙がありました」2人に見せます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「…………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……そうですか……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        s2d100 
+Cthulhu : (2D100) ＞ 69[53,16] ＞ 69
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「哲学じみた事が書いてありますね……むむ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……抽象的すぎて何が言いたいのかさっぱりですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「とりあえずラテン語の辞書とか見つかるかもしれないですし、少し本棚調べてみませんか？」2人を誘って本棚のほうに向かおうかな 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「………」ついてはいくよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「辞書……なるほど。みこも探しに行きますよ」本棚に行きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [本棚] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        薄暗くてよく見えないが、本がたくさん並べられている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《図書館》どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=60 《図書館》 
+Cthulhu : (1D100&lt;=60) ＞ 87 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=25　《図書館》 
+Cthulhu : (1D100&lt;=25) ＞ 4 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        草 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        表題の無い白い本を見つける。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        中を開くと、そこにはあなたが一度も見た事がない文字が綴られている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        しかしそれは瞬きの間に、あなたのよく知る言語へと変わる。《SANチェック 0/1》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ……ですが、クリティカルなので自動成功です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「………？一瞬よくわからない文字が見えた気がしますけど……それより本の中身ですよね」本を読みます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+         
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#00bcd4;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        『人間は本来、その命を終えたら生き返ることは無い。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#00bcd4;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        例外的に、神の気まぐれによって命を吹き返す者もいるけれど、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#00bcd4;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        その結末はいつだって悲惨なもの。』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#00bcd4;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#00bcd4;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        『大抵は、死の恐怖に心を狂わせて身を亡ぼす。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#00bcd4;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        &quot;死&quot;を一度経験したからこそ、その恐怖によって狂ってしまう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#00bcd4;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        それでもなお死ぬことができず、再びの死が訪れるまで怯えて暮らすことになる。』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#00bcd4;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#00bcd4;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        『けれど、愛する者や大切な人を喪った人間は、時に自分を犠牲にして 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#00bcd4;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        他者の蘇生を、亡者との再会を願うことがある。』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#00bcd4;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#00bcd4;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        『他者が背負うことになる苦しみに目を向けず、自己の後悔や寂寥に飲まれてしまう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#00bcd4;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        己を顧みず、他者を想うあまりに禁忌を侵してしまう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#00bcd4;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        それを止めるのは、生半可な覚悟ではできない』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ろくでもねえこと書いてありますねえ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……、…………そうまでしてでも、もう一度大切な誰かに会いたいって思える人もいるんですね……」ぱたん、と本を閉じます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……会長さんも読んでみてください。何かヒントになるかもですよ」会長さんに本を手渡します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「これも……なんだか抽象的で難しい内容ですね……」難しい顔しながら読んでます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「………」先生は二人から少し離れた場所で立っています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……探し物は見つかりましたか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「はい………あ、この場合、いいえ？ラテン語の辞書はなかったので……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「あら……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「うーんと……調べ物も終わったので扉に向かいます？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……そうですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「はい、私も今読み終わりました。行きましょうか。」扉いきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [扉] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        相変わらず固く閉ざされ、プレートが掛けられている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『その人のことを信じてもいいの？』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        また、白いメッセージカードが貼られている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+         
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「ここにもカードがありますね。」なんて書いてあるかな 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『欲張って手を伸ばした、傲慢な人は誰？』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        裏面も見ます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『あなたの恩人なら左へ。あなた自身なら右へ』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「……と書いてありますが。」2人にも共有します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「…………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……左で良いのでは？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        シンリガク 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        sccb&lt;=55　《心理学》 
+Cthulhu : (1D100&lt;=55) ＞ 67 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        嘘ついてんなあ…… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        心理学もういっちょ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        sccb&lt;=55　《心理学》 
+Cthulhu : (1D100&lt;=55) ＞ 5 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼女は本心からそう思っていること、そして何かを隠している。そう確信するだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「今回も……なんとなくですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……ええ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#f0908d;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>咲坂 一年</div>
+	<div>
+	
+        sccb&lt;=65　《心理学》 
+Cthulhu : (1D100&lt;=65) ＞ 8 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……やっぱり先生のこと、疑っているんですね…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「センセはなんとなくって言いましたけど……『傲慢』に心当たりがあるってことですよね。……それってなんですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「…………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「………何でもないですよ。先を急ぎましょう？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「…………わかり、ました。会長さんもそれでいいですか？」扉に向かいます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「ええ……。行きましょう。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        扉開けていいんだな？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        いいわよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        いいよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        扉を開けると、あなた達の目の前にはやはり二つに分かれた通路がある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなた達が正解だと思う方へ足を向けたとき、咲坂一年ははっ、とあなたたちとは逆の方へ振り向く。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……ッ、待って！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そう言うと、何かを追いかけるようにそちらへ走って行ってしまった。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼女が走っていった通路は照明が落ち、真っ暗だ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        先生は右側に行きましたと言うことで 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「センセ……？ま、待ってください……！」おいかけます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「追いかけましょう！」右に同じく 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなたたちが追いかけようとしたとき、ふと最初に見たあの水色の蝶が現れた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        それはあなた達を誘うように、先生が走っていった方とは逆の、左の通路をひらひらと飛んでいる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「あの蝶々……また……」蝶々がちょっと気になる…けど… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……でも、センセを追いかけないと……こんなに真っ暗なのにどうして一人で行ってしまったんでしょう」やっぱり先生を追いかけます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        先生を追って暗い通路を行こうとするのなら、蝶があなた達の顔の前を飛び妨害する。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        行くな、とでも言うように。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……っ、どうして、邪魔、するんですか！みこはセンセのところに行きたいんです！」振り払います… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        それを振り切って追いかけるのなら、あなたは暗い通路を進むことになる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        進んでも進んでも、先生の背中を見ることができない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そうして気が付けば、あなたは分かれ道に戻ってきてしまうことだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        先生はどこへ行ってしまったのだろうか。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        蝶は相変わらずあなた達を誘うように飛んでいる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「センセ……どこに行ってしまったんですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「どうしてもあちらへ行かせたいようですね……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        どうする？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「…………もう知らないです。そっちに行けばいいんですね」蝶々の跡をとぼとぼ追います… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        蝶についていくと、あなたたちは白い扉の前に辿り着く。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        蝶は扉まであなた達を連れてくると、溶けるように消えた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [扉] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        少し豪華な装飾が施された白い扉。鍵などはかかっていないようだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「この先には一体何が……」めぼききありますか 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        聞き耳がありますね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……、………」とりあえず警戒しとこうね…聞き耳 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ふってふって 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=77　《聞き耳》 
+Cthulhu : (1D100&lt;=77) ＞ 5 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        どうして？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=75 《聞き耳》 
+Cthulhu : (1D100&lt;=75) ＞ 37 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        クリティカル保留でいいよｗ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        中から微かに物音が聴こえ、人の気配も感じる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「もしかしてこの先に咲坂教諭が……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「聞いてみればいいと思いますよ。……どなたかいます？」コンコン　ノックします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        返事ないわ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「こ、幸田さん……もっと慎重に……」ちょっと焦ってます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「この先にセンセがいるかもしれないんですよ。……早く、会いたいじゃないですか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「確かにこれ以上手掛かりは無さそうですし、この先に進むしかないです、よね……。」進みます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……じゃ、開けますよ」あけます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        扉を開けると、そこは天井がドーム状の水槽になった書斎のような部屋だった。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        たくさんの本が本棚に収められており、収まりきらない本が床に無造作に積み上げられている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        部屋の奥にある書斎机、その椅子がくるりと回る。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        座り心地のよさそうな革張りの椅子に座っていたのは、少女だった。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        頭に狐のような耳を持つ、美貌の少女。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        それを目にしたあなたたちは《SANチェック 0/1》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=59 《SANc》 
+Cthulhu : (1D100&lt;=59) ＞ 72 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 幸田 みこ ] SAN : 59 → 58 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=84 《SANc》 
+Cthulhu : (1D100&lt;=84) ＞ 65 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        少女はあなたたちをガラス玉のような瞳で見つめていたが、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        やがてゆっくりと口を開いた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……はじめまして、幸田 みこ。そして天阜 御門。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「驚かせてしまってごめんなさい。でも、こうしないと話せないと思ったから」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「あなたは……？どうして私たちのことを？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「…私は、すべてを視ていたから。だから、何でも知っているわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……それは、みこが思い出せない修学旅行の事も、ですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……そうね。察しのいい子は好きよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「咲坂教諭の様子が変だったのも何か知っているんですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「ええ、もちろん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……単刀直入に言うわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……あなたたちはもう死んでいるの。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「今のあなた達は…そうね、幽霊のようなもの、って思って」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「修学旅行で出会った少女を、あなた達は助けようとした。でもだめだった。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「《名伏し難き者》……黄衣の王の解放によって世界は崩壊し、あなた達は命を落とした」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        少女の話を聞いて、あなたはズキリと頭が痛む。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そして脳内を記憶が駆け巡る。ああ、ああ…そうだ。そうだった。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        自分たちはクティーラを助けようとして、そして失敗したのだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        何も為せぬまま。誰も救えないままに死んだのだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        その事実と死の記憶が蘇る。《SANチェック 1d8/1d20+1》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=58 《SANc》 
+Cthulhu : (1D100&lt;=58) ＞ 80 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        1d20+1 
+Cthulhu : (1D20+1) ＞ 12[12]+1 ＞ 13
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=84 《SANc》 
+Cthulhu : (1D100&lt;=84) ＞ 1 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        1d8 
+Cthulhu : (1D8) ＞ 6
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 天阜 御門 ] SAN : 84 → 78 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=80　《アイデア》 
+Cthulhu : (1D100&lt;=80) ＞ 16 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=65 《アイデア》 
+Cthulhu : (1D100&lt;=65) ＞ 4 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 幸田 みこ ] SAN : 58 → 45 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        じゃあ会長は全てを思い出してしまったついでに化物の造形も思い出したので追加で1d50SAN減らしといて 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        1d50 
+Cthulhu : (1D50) ＞ 44
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 天阜 御門 ] SAN : 78 → 33 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 天阜 御門 ] SAN : 33 → 34 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        1d10 
+Cthulhu : (1D10) ＞ 9
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        1d10 
+Cthulhu : (1D10) ＞ 8
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「何だか急に空腹感が……」腕しゃぶ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「………？？会長さん、腕っておいしいんですか？みこの腕もおいしいのでしょうか？……がぶ」袖まくって腕がじがじ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「………狂いもするわね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼女はそう言うと手を払う。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        すると、あなた達の意識ははっきりと形をもって戻ってくる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        正気に戻れました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……はっ、今、みこは何を……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……戻ってこれた？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        歯形がついた自分の腕を不思議そうに見ています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「……おかげさまで助かりました。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……ごめんなさい、辛い話をして。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……本題に入るわ。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「さっきも言った通り、わたしはあなた達を視ていた。最初から最期の瞬間まで。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……あなた達は頑張ったのに、ね。あれではあまりにも可哀想だと思った。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「だから、せめて消えてしまう前に、三人でゆっくり話をさせてあげられたらと…この水族館にあなた達を閉じ込めた」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……あなた達の気が済んだら解放してあげるつもりだったわ。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……だけど、ちょっと不都合が発生してしまって。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「咲坂一年に記憶を曇らせる魔法が効かなかったの。あの人、本当に余計な所で決定的な成功をするのね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……そう、そうでした。……みこは、みこ達、はあの修学旅行、で……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「…………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「………今の彼女は、あなた達と過ごすのも辛い罪悪感を抱いているはずよ。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「『裏切ってしまった。守れなかった。私が傲慢だったばかりに』……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「『……せめてあの子たちだけでも、誰か助けて』」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「センセ………そんな事を思いながら、何も憶えていないみこ達について来てくれたんですね……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「だから……様子が変だったんですね……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「………彼女の願いを、聞いてしまった者がいる」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「叶わない、叶えられない。でも、傲慢にも願ったから。それだけで彼女に苦しみを背負わせようとしている」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「死んでも死ねず、狂うことも許されない。自分が自分でなくなる恐怖を。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……あなた達は、それを彼女に背負ってほしい？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「そんな事あるわけないですよ！！センセにそんな苦しい思い……してほしくないです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「私たちのせいで咲坂教諭が危険な目に遭ってるなら……見過ごせないですよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……あなた達なら、そう言ってくれると思っていたわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……あなた達には、咲坂一年を説得してほしいの。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「彼女は今、一種の発狂状態にある。だから理性的な判断ができなくなっているわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「そして……彼女を騙している者。それが妨害すると思う。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「だからあなた達に、対抗するための手段を渡すわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        チェルシーはそう言うと、一枚の羊皮紙を幸田みこ、あなたに差し出した。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなたがそれを受け取ると、羊皮紙はタールのような黒い薬品の入った小瓶に変わる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「えっと……これ、なんです？黒い薬品……？」薬学とか　ふれますか 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「その薬品は私達の天敵を加工したもの。投げつければ相当な毒になるわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「幸田さんなら上手く扱えますよきっと」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「つまり、これをセンセを騙してる奴に投げればいいって事ですよね。……大丈夫、みこが絶対、センセを助けます」小瓶をぎゅっと握りしめます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……相手は見た目こそあなた達と変わらない…『元人間』。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「だから、物理的な攻撃だって効くわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……でも当然、相手も反抗する。だから、あなた達に力を貸してあげるわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        具体的に言うと 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        回避に+30の補正が付くわよ！！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        感謝しな！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        薬品は全部で5つ。投擲で判定。ダメージは1d6+db+1。追加で毎ターン相手の耐久を1削ります。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……これで大丈夫。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……ああ、そうだわ。やりすぎには注意するのよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「やりすぎ……というと？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……あんな子でも、私の妹分だから。あんまりいじめないであげてほしいの」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……悪気はないのだけれど…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「えっと……死なない程度に痛めつける感じ、ですか？加減できるかわかりませんけど……やってみますよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「ええ、ありがとう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……彼女の場所までは、わたしの分身が連れて行くわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……さあ、行って。先生を助けてあげなさい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「…………はい！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「私たちで、助けましょう。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「(……今度こそ、ですよ。何も救えないまま終わるなんて、みこは嫌です)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……頼んだわね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そう言うと少女の姿は無数の蝶となって消え、そのうちの一匹があなた達の前でひらひらと飛んでいる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ついていきますか？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        ついていきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        いきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        扉を開けて通路へ出ると、蝶は迷わずにひらひらと飛んでいく。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        やがて、黒い扉の前に辿り着くだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……この部屋、なんですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「この先に例の……」深呼吸しとこう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「すぅ……はぁ………、よし、開けますよ、会長さん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「はい、大丈夫です」開けます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        黒い扉の部屋の中には、水槽は何もなく、薄暗い。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そこには咲坂一年と、もう一人…中性的な美貌の人物がいる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        紫色の髪を後ろで一つに束ねたその人物は、男性か女性かあなたには判断がつかない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼等の目の前には、古びた銀色の天秤がある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「あらら、もう来ちゃったのか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「二人とも……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        先生はその手に、ハート型のハーバリウムを抱えている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「幸田さん、気をつけてください……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……！センセ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「………」ハーバリウムぎゅっ… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「まあそうはやるなよ。私は善意でやってるんだし」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「ここに来たってことは…もう聞いてるでしょ？君たち三人は仲良く死んでて、世界も黄衣の王の解放によって崩壊した。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「それでこの先生は自分の魂と引き換えに君たちだけでも現世に戻したいんだってさ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「君たちに何のペナルティもなく、先生が自ら犠牲になることを望んでる」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「君たちの先生の『最期のお願い』だぜ？もちろん聞いてあげるんだろ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「そんな、誰かを犠牲にしてなんて……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「その先生のお願いでも？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「そんなのみこは望んでません。………みこ達を助けたらセンセはずっと辛い思いをしなきゃいけないんですよね？そんなの嫌に決まってますよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「みこは生き返れなくてもいいです。これ以上センセを苦しませないでください」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「……ふぅん。まあ、その先生に決めてもらおっか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「……咲坂先生？……こんなに君を想っている生徒を助けたいなら、その天秤に君の命を乗せればいい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……わ、私…は、」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        その言葉に、咲坂一年は手に持っているハーバリウムを天秤の片側に乗せようとする。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        阻止するのなら《DEX*3》に成功したうえで《STR12》とSTR対抗ロール 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        みこちゃんも手伝うならSTR17でいいよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=(18*3) 《DEX×3》 
+Cthulhu : (1D100&lt;=54) ＞ 42 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        じゃあ対抗ロール 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>天阜 御門</div>
+	<div>
+	
+        resb(17-12) 
+Cthulhu : (1d100&lt;=75) ＞ 56 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなた達は先生の手からハーバリウムを奪うことができる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        しかし、そんなあなた達に青年が歩み寄る。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「おやおや、邪魔をするなんて先生の気持ちを汲んであげないの？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「酷い子たちだなあ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼はそう言うと、ひょいとあなた達からハーバリウムを取り上げる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「―――これは、すでに死んでいる君たちの為に、あの子が用意した代わりの心臓だ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「だからこれを壊したら心臓を壊されるのと同じ痛みに襲われるし、魂は消える」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「……返してほしい？なら取り返してごらん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「……できるなら、ね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼があなた達に立ち塞がる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ニヤニヤと、薄気味の悪い笑顔を浮かべて。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        話し合いで受け入れるような様子ではない。ならば力尽くで奪うしかないだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        制限時間は8R。<br>この相手には《武道》によるダメージ2倍は適用されますが、気絶は無効です。<br>相手の使う《眠りへの誘い》の回避に失敗すると1d3Rの間眠ってしまいます。<br>睡眠状態のPCに対してこぶし/医学/応急手当に成功すると即座に叩き起こすことができます。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        また、先生は戦闘に参加しません。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        戦闘開始です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では1R目です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        でぃれいで 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        1d2　《攻撃対象》 
+Cthulhu : (1D2) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        1d3 攻撃手段 
+Cthulhu : (1D3) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#62418a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>？？？</div>
+	<div>
+	
+        ccb&lt;=90　《眠りへの誘い》 
+Cthulhu : (1D100&lt;=90) ＞ 100 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        は？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「うわっ」こけた！次のR行動不能 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        薬品を投げます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        なげてなげて 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=66　《投擲》 
+Cthulhu : (1D100&lt;=66) ＞ 70 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        当たらんかったわ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        武道と組み付き組み合わせロールしてサルトしたい 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        やっちゃって 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="1" data-dice-x="0" data-dice-result="sc">
+	<div>天阜 御門</div>
+	<div>
+	
+        cbrb(75,80) 《組みつき》《武道》 
+Cthulhu : (1d100&lt;=75,80) ＞ 57[成功,成功] ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ダメージﾄﾞｳｿﾞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        2d6+1d4 
+Cthulhu : (2D6+1D4) ＞ 7[6,1]+3[3] ＞ 10
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では2R目 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        もう一度会長です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        もっかいやっとくわ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        やってやって 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="1" data-dice-x="0" data-dice-result="fl,fb">
+	<div>天阜 御門</div>
+	<div>
+	
+        cbrb(75,80) 《組みつき》《武道》 
+Cthulhu : (1d100&lt;=75,80) ＞ 97[致命的失敗,致命的失敗] ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        こけたわ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        じゃあ普通の失敗にします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        次みこちゃん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        薬品なげなげ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        なげてなげて 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=66　《投擲》 
+Cthulhu : (1D100&lt;=66) ＞ 10 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ダメージいいよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        1d6+1d4+1　《ダメージ》黒い薬品+DB+1 
+Cthulhu : (1D6+1D4+1) ＞ 3[3]+1[1]+1 ＞ 5
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「……っげえ！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        というわけで3R目よ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        会長どうする？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        また同じのします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        やってやって 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="1" data-dice-x="0" data-dice-result="sc">
+	<div>天阜 御門</div>
+	<div>
+	
+        cbrb(75,80) 《組みつき》《武道》 
+Cthulhu : (1d100&lt;=75,80) ＞ 14[スペシャル,スペシャル] ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        だめーじどうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        2d6+1d4 
+Cthulhu : (2D6+1D4) ＞ 6[1,5]+2[2] ＞ 8
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「女の子に手加減してくれないの？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        1d2　《攻撃対象》 
+Cthulhu : (1D2) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        1d3　攻撃手段 
+Cthulhu : (1D3) ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#62418a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>？？？</div>
+	<div>
+	
+        ccb&lt;=80　《影による組み付き》 
+Cthulhu : (1D100&lt;=80) ＞ 79 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=25　《受け流し》 
+Cthulhu : (1D100&lt;=25) ＞ 37 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ではみこちゃんは影のようななにかに組み付かれました。次のRでこいつが動くまで行動不能です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        3R目……と言いたいところですが 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「ぐっ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼…彼女。彼女は地面に片膝をつく。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        ハーバリウム奪取を試みます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなたは彼の手からハーバリウムを奪おうとするだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ―――だが、その瞬間。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《回避》をどうぞ♡ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=66 《回避》 
+Cthulhu : (1D100&lt;=66) ＞ 6 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなたはすんでのところで回避する。貴方の頬を、夜空のような影が掠めた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「まったくひどい話だな。思い上がるなよ、人間」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなたの足元の死体はいつの間にか夜空のような影になり、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなた達の後ろで嗤う彼女に吸い込まれていった。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そして、ハーバリウムも影によってふたたび奪われてしまう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        さらに 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        相手の耐久が全回復し、装甲が追加で+1されました。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        戦闘再開です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        というわけで3R目。どうする？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「あのさあ……私は元人間だけど、すでに人ならざる者だ。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「人間が神の眷属を殺せるわけないだろ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「なんにも学んでいないのかな、君たちは」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「………動かないなら、私からやっちゃうよ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「……はあ、ひっぱたけば気が付くかなあ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        1d2　《攻撃対象》 
+Cthulhu : (1D2) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        1d3 攻撃手段 
+Cthulhu : (1D3) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#62418a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>？？？</div>
+	<div>
+	
+        ccb&lt;=80　《影による攻撃》 
+Cthulhu : (1D100&lt;=80) ＞ 62 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        会長回避する？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        する 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        して 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=66 《回避+30》 
+Cthulhu : (1D100&lt;=66) ＞ 47 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「ああ、避ける頭は残ってたんだ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        次　会長よ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        取り返したいです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ハーバリウムを取り返すには《DEX*3》に成功したうえで《STR18》とSTR対抗ロールに成功する。<br>これも攻撃として判定されるため、相手は《DEX*3》に対して回避を行います。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では判定どうぞ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=(18*3) 《DEX×3》 
+Cthulhu : (1D100&lt;=54) ＞ 9 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        回避しちゃうけどどうするぅ？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        妨害するならDEX振ってない方がしてね～ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        薬品を床に投げて回避できる範囲を減らしたいです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では投擲で判定　どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=66　《投擲》 
+Cthulhu : (1D100&lt;=66) ＞ 80 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        残念ながら妨害できませんでした… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        なので回避はそのまま振ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#62418a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>？？？</div>
+	<div>
+	
+        ccb&lt;=80　《回避》 
+Cthulhu : (1D100&lt;=80) ＞ 69 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「おっと？」避けちゃったねえ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では今度こそ4R目です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「くっ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>天阜 御門</div>
+	<div>
+	
+         
+Cthulhu : (1D100&lt;=17) ＞ 77 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=(17*3) 《DEX×3》 
+Cthulhu : (1D100&lt;=51) ＞ 61 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        1d2　《攻撃対象》 
+Cthulhu : (1D2) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        1d3 
+Cthulhu : (1D3) ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#62418a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>？？？</div>
+	<div>
+	
+        ccb&lt;=80　《影による組み付き》 
+Cthulhu : (1D100&lt;=80) ＞ 70 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        組付きなので組付きでしか受け流しできないです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        受け流す？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        受け流します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ながして 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=75 《組み付き》 
+Cthulhu : (1D100&lt;=75) ＞ 57 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        受け流せました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ではつぎみこちゃん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ワンチャンチェルシーちゃんに助けを乞えたりしますか… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        幸運かな 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=60　《幸運》 
+Cthulhu : (1D100&lt;=60) ＞ 4 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        うそでしょ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「(一か八か、ですけど……)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「………っ、さっきの、獣耳の女の子………今も見てるんですよね。この声も聞こえてますよね。一手、あと一手足りないんです。……みこ達にセンセを助ける力をください！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……あら、私が見ているってよく気づいたわね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「…何をしてほしいの？それにも…よる」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……ハーバリウムを持ってるあの人の気を引いててほしいです。あれを取り戻さないと……センセが……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……そう。…私に頼るとは思わなかったけど…気を引くなら何でもいいのね？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……そうね、カガリの気を引くプロがいるわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……彼にお願いしましょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        突然上からぬいぐるみ降ってきたわ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ついでにチェルシーちゃんも来たわ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「頑張っている子は好きよ。……手を貸してあげる」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        人外来ちゃったなあ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ぬいぐるみはチェルシーちゃんの上でじたばたしてるわ　動くの？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「この子を人質にすればいいわ」何言ってんの？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「試してみる？面白いわよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「その……そんなぬいぐるみで気を引けるんです……？」不安そう　なにも知らんので… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「ぬいぐるみ……？ですよね？大丈夫なんでしょうか……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「あなた達だって、先生を人質にされてる。…だったらあなた達も兄を人質にするくらい、いいと思うけれど……」いいと思うけれどではない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「え、なんでチェルシーちゃん……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        まあそんな感じで5R目です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「……？事情はわかりませんが、とにかくもう一度仕掛けてみますから、そのときに使えるものは使っていきましょう！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        でぃれいします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        はいはい 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        じゃあブラコンが動きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        1d2　《攻撃対象》 
+Cthulhu : (1D2) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        1d3 
+Cthulhu : (1D3) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#62418a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>？？？</div>
+	<div>
+	
+        ccb&lt;=80　《影による攻撃》 
+Cthulhu : (1D100&lt;=80) ＞ 85 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        動揺したわ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        次はチェルシーちゃんです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        何してほしい？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        かいちょのDEX判定が有利になる行動がほしいです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ふむ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        じゃあお願いしてみて 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「私が……あの人からハーバリウムを奪う瞬間に何か協力していただけないですか？お願いします。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……そうね……それはできないけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「ちょっとだけ書き換えてあげる」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「書き換え……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「ええ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#00bcd4;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>？？？？</div>
+	<div>
+	
+        resb(18-17)　《事象の書き換え》 
+Cthulhu : (1d100&lt;=55) ＞ 75 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「あ、ごめんなさい。抵抗されちゃった」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……またあとでね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「そうですか……ありがとうございます。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「まあ、あの子の足をつぶしてもいいけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ぬいぐるみはそれ聞いて暴れてるわ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=(17*3) 《DEX×3》 
+Cthulhu : (1D100&lt;=85) ＞ 88 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        つぎみこちゃん？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ちぇるしーちゃんはぬいぐるみ持ってみこちゃんを見てるよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「あ、ぬいぐるみ。喋れるようにしておくわね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#009688;">
+	<div>ぬいぐるみ</div>
+	<div>
+	
+        「ぷはっ……、えっ……なにこれ、どういう状況なのこれ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「あなたの妹を止めてほしいっていうから。あなたが適任でしょう？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#009688;">
+	<div>ぬいぐるみ</div>
+	<div>
+	
+        「……ああ、だいたいわかったかも」察しがいいな 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        といわけでみこちゃん何する？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「えっと……チェルシー、さん？そのぬいぐるみ、どうやって使うのが効果的なんです？みこ、人質か囮ぐらいしか思いつかなくて……」ぬいぐるみの使い方をききたい 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「そうね、投げれば？」投げれば？ではない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#009688;">
+	<div>ぬいぐるみ</div>
+	<div>
+	
+        「ひとじ……おと、囮……な、投げる！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「ああ、でも気を引くなら……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「人質にした方が、何度も使えていいんじゃない？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#009688;">
+	<div>ぬいぐるみ</div>
+	<div>
+	
+        「……ボクもその方が助かるかな、肉体的に。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「………なるほど！みこは投げる方が得意ですけど……やってみますよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ではどうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「じゃあ、はい。強度は結構あるから多少手荒にしても壊れないわ」ぬいぐるみを渡してくれます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「ありがとうございます。……とりあえず、投げても大丈夫そうですね」みょんって横にひっぱってみる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#009688;">
+	<div>ぬいぐるみ</div>
+	<div>
+	
+        「い、いだ、痛いから……ちゃんと痛覚通ってるから……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「あ、そうなんですね。……って、遊んでる暇はなかったですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そうだぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#009688;">
+	<div>ぬいぐるみ</div>
+	<div>
+	
+        「……あの子、暴走するとなにしでかすかわからないから、あまり刺激しすぎない程度にね。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……見えます、これ？みこは今ぬいぐるみを持ってるんですよ。……この意味、あなたにならわかるんじゃないんですか？」これみよがしに掲げてカガリさんに見せつけますね… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「なっ！？なんでみーさんを持ち出してるのさ！！！人質とかずるい！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        何言ってんだこいつ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#009688;">
+	<div>ぬいぐるみ</div>
+	<div>
+	
+        「わー、たすけてー」大袈裟にジタバタしてみせます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「返してよ！」ぷんぷん！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        えー、ではブラコンじゃなかった、このポンコツは気を取られたので回避-30です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そういうわけで6R目 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        変わらずディレイで 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        じゃあ小鳥遊のヘイトはみこちゃんに集中します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#62418a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>？？？</div>
+	<div>
+	
+        ccb&lt;=90　《眠りへの誘い》 
+Cthulhu : (1D100&lt;=90) ＞ 68 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        回避する？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=48　《回避+30》 
+Cthulhu : (1D100&lt;=40) ＞ 17 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        寝なかった 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「ちっ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        次会長よ～ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「もう一度お願いします……！」ディレイするよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「ええ、いいわよ。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#00bcd4;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>？？？？</div>
+	<div>
+	
+        resb(18-17)　《事象の書き換え》 
+Cthulhu : (1d100&lt;=55) ＞ 93 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        出目高いなこの人外 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「………次のターン、あの子の足を一本くらい潰すのでだめかしら？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「たぶんその方が確実よ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#00bcd4;">
+	<div>？？？？</div>
+	<div>
+	
+        「……大丈夫、どうせ私たちは死なないもの。ちょっと痛いだけ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#009688;">
+	<div>ぬいぐるみ</div>
+	<div>
+	
+        「ちょ、ちょっと、そんな手荒なのは勘弁してあげて……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=(17*3) 《DEX×3》 
+Cthulhu : (1D100&lt;=51) ＞ 75 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        貯金使って振り直します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        いいよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>天阜 御門</div>
+	<div>
+	
+        ccb&lt;=(17*3) 《DEX×3》 
+Cthulhu : (1D100&lt;=51) ＞ 21 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        回避するけど妨害する？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        我薬品投擲妨害要求 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        似非中国語やめろ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        いいよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#4a6cd7;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>幸田 みこ</div>
+	<div>
+	
+        ccb&lt;=66　《投擲》 
+Cthulhu : (1D100&lt;=66) ＞ 13 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        じゃあ回避がさらに-10です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#62418a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>？？？</div>
+	<div>
+	
+        ccb&lt;=40　《回避》 
+Cthulhu : (1D100&lt;=40) ＞ 83 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「っ、わ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ではSTR18と対抗です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        2人で 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        みこちゃんも協力するぞ～～！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        じゃあ二人合わせて23なので23と18で対抗してね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#ffc107;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>天阜 御門</div>
+	<div>
+	
+        resb(23-18) 《STR対抗》 
+Cthulhu : (1d100&lt;=75) ＞ 44 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「返してもらいますよ……！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「……はあ…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなた達はハーバリウムを奪うことができる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        透き通った赤い液体と白い花、オレンジ色の宝石が入っているそれは、ひどく冷たい。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「やーっと終わったよ、もう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        先生は呆然と座り込んであなた達を見上げている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……っ、わ、私は…私はあなた達を見捨てたんですよ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「だから、あなた達だって……私を見捨てても……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……私のせいで、クティーラさんだけでなく、大切なあなた達を死なせてしまった。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……誰も救えなかった。何もできなかった！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「そんなこと……咲坂教諭が負い目を感じる必要なんて……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……センセのせいじゃないですよ。クティーラさんを助けられなかったのは、みこの頑張りも足りませんでした」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「みこ達に生き返ってほしいって思ってくれたセンセの気持ちは嬉しいですけど、その気持ちだけで十分ですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「………そんな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼女はあなた達を見つめる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        それでもあなた達は首を横に振る。決めたから。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        この人一人が苦しんで自分たちだけがのうのうと生きていくだなんて、有り得ない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        紫色の髪の彼女が、呆れたようにため息をつく。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「……いいんじゃない？そうやって思ってくれる生徒がいるなら、無駄じゃなかった」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「それに、人を生き返らせるなんてそんなの、ただのエゴの押しつけだ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#009688;">
+	<div>ぬいぐるみ</div>
+	<div>
+	
+        「…………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「死んだ人間は、生き返る事なんかできない。絶対に元に戻れない」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……それ、でも」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「…………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「一度失ったものってどうやっても取り戻せないものなんですよ。過ぎ去った時間とか、あの時死んでしまったみこ達とか。……戻りたくても、もう戻れないし、みこ達の人生はあそこで終わりなんです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……みこはですね、お勉強を頑張って将来はお薬を研究する人になりたかったです。卒業式にも出たかったですし、大人になったらセンセとお酒を飲んでみたかったんですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「生き返ることができるなら、ってちょっぴり期待しちゃったみこもいるのは事実ですけど……やっぱりだめです。みこはセンセに永遠の苦しみなんて背負ってほしくないです。考えるまでもないじゃないですか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「………、」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……本当に、本当に……あなたって子は……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「……やっとわかったか、この分からず屋も」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「可愛い教え子がこんな感じのぬいぐるみになっていいなら止めないけどね私は」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#009688;">
+	<div>ぬいぐるみ</div>
+	<div>
+	
+        「こんな感じって……ボクはこうなったことに感謝こそすれど後悔なんて微塵も無いんだけど……」今はそういうことじゃない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……いえ、もう、大丈夫です」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……この子たちが、こんなに頑張ってくれたんですもの」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「それを振り払うようなこと、できるわけがないでしょう？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「大切な大切な、教え子ですもの」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「……私が君たちにしてあげられることは、せめて最期に夢を見せてあげることだけ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「……君たちは最期に、何を望む？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「私は、ようやくお二人の力になれたので……望みなんてもう……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「人としての最期を迎える。この中の誰が欠けることもなく。……それがみこの望みですよ。二度目の人生なんていりません。苦しみを誰か一人だけに押し付けるのは嫌なので」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……ええ。私も。この子たちと最期に一緒にいられるだけで」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「それだけで……幸せです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「最期にセンセの声を聞けたので、みこはそれで満足です。……何も聞こえなかったけど、あの時だけはちゃんとセンセの声が聞こえてましたから」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……怖い思いをさせて、ごめんなさい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「いいんですよ。センセは最期の最期まで希望を持たせてくれました。みこが苦しい思いをするのが一瞬で済むように、してくれたんですよね。……大丈夫ですよ。センセの気持ち、ちゃんと伝わってます」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「………ありがとう、……本当に、いい子ね」みこちゃんの頭を　撫でます…… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「…欲がないなあ。……まあ、それなら。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「……こんな薄暗い場所でなく、夜明けの空の下で」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「君たちの魂が、何にも侵されないように。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼女がパチン、と指を鳴らす。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        すると、空間がはがれるように変わっていく。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        暗い地面は花畑へ。暗い天井は朝焼け色の空へ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「……最期くらい、とびきりの美しい場所で迎えても罰はあたらない」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「……10分間。10分間だ。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「10分経てば君たちは眠りに落ちる。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#62418a;">
+	<div>？？？</div>
+	<div>
+	
+        「ほら、最期の瞬間まで、ゆっくり話したらどう？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼女はそう言うと闇に溶けるように消えてしまう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あの少女もぬいぐるみも、それに続くように消える。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        花畑に残されたのは、あなた達だけだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……綺麗な場所。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「…………粋な計らいですね。過程はちょっと……あれですけど。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……本当に。きれいですね、こんな事する人には見えませんでしたよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……そうですね。……あの方たちが、なんなのか見当もつきませんけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……言われたんですよ。あの人に」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「『生き返らせる代償は、お前の存在そのものだ』」「『その意味も知らないで、軽々しく願うな』と……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……それでも、願ってしまったんです。……でも、ごめんなさい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……こうして最後にあなた達と話すことができたから……願ってよかったのかもしれません」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……目の前に希望が見えたら、それに縋ってしまいますよね。人間ってそういうものですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「センセはなんでもできて完璧に近いと思いますけど、完璧な人間なんて世界中探したってどこにもいないんですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「幸田さん、修学旅行前後でずいぶん逞しくなったような気がしますね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……ええ、そうですね。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「んー……そうですか？もう死んでるんですし、もうどうにでもなれーって好き勝手してるだけかもしれませんよ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……そうですね。これが最期なら……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼女はそう言うと、あなた達をぎゅっと抱きしめる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        心臓の音は聞こえないかもしれない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        確かに自分たちは死んでいる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        けれど、抱きしめられたぬくもりは、温かく、心地よい。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……私を、助けてくれてありがとうございます」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「お二人の事が、大好きですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「二人の先生になれて……よかった。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……そう、思っているわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        「恩師にそう言って頂けて、これ以上光栄なこと他にないですよ……。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……いつも問題ばっかり起こすみこにも、センセは優しかったですよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……センセはみこの最高のセンセでした。大好きです」にこ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……ええ。ええ！あなた達にそう言ってもらえて、もう…悔いはないわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「…ありがとう。みこさん、御門くん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        「……それじゃ、さよならをしましょう。こんな形でお別れできるなんて、それこそ夢にも思いませんでしたけど。これで最後、ですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……ええ。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……さよなら、二人とも。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……もしも、もしも……許されるなら」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……もう一度、あなた達の先生になりたいわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなた達は抗いがたい眠気に襲われる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        それはだんだんと強くなっていき、やがてあなた達は瞼を閉じる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        手のぬくもりと、最後の願いに想いを馳せながら。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#4753a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        深い深い水の底に沈むように、あなた達は意識を手放した。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        エンディング『Ad extremum et』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ベストエンドです…… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        おつかれさまでした……… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        おつかれさまでした！！！！！！！！！！！！！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        俺が焼けたが 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        これで……この三人は正式ロストです…… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#4a6cd7;">
+	<div>幸田 みこ</div>
+	<div>
+	
+        もう心残りはないです。ありがとう…ありがとう…… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#ffc107;">
+	<div>天阜 御門</div>
+	<div>
+	
+        おつかれさま、そしてありがとう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user7 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        たいへんよく頑張った…… 
+      
+	</div>
+</div>
+
+</div>
+<div id="log-end"></div>
+</body>
+</html>
