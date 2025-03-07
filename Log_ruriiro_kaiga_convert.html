@@ -1,0 +1,5066 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ruriiro_kaiga_convert</title>
+<meta http-equiv="content-type" charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<style>*{font-family:sans-serif;}:root{--header-back:0,0,0;--header-color:#FFF;--awesome:'Font Awesome 5 Free';}body{padding-top:80px;margin:0;}/* header */header{background:rgba(var(--header-back),0.5);color:var(--header-color);position:fixed;top:0;left:0;width:100%;overflow-x:hidden;transition:0.3s;}header:has(#menu[open]){background:rgba(var(--header-back),0.8);}summary{outline:none;}details > summary{display:inline-block;cursor:pointer;opacity:0.3;font-size:110%;font-weight:bold;padding:5px;margin:10px 0 0;}details > summary:hover,details[open] > summary{opacity:1;}details[open] > summary:hover{opacity:0.3;}details > summary:before{content:'\f138';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details[open] > summary:before{content:'\f13a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details > div{margin:10px 10px 30px 20px;word-break:break-all;}details > div > button{padding:3px 20px;margin:0 0 8px;font-size:105%;cursor:pointer;outline:none;border:2px solid var(--header-color);border-radius:3px;background:rgba(0,0,0,0);color:var(--header-color);opacity:0.3;}details > div > button:hover{opacity:1;}button.all.hide:before{content:'一括非表示';}button.all.hide:after{content:'\f070';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}button.all.show:before{content:'一括表示';}button.all.show:after{content:'\f06e';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}input[type="checkbox"]{display:none;}label{cursor:pointer;}input[type="checkbox"]+ label:before{content:'\f0c8';font-family:var(--awesome);font-weight:400;margin-right:0.5em;}input[type="checkbox"]:checked + label:before{content:'\f14a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open]{max-height:85vh;}#menu > summary{padding:0 10px 10px;}#menu[open] > summary{opacity:0.3;}#menu[open] > summary:hover{opacity:1;}#menu > summary:before{content:'\f0c9';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu > summary:after{content:'MENU';}#menu[open] > summary:before{content:'\f00d';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open] > summary:after{content:'CLOSE';}#menu > div{max-height:60vh;max-width:80vw;padding-bottom:50px;overflow-y: auto;}#menu > div::-webkit-scrollbar{display:none;}header a:link,header a:visited{color:var(--header-color);opacity:0.5;text-decoration: none;}header a:hover{opacity:1;}/* chat-log default style */#chat-log{margin:20px 0 20px 25px;}.chat{display:flex;flex-wrap:nowrap;flex-direction:column;padding-right:1em;}.chat > div{word-break:break-all;}.chat > div:nth-child(1){display:block;font-weight:bold;padding-top:0.2em;}.chat > div:nth-child(2){margin-left:1em;padding:0 0.2em 0.2em;}/* headline */[id^="index"]{margin-top:-90px;padding-top:90px;}/* hide-user style */.hide-user > div:nth-child(1),.hide-user2 > div:nth-child(1){display: none !important;}.hide-user > div:nth-child(2):not(:has(b)){margin-left:0;padding:0;}.hide-user + div:not(:has(.hide-user)){padding-bottom:0.5em;}.hide-user b,.hide-user2 b{ margin-left:-1.2em; }/* tab style */body{background:#2a2a2a;}/* diceroll */button.dice{outline:none;border:none;background:none;color:inherit;opacity:0.5;cursor:pointer;transition:0.3s;}button.dice:hover{opacity:1;letter-spacing:0.1em;}button.dice.select{opacity:1;}button.dice.select:hover{letter-spacing:0;cursor:default;}#dice-output-area{padding:10px 15px;background:#000;color:#888;border-radius:3px;font-size:80%;}#dice-output-area li{text-indent:-1.5em;padding-left:2.5em;}#dice-output-area li.sub{list-style-type:circle;padding-left:5em;}button.dice-output-area{display:none;padding:2px 8px;font-size:100%;}#dice-text-copy{display:none;}@media only screen and (orientation: portrait){button.dice{display:block;color:var(--header-color);background:rgba(var(--header-back),1);}span.dice-span{display:none;}}/* safari */summary::-webkit-details-marker {display:none;}/* mediaquery */@media only screen and (orientation: portrait){*{overflow-x:hidden !important;}html{width:100vw;overflow-x:hidden !important;}header{padding:50px 0 0 0;margin:0;width:100%;overflow-x:hidden !important;position:fixed;top:0;left:0;right:0;}#menu{padding-left:10px;}body{padding:120px 0 0 0;margin:0;;width:100%;font-size:90%;overflow-x:hidden !important;}#chat-log{width:90vw;overflow-x:hidden !important;margin:20px 0 20px 15px;}#chat-log div{word-break:break-all;overflow-x:hidden !important;padding-right:0;}.chat > div:nth-child(2){margin-left:0;overflow-x:hidden;}.hide-user b,.hide-user2 b{ margin-left:0em; }[id^="index"]{margin-top:-120px;padding-top:120px;}}</style>
+<script>$(function(){$(document).on('click','#tab-all,#user-all',function(){let tgt = $(this).attr('id').replace('-all','');let result = true;if( $(this).hasClass('hide') ){ result = false; }$('input[name="' + tgt + '"]').prop('checked',result);$(this).toggleClass('show hide');chatShowHide();});});$(function(){$(document).on('change','[name="user"],[name="tab"]',function(){ chatShowHide(); });});function chatShowHide(){$('.chat').show();let hide_list = [];$('[name="user"]:not(:checked),[name="tab"]:not(:checked)').each(function(){ hide_list.push('.' + $(this).attr('id').toLowerCase()); });hide_list = hide_list.join(',');$(hide_list).hide();$('#dice-output-area').html('').hide();$('.dice-output-area').hide();$('button.dice').removeClass('select');}</script><script>/* dice output */$(function(){$(document).on('click','button.dice',function(){if( $(this).hasClass('select') ){ return; }else{$('button.dice.select').removeClass('select');let tgt = $(this).attr('id');let user_ary = [];let dice_ary = [];let result_ary = [];let elm = $('#chat-log > div.diceroll:visible');for( i = 0 ; i < elm.length ; i++ ){let thisUser = elm.eq(i).attr('class').split(' ')[2];let txt = elm.eq(i).children().eq(1).html();try{let txt_re = txt.split('</b>');if( txt_re[1] == undefined ){ throw new Error(); }txt = txt_re[1];}catch(e){;}txt = txt.replace(/\n|\s|\t| |　| /g,'');let terms = false;if( tgt == 'diceroll' ){ terms = true; }else if( tgt == 'cf' && ( elm.eq(i).data('dice-result').split(',').indexOf('cr') !== -1 || elm.eq(i).data('dice-result').split(',').indexOf('fb') !== -1 ) ){ terms = true; }else if( elm.eq(i).data('dice-result').split(',').indexOf(tgt) !== -1 ){ terms = true; }if( terms ){if( user_ary.indexOf(thisUser) == -1 ){ user_ary.push(thisUser);dice_ary.push([]);result_ary.push([0,0]); }let user_num = user_ary.indexOf(thisUser);if( Boolean(elm.eq(i).data('dice-ccb')) && !Boolean(elm.eq(i).data('dice-x'))){try{let cbr_result = txt.split('&lt;=')[1].split('[')[1].split(']')[0].split(',');if( cbr_result[0].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[0].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }if( cbr_result[1].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[1].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}catch(e){;}}else if( Boolean(elm.eq(i).data('dice-x')) ){txt = txt.split(/#\d/);for( j = 0 ; j < txt.length ; j++ ){txt[j] = txt[j].replace(/<br>/g,'');if( j > 0 ){txt[j] = '<li class="sub">' + txt[j] + '</li>';if( txt[j].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt[j].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}}txt = txt.join('');}else{txt = txt.replace(/<br>/g,'');if( txt.match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt.match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}let tabspan = '<span>［' + $('#' + elm.eq(i).attr('class').split(' ')[1].toUpperCase()).next().text() + '］</span>';dice_ary[user_num].push(tabspan + txt);}}let output = '';for( i = 0 ; i < user_ary.length ; i++ ){output += '<b>▼ ' + $('#' + user_ary[i].toUpperCase() ).next().text();if( tgt == 'diceroll' || tgt == 'cf' ){ output += '（' + result_ary[i].join('C') + 'F）'; }output += '<br></b>';output += '<li>' + dice_ary[i].join('</li><li>') + '</li><br>';}$('#dice-output-area').html(output).show();$('.dice-output-area').show();$(this).addClass('select');}});});/* copy action */$(function(){$(document).on('click','button.dice-output-area',function(){$('#dice-text-copy').html($('#dice-output-area').html());$('#dice-text-copy span').remove();let li_elm = $('#dice-text-copy li.sub');for( i = 0 ; i < li_elm.length ; i++ ){ li_elm.eq(i).prop('outerHTML','　◦ ' + li_elm.eq(i).text() + '<br>'); }let copyTxt = $('#dice-text-copy').html();copyTxt = copyTxt.replace(/<br><b>/g,'\n\n').replace(/<li>|<b>|<\/b>/g,'').replace(/<\/li>|<br>/g,'\n').replace(/&lt;/g,'<').replace(/&nbsp;/g,' ');copyToClipboard(copyTxt);alert('クリップボードにコピーしました。');$('#dice-text-copy').html('');});});function copyToClipboard(txt){const pre = document.createElement('pre');pre.style.webkitUserSelect = 'auto';pre.style.userSelect = 'auto';pre.textContent = txt;document.body.appendChild(pre);document.getSelection().selectAllChildren(pre);const result = document.execCommand('Copy');document.body.removeChild(pre);return result;}</script>
+</head>
+<header>
+<details id="menu">
+<summary></summary>
+<div>
+<details>
+<summary>タブ別表示切替</summary>
+<div>
+<button id="tab-all" class="all hide"></button><br>
+<input type="checkbox" name="tab" id="TAB0" checked><label for="TAB0">メイン</label><br>
+</div>
+</details>
+<details>
+<summary>発言者別表示切替</summary>
+<div>
+<button id="user-all" class="all hide"></button><br>
+<input type="checkbox" name="user" id="USER0" checked><label for="USER0">system</label><br>
+<input type="checkbox" name="user" id="USER1" checked><label for="USER1">白峰 涼波</label><br>
+<input type="checkbox" name="user" id="USER2" checked><label for="USER2">アイ</label><br>
+<input type="checkbox" name="user" id="USER3" checked><label for="USER3">NPC</label><br>
+<input type="checkbox" name="user" id="USER4" checked><label for="USER4">KP</label><br>
+</div>
+</details>
+<details>
+<summary>ダイス出力機能</summary>
+<div>
+<button type="button" class="dice" id="diceroll">ダイス一括表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="sc">成功のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="fl">失敗のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="cf">CF表示</button>
+<div id="dice-output-area" style="display:none;"></div>
+<br>
+<button class="dice-output-area">コピー <i class="fa-regular fa-copy"></i></button><div id="dice-text-copy"></div>
+<br>
+<span style="font-size:70%;">
+※組み合わせダイス（CBR,CBRB）、繰り返しコマンド（Xn CCB等）は正しく判定できない可能性があります。<br>
+※ダイス結果のコピーではタブ名はコピーされません。
+</span>
+</div>
+</details>
+
+<br><br>
+<a href="#"><i class="fa-solid fa-angles-up"></i> ログの先頭へ</a><br>
+<a href="#log-end"><i class="fa-solid fa-angles-down"></i> ログの最後へ</a>
+</div>
+</details>
+</header>
+<body>
+<div id="chat-log">
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなたは都内で開催された美術展にやってきていた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        暫らくすると、人気のない奥の方であなたは不思議な絵画を見つける。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#1e50a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        それは瑠璃色の額縁に、真っ白に塗りたくられた絵画だった。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        それを見つけた途端、あなたは抗い難い眠気に襲われる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ……… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        …… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        … 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#1e50a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        <br>◆───－- -　-　-　　　　　　　　　-　-　- – -－───◆<br><br><br>　　　　　　　　　　『瑠璃色絵画』<br>　　　　　　　　 シナリオ制作：紅音様<br><br><br>◆───－- -　-　-　　　　　　　　　-　-　- – -－───◆ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        … 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        …… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ……… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなた達が再び目を開けると、そこは美術館ではなく真っ白な空間だった。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        見覚えのない場所で目が覚めたことに《SANチェック 0/1》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#84a7ee;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ccb&lt;=60　《SANc》 (1D100&lt;=60) ＞ 4 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        は？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        正方形の真っ白な空間で、中央には小さな机がひとつある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        四隅にはそれぞれ赤、青、白、黒色の木製の扉がある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《探索可能箇所》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        机、赤の扉、黒の扉、白の扉、青の扉 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「あ、あれ？私、美術館に来てたはずなんですけど……ここは？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        まわりを見渡して目についた机を調べに行きます/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ◆　机　◆ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        小さくて簡素な木製の机。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        上にはメモ用紙とガラスの器に入った瑠璃色の薔薇が入っている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「わぁ、綺麗な薔薇！……と、メモ？」メモを読んでみます/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [メモ] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#1e50a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        <br>＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿<br><br>　私のアトリエへようこそ。<br>　その薔薇は貴方の＊、朽ち果てるまでどうぞ楽しんで<br>＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「私の……？もらっていいんでしょうか……入場者特典、みたいな？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        器から出して持っていけますか？/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        はい。可能ですよ。では薔薇の情報を開示します。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [薔薇] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        花びらが淡く光っているようにも見える、とても美しい花。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        花びらは全部で6枚ある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「この薔薇なんだか光ってる？どんな技術なんでしょう……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「ともあれ、誰かのアトリエということは、どこかに作品が展示されてるってことですよね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「わくわくしてきました！どこから見に行こうかな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「ど、れ、に、し、よ、う、か、な……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「あ、赤ですね！」赤い扉の方に行きます/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ではですね、その前に 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《目星》/《アイデア》/《幸運》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        目星！いきます！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#84a7ee;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ccb&lt;=80　《目星》 (1D100&lt;=80) ＞ 79 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        あぶな 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        えらい！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        先程見つけたメモの裏側に何か書いてある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#1e50a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『　真実は瑠璃色だけ　』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ◆　赤い扉　◆ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        扉には『赤は嘘つき』というプレートがかけられている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        また、鍵がかかっているらしく、開かない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「あれ？鍵がかかってます」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「それじゃあ他の部屋の展示を見に行った方がいいですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「うーんと、こっちにしようかな」白い扉に向かいます/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        わかりました。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ◆　白い扉　◆ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        扉には『白は忘れんぼう』と書かれたプレートがかけられている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        この扉に鍵はかかっていないようだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「ここは入っても大丈夫そうかな？でも一応……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「こんにちは、誰かいますか？」ドアをノックしてみます/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        返事はありません。/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「誰もいないのかな？」あけます/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        白い壁、木造の床でできた正方形の部屋。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        部屋には壁際に小さな本棚が一つ、床には白いキャンパスが複数立てかけられており、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        いくつものダンボールが積み上げられている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《探索可能箇所》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        本棚、ダンボール 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「ここ、物置でしょうか。ダンボールがたくさん……」ダンボールを調べにいきます/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [ダンボール] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        中には様々な美術道具が入っている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《幸運1/2》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#84a7ee;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ccb&lt;=30　《幸運1/2》 (1D100&lt;=30) ＞ 65 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        残念… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「絵を描くときの道具だ……この持ち主の人はどんな絵を描いてるんだろう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「それと、本棚も見てみましょうか」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [本棚] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        絵画や芸術に関する本が並んでいる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《図書館》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#84a7ee;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ccb&lt;=65　《図書館》 (1D100&lt;=65) ＞ 3 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ？？？？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        保留にしよっか…… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ｱｲ…… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        1冊の分厚いファイルを見つける。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そこには様々な絵が挟まれており、最初のページには子供がクレヨンで書いたような拙い絵がある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        またそれらはページをめくるごとにどんどん上達していき、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ある程度めくると絵はいつしか風景や人物画からどこか不気味な抽象的なものに変わっていく。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        最後のページには虹色の空の上で有翼の美しい青年が人々を眠らせる絵が書かれており、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        「私の神様」と右下にタイトルが付けられている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「この人は小さい頃からずっと絵を描いて、こんなに上手になったんだろうなぁ……私もそうなれたらいいな！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「でも最後のこの絵はなんだろう。神様……？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなたがぱらぱらとファイルを見ていると、ふと、手に持った瑠璃色の薔薇から、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ひらり、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        と花びらが一枚散った。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「あっ、薔薇が……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「花びらが1枚なくなっちゃいました……綺麗な薔薇だったのに」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        しょぼんとしながら白い部屋をでます……/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        次はどこに行きますか？/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「次は……青い扉の部屋にしようかな」扉の前まで行きます/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        わかりました。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ◆　青い扉　◆ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        扉には『帰りたいなら瑠璃色を』というプレートがかけられている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        扉に鍵はかかっていない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「扉の前にかかってるこのプレートって何の意味があるんでしょう？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        あけます/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        最初の部屋と同じ正方形の空間であり、中はオレンジ色の証明一つのみで薄暗い。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        真ん中には青い革の椅子が一つ、その上に幼い子供が俯いて座っているように見える。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「あれっ、誰かいますね……こんにちは？」椅子に近づいて話しかけてみます/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        近付いてみると、それが人ではなく、とても精密に作られた人形であることがわかる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        また、人形は祈るように両手を胸の辺りで組み、小さなゼンマイを大事そうに握っている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《目星》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#84a7ee;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ccb&lt;=80　《目星》 (1D100&lt;=80) ＞ 85 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        何もわからないな…… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「よく見たらお人形さんなんですね。まるで本物の人間みたい……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「えっと、確かゼンマイ仕掛けのお人形ってネジを巻いたら動くんでしたっけ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        お人形のおててにゼンマイ固定されてる感じではないですか？？/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ぜんまいを人形の手から取ることは可能ですよ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        固定されている感じではないです。/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ﾖｼ!じゃあすこし貸してもらおう！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「ごめんなさい、ちょっと大事な物貸してくださいね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「どこかにこれを差す穴とかがあるはずなんですけど……」後ろに回ってお人形観察します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        人形を観察していると、人形の項に小さな丸い穴があることに気づく。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「あ！ありました！……よいしょ」ゼンマイを差してを巻き巻きします/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        わかりました。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ゼンマイを巻きおわるとキリキリと音を立てて人形が動き出す。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《SANチェック 0/1》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#84a7ee;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ccb&lt;=60　《SANc》 (1D100&lt;=60) ＞ 14 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        瑠璃色の瞳を数度瞬かせると、人形はあなた達に向かって丁寧にお辞儀をする。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>？？？<br></b>
+
+        「初めまして、お姉ちゃんが私を起こしてくれたの？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「わ！ほんとに動きました！！」びっくり 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「そうですよ！私は白峰 涼波って言います。あなたのお名前はなんですか？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>？？？<br></b>
+
+        「私には名前がないの」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>？？？<br></b>
+
+        「そうだ！よかったらお姉ちゃんに私の名前を付けてほしいな！」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「えっ？私がつけてもいいんですか？お名前って大事なものですよ……？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>？？？<br></b>
+
+        「うん！涼波お姉ちゃんにつけてほしい！」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「そうですか？じゃあ……うーーん……」考え中…… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「うーんと……そうだ！アイちゃん、とかはどうですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「青い色の『藍』と好きって気持ちの『愛』、二つの捉え方ができそうじゃないですか？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>？？？<br></b>
+
+        「アイ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>？？？<br></b>
+
+        「……私、アイ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「ありがとう！私、とっても嬉しい！」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「ほっ、気に入ってもらえて良かった……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「改めて、よろしくお願いしますね！アイちゃん」にこ！/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「うん！よろしくね、涼波おねえちゃん！」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「えっと、じゃあいくつかアイちゃんに聞きたいことがあるんですけど、いいですか？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「うん、いいよ！」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「アイちゃんを作った人について知りたくて」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「たぶん、このアトリエの持ち主と同じ人じゃないかなって思うんですけど……」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「お母さんのこと？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「お母さんはお母さんだよ」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「お母さんということは女の人なんですね？どんな人ですか？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「どんな……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「うーん…お母さんは優しいよ！でももうずっと帰ってこないの」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「どこに行っちゃったんだろう…」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「そうですか……早く帰ってくるといいですね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「じゃあゼンマイを取ってアイちゃんにおやすみなさいをしたのもお母さんですか？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「……？うん」「でも、どうしてそんなことを聞くの？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「アイちゃんのお母さんを探すヒントになるかなと思って」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「……私、気づいたらここに迷い込んでてたんです。何か知ってそうな人がいたらお話が聞きたくて」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「そっか……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「じゃあ、お姉ちゃんがここから出られるようにお手伝いする！」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「！　本当ですか！？それは心強いです！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「とはいえ、折角来たので一通り展示は見ておきたいですね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「絵とか作品とかが飾ってあるお部屋、アイちゃんは知りませんか？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「知ってるよ！黒い扉のお部屋と赤い扉のお部屋にみんないるの！」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「赤いお部屋……最初に行ったとこですね。あそこ、鍵がかかって入れなかったんです」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「そうなの？いつも開いてたけどなあ……」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「じゃあもう一回行ってみましょうか。一緒に来てくれますか？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「うん、いいよ！」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        この部屋で調べられる事は他にないですか？/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そうですね。この部屋の情報は以上です。/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        じゃあ部屋を出て赤い部屋の前まで行きます/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        わかりました。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなたが部屋を出たとき、手に持った青い薔薇からまた一枚、花びらが散った。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「あ、お花……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「綺麗…お姉ちゃん、そのお花私にも見せて！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「この薔薇ですか？綺麗ですよね！ここに来た時にもらったんです」と言って手渡します/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「ありがとう！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        人形が薔薇に手を伸ばす。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「………いたっ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        しかしすぐに手を引っ込める。どうやら、薔薇の棘で怪我をしたらしい。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e60033;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼女の指からは赤い血ではなく青い血がぽたりと垂れる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《SANチェック 0/1》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#84a7ee;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ccb&lt;=60　《SANc》 (1D100&lt;=60) ＞ 30 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《医学》/《聞き耳1/2》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#84a7ee;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ccb&lt;=35　《聞き耳1/2》 (1D100&lt;=35) ＞ 64 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「わ！大丈夫ですか！？血？が……」あわわ…/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「いたた……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「……うん、大丈夫」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「私ハンカチ持ってますよ！これでしばらく傷口を抑えててください」ハンカチを差し出す 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「いいの？汚れちゃうよ……？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「そんなこと気にしないでください。私はアイちゃんのお洋服が汚れちゃう方が嫌です！」にこ！/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「わかった。ありがとう、お姉ちゃん」止血しましょうね/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「それにしても、部屋を出る度に花びらが散ってしまいますね。せっかく綺麗なのに」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「……全部なくなってしまったらよくない事が起きる、ような」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「この薔薇は私の……私の、何なんでしょう？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「うーん……今考えても仕方ないですね。次の部屋！行きましょう！」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        赤い扉へ目を向けたその時、カチリと赤い部屋から扉の鍵の開く音が聞こえた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ◆　赤い扉　◆ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        扉には『赤は嘘つき』というプレートがかけられている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        鍵は……開いている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「あれっ、開いてる……アイちゃん、今鍵開けました？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「ううん？開けてないよ？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「勝手に開いたにしてはタイミングが良すぎる気が……。アイちゃんにだけ自動でロックが外れたりするんでしょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「とにかく入ってみましょうか」中に入ります/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        中は長い通路になっており、床には赤い絨毯が敷かれている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        壁には照明のほか、等間隔に赤、黒、白といった色の額縁に入れられた人物画が飾られている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        部屋の1番奥には人1人が余裕で入れそうな大きさの何も塗られていない木製の額縁に、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        真っ白な絵画が飾られている…。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《目星》/《アイデア》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#84a7ee;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ccb&lt;=80　《目星》 (1D100&lt;=80) ＞ 38 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ここに瑠璃色の額縁が一つもないことに気が付く。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「確か、あの美術館で瑠璃色の額縁を見かけて……それで気づいたらこのアトリエにいた……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「だったらここでも瑠璃色の額縁を探せば元の場所に帰れたりするんでしょうか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        すると絵画の中の人物たちは一斉にあなたを見つめ、嘲笑うかのようにケタケタと笑う。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《SANチェック 1/1d3》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#84a7ee;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ccb&lt;=60　《SANc》 (1D100&lt;=60) ＞ 65 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        1d3 (1D3) ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 白峰 涼波 ] SAN : 60 → 57 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼女たちはおかしそうに「あなた、見ない顔ね。新入りさん？」と話しかけてくる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「え？……え？？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「い、いま、絵がしゃべ……喋って……？」あわわわ…/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#e91e63;">
+	<div>NPC</div>
+	<div>
+	<b>赤い額縁の女<br></b>
+
+        「あらあら、すごい驚くのね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#e91e63;">
+	<div>NPC</div>
+	<div>
+	<b>赤い額縁の女<br></b>
+
+        「そこの人形なんて、喋る上に動いているじゃない」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「お、驚きますよ！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「お人形さんはなんというか……機械仕掛け？とかでお話ができるお人形さんがいてもおかしくないとは思いますけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「私、今までいろんな絵を見てきましたけど、お話できる絵は初めてですよ！」むす/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「そうなの？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「そうですよ。絵は何も言わないので描いた人の気持ちとか、絵に込めた想いとかは、見てる側が感じ取る物で……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「ここの絵は違うんですか？もしかしてみんなお喋りするんですか……？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「うん。みんなおしゃべりするよ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「そうだ！お姉ちゃんがここから出られる方法、みんな知らない？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「うそ……そんなことが、あるんなんて……」呆然 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「えっと、私からもお願いします！ずっとここにいる訳にもいかないので……」ぺこり/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#e91e63;">
+	<div>NPC</div>
+	<div>
+	<b>赤い額縁の女<br></b>
+
+        「あぁ、それなら瑠璃色の薔薇があったでしょう？あれをすり潰して額縁に塗ればいいのよ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>黒い額縁の男<br></b>
+
+        「人形だ！人形を殺せ！そいつの血で額縁を塗るんだ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#e0e0e0;">
+	<div>NPC</div>
+	<div>
+	<b>白い額縁の子供<br></b>
+
+        「確かどこかになにかがあったような……？忘れちゃったなぁ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「……、」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「どうしよう、みんな言ってることがバラバラです。本当の事を言ってるのは誰なんですか？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「わ、わかんない……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「……ごめんなさい…」しゅん/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「うーん……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「(扉の色と、この部屋に飾ってある額縁の色……青色以外は同じ、ですよね)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「(ということは、プレートの言葉は絵の中の人たちの言動を表してるんでしょうか？)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「赤は嘘つき、白は忘れんぼう、黒は……あとで見に行ってみない事には……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「あの、白い額縁の方、覚えてたら教えてほしいんですけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「私、さっき白いお部屋を見てきたんですけど、これと言って何もなかったですよ？あの部屋には何があるんでしょう？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#e0e0e0;">
+	<div>NPC</div>
+	<div>
+	<b>白い額縁の子供<br></b>
+
+        「え～～……うーん…忘れちゃったなあ…」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「そうですか……もう一回自分で見に行かないと、ですかね」しゅん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「その前に、一番奥の大きな額縁も見ておきたいですね」近寄ります/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        何の変哲もない、木の額縁と白いキャンバスだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「この額縁を瑠璃色にすれば出られる、薔薇をすり潰す……どちらかが嘘？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「あるいはどっちも……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「何にせよ、この大きな絵をどうにかしないとここからは出られなさそうですね。他の部屋を見に行きましょう」部屋を出ます/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        わかりました。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなたが部屋を出ると、また薔薇から花びらが一枚散る。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        薔薇の花びらは……あと3枚だ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「まだ見てないところは黒い部屋でしたよね。アイちゃんはここにも作品があるって言ってましたけど」黒い扉の前まで移動します/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        わかりました。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ◆　黒い扉　◆ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        扉には『黒は乱暴』というプレートがかけられている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        鍵はかかっていないようだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「乱暴。確かに殺せ、とか言ってましたし……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「……いったい何が展示されてるんでしょうこの部屋」入ります/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        なにもない正方形の空間に、四肢が砕かれた真っ白な石膏像がいくつも無造作に積み上げられている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        石膏像をよく見てみると、それらは憎しみに満ちたような、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        または泣き叫ぶような狂った表情をしていることに気づく。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《目星》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#84a7ee;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ccb&lt;=80　《目星》 (1D100&lt;=80) ＞ 94 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        Oh... 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        出目竹～～　貯金でふりなおせますか……？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        お、いいですよ。どうぞ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#84a7ee;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ccb&lt;=80　《目星》 (1D100&lt;=80) ＞ 70 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ﾖｼ! 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ヨシ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        古びたメモ用紙が彫刻の間に挟まっていることがわかる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        <br>＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿<br><br>もう駄目だ、時間が無い。<br>あの子供も信用ならないし、脱出方法もわからない。<br>花はもうすぐ散ってしまう。<br>嫌だ、死にたくない、死にたくない死にたくない死にたくない死にたくない死にた<br>＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        …これは、以前自分と同じようにここに迷いこんだ者が書いたのだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e60033;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        背筋を嫌な汗が伝った。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《SANチェック 1/1d3》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#84a7ee;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ccb&lt;=57　《SANc》 (1D100&lt;=57) ＞ 78 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        1d3 (1D3) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 白峰 涼波 ] SAN : 57 → 56 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「これ、は……ううん、この人は……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「花びらが全部なくなったら私もこうなっちゃうってことですよね……がんばらないと」ぐっ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「アイちゃん、この人も作品なんですか？絵の方達みないにお話する様子はありませんけど」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「この人たちは………、ううん……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「…………、お姉ちゃんも石になっちゃったら嫌だなあ…」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「もちろん私も嫌です！そうならないように頑張ってるんですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「だから、私が出られるようにアイちゃんも応援してくれたら嬉しいです！」にこ！/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「……うん！」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「さてと！じゃあ次は……白いお部屋をもう一回見に行きましょうか」お部屋を出ます……ｺﾜ…/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        わかりました。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなたが部屋を出ると、薔薇の花びらが一枚散った。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        残りは2枚。……時間はないだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ◆　白い扉　◆ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        先程と特に変わった様子は見受けられない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「ここに何かがあるんでしょうか……白い絵の方はほんとに忘れん坊ですね」中に入ってもう一度ダンボールのところを調べたいです/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では《幸運1/2》をどうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#84a7ee;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ccb&lt;=30　《幸運1/2》 (1D100&lt;=30) ＞ 53 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「……お姉ちゃん、何を探してるの？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「やっぱりないですね……」しゅん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「ここ、画材がたくさん置いてあるので瑠璃色の絵の具か何かがあるかなって思ったんですけど、見つからなくて」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「瑠璃色の絵の具？それなら……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        人形が箱を漁ると、ダンボールの奥底に一つだけ瑠璃色の絵の具を発見する。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「わ！あんなに探しても見つからなかったのに！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「アイちゃん、ありがとうございます！とってもたすかりました！」にこ！/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「役に立てたならよかった！」「お母さんの好きな色だから覚えてたの！」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「そうなんですか？私も青い色大好きなんです！アイちゃんのお母さんともお話してみたかったですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「絵の具は見つかったので、あとはこれを塗る筆……あの絵かなり大きかったからハケの方がいいでしょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「それもこの部屋にあるといいんですけど」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「お母さんが使ってたものでよかったらここにあるわ！」箱を指さして/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「よかった～！じゃあ絵の具とハケを拝借してっと。赤いお部屋に行きましょう！」出ま…す……/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        部屋を出ると、やはり薔薇の花びらが一枚散る。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        残りの花びらは、1枚だ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ◆　赤い扉　◆ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        先程と変わった様子はなく、額縁の三人がクスクスと笑っている……。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「さて、絵の具を取って戻ってきましたけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「赤い絵の方のどれが嘘なんでしょう？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「薔薇をすり潰す……のはもちろん嘘だとして、額縁に塗るのも嘘？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「だったら、額縁じゃなくてキャンバスに塗るとか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「アイちゃんはあの人のなにが嘘だと思いますか？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「どれが嘘かはわからないけど……額縁を青くするのは黒い人も言ってるわ」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「あ、なるほど！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「黒い方は言ってることは物騒ですけど、嘘を言ってる感じはなかったですし！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「だったらあの額縁を絵の具で瑠璃色に塗ればいいんですね！塗りますよー！」腕まくり/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「私もお手伝いする！」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「いいんですか？じゃあお願いします！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「私は上から塗っていくので、アイちゃんは下の方から塗ってもらえますか？」アイちゃんにもハケを渡しましょうね/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「うん！わかった！」刷毛を受け取って 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では、『額縁』を瑠璃色に塗るということでよろしいですか？/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        ぬります！！！/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        わかりました。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなた達が額縁を瑠璃色に塗ると、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        真っ白な絵画は波紋が広がるように波打ち貴方がいた現実世界の風景が写し出される。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「！」「あそこ、私がここに来る前にいた美術館です！」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「わあ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「お姉ちゃんはあの世界にいたのね…」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「はい！ここの作品たちとは違って、お喋りとかはしませんけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「とっても素敵な絵がたくさん飾ってあったんですよ」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「そうなんだ…………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「……いいなあ…」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「……もし、アイちゃんがよかったら、ですけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「一緒に私の世界の絵を見に行きませんか？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「……いいの？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「……ココから出てもいいの…？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「ここがアイちゃんの居場所だっていうなら私は無理に一緒に行こうとは言えませんけど……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「あなたがここから出たいというなら、私と一緒に来てくれたら嬉しいです！」にこ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「私、いつかお金を貯めて世界中の絵をたくさん見に行くのが夢なんです。アイちゃんも私と一緒に見に行きませんか？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「…うん！行きたい！」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「ほんとですか？実は一人でいろんなところに行くの、ちょっとだけ寂しかったんです！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「旅は道連れなんとやらってやつですね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        「それじゃあ、私がアイちゃんを抱っこしてここを絵の中に入りますね！それでたぶん、私が元いた世界に帰れるはずです」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 hide-user2" style="color:#1e50a2;">
+	<div>アイ</div>
+	<div>
+	<b>アイ<br></b>
+
+        「うん！……お姉ちゃんと一緒にここから出る！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では、アイを連れて外に出るということでよろしいですか？/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#84a7ee;">
+	<div>白峰 涼波</div>
+	<div>
+	
+        外に出ます！出れるといいな……/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        わかりました。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あなたは人形を抱えて、絵画の景色に触れる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        絵画に触れれば吸い込まれるように中に入ることができた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        … 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        …… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ……… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        眩い光の中、貴方はふと目を開ける。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そこはあの不思議な空間に入る前の美術展の中であり、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        もうあの瑠璃色の額縁は飾られていなかった。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        業者に聞いてもそんな絵画は展示していないと言われ、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        いささか腑に落ちないまま貴方は日常へ戻っていく。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ＿＿＿＿＿＿＿＿＿数日後。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        貴方は時折、瑠璃色の瞳をした可愛らしい少女が、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        同年代であろう子達と楽しそうに遊んでいる姿を目にするだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#1e50a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        <br>◆───－- -　-　-　　　　　　　　　-　-　- – -－───◆<br><br><br>　　　　　　　　　　『瑠璃色絵画』<br>　　　　　　　　 シナリオ制作：紅音様<br><br>　　　　　　　　◆ ED『瑠璃色絵画』◆<br><br><br>◆───－- -　-　-　　　　　　　　　-　-　- – -－───◆ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#1e50a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#1e50a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#1e50a2;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        シナリオクリア 1D6 SAN回復 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        人形と共に脱出 1D3 SAN回復 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        シナリオクリアです。お疲れ様でした。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+</div>
+<div id="log-end"></div>
+</body>
+</html>
