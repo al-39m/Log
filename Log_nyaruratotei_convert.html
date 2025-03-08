@@ -1,0 +1,5101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>居酒屋ニャルラト亭</title>
+<meta http-equiv="content-type" charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<style>*{font-family:sans-serif;}:root{--header-back:0,0,0;--header-color:#FFF;--awesome:'Font Awesome 5 Free';}body{padding-top:80px;margin:0;}/* header */header{background:rgba(var(--header-back),0.5);color:var(--header-color);position:fixed;top:0;left:0;width:100%;overflow-x:hidden;transition:0.3s;}header:has(#menu[open]){background:rgba(var(--header-back),0.8);}summary{outline:none;}details > summary{display:inline-block;cursor:pointer;opacity:0.3;font-size:80%;font-weight:bold;padding:5px;margin:10px 0 0;}details > summary:hover,details[open] > summary{opacity:1;}details[open] > summary:hover{opacity:0.3;}details > summary:before{content:'\f138';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details[open] > summary:before{content:'\f13a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details > div{margin:10px 10px 30px 20px;word-break:break-all;}details > div > button{padding:3px 20px;margin:0 0 8px;font-size:80%;cursor:pointer;outline:none;border:2px solid var(--header-color);border-radius:3px;background:rgba(0,0,0,0);color:var(--header-color);opacity:0.3;}details > div > button:hover{opacity:1;}button.all.hide:before{content:'一括非表示';}button.all.hide:after{content:'\f070';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}button.all.show:before{content:'一括表示';}button.all.show:after{content:'\f06e';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}input[type="checkbox"]{display:none;}label{cursor:pointer;}input[type="checkbox"]+ label:before{content:'\f0c8';font-family:var(--awesome);font-weight:400;margin-right:0.5em;}input[type="checkbox"]:checked + label:before{content:'\f14a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open]{max-height:85vh;}#menu > summary{padding:0 10px 10px;}#menu[open] > summary{opacity:0.3;}#menu[open] > summary:hover{opacity:1;}#menu > summary:before{content:'\f0c9';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu > summary:after{content:'MENU';}#menu[open] > summary:before{content:'\f00d';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open] > summary:after{content:'CLOSE';}#menu > div{max-height:60vh;max-width:80vw;padding-bottom:50px;overflow-y: auto;}#menu > div::-webkit-scrollbar{display:none;}header a:link,header a:visited{color:var(--header-color);opacity:0.5;text-decoration: none;}header a:hover{opacity:1;}/* chat-log default style */#chat-log{margin:20px 0 20px 25px;}.chat{display:flex;flex-wrap:nowrap;flex-direction:column;padding-right:1em;}.chat > div{word-break:break-all;}.chat > div:nth-child(1){display:block;font-weight:bold;padding-top:0.2em;}.chat > div:nth-child(2){margin-left:1em;padding:0 0.2em 0.2em;}/* headline */[id^="index"]{margin-top:-90px;padding-top:90px;}/* hide-user style */.hide-user > div:nth-child(1),.hide-user2 > div:nth-child(1){display: none !important;}.hide-user > div:nth-child(2):not(:has(b)){margin-left:0;padding:0;}.hide-user + div:not(:has(.hide-user)){padding-bottom:0.5em;}.hide-user b,.hide-user2 b{ margin-left:-1.2em; }/* tab style */body{background:#2a2a2a;}/* diceroll */button.dice{outline:none;border:none;background:none;color:inherit;opacity:0.5;cursor:pointer;transition:0.3s;}button.dice:hover{opacity:1;letter-spacing:0.1em;}button.dice.select{opacity:1;}button.dice.select:hover{letter-spacing:0;cursor:default;}#dice-output-area{padding:10px 15px;background:#000;color:#888;border-radius:3px;font-size:80%;}#dice-output-area li{text-indent:-1.5em;padding-left:2.5em;}#dice-output-area li.sub{list-style-type:circle;padding-left:5em;}button.dice-output-area{display:none;padding:2px 8px;font-size:100%;}#dice-text-copy{display:none;}@media only screen and (orientation: portrait){button.dice{display:block;color:var(--header-color);background:rgba(var(--header-back),1);}span.dice-span{display:none;}}/* safari */summary::-webkit-details-marker {display:none;}/* mediaquery */@media only screen and (orientation: portrait){*{overflow-x:hidden !important;}html{width:100vw;overflow-x:hidden !important;}header{padding:50px 0 0 0;margin:0;width:100%;overflow-x:hidden !important;position:fixed;top:0;left:0;right:0;}#menu{padding-left:10px;}body{padding:120px 0 0 0;margin:0;;width:100%;font-size:90%;overflow-x:hidden !important;}#chat-log{width:90vw;overflow-x:hidden !important;margin:20px 0 20px 15px;}#chat-log div{word-break:break-all;overflow-x:hidden !important;padding-right:0;}.chat > div:nth-child(2){margin-left:0;overflow-x:hidden;}.hide-user b,.hide-user2 b{ margin-left:0em; }[id^="index"]{margin-top:-120px;padding-top:120px;}}</style>
+<script>$(function(){$(document).on('click','#tab-all,#user-all',function(){let tgt = $(this).attr('id').replace('-all','');let result = true;if( $(this).hasClass('hide') ){ result = false; }$('input[name="' + tgt + '"]').prop('checked',result);$(this).toggleClass('show hide');chatShowHide();});});$(function(){$(document).on('change','[name="user"],[name="tab"]',function(){ chatShowHide(); });});function chatShowHide(){$('.chat').show();let hide_list = [];$('[name="user"]:not(:checked),[name="tab"]:not(:checked)').each(function(){ hide_list.push('.' + $(this).attr('id').toLowerCase()); });hide_list = hide_list.join(',');$(hide_list).hide();$('#dice-output-area').html('').hide();$('.dice-output-area').hide();$('button.dice').removeClass('select');}</script><script>/* dice output */$(function(){$(document).on('click','button.dice',function(){if( $(this).hasClass('select') ){ return; }else{$('button.dice.select').removeClass('select');let tgt = $(this).attr('id');let user_ary = [];let dice_ary = [];let result_ary = [];let elm = $('#chat-log > div.diceroll:visible');for( i = 0 ; i < elm.length ; i++ ){let thisUser = elm.eq(i).attr('class').split(' ')[2];let txt = elm.eq(i).children().eq(1).html();try{let txt_re = txt.split('</b>');if( txt_re[1] == undefined ){ throw new Error(); }txt = txt_re[1];}catch(e){;}txt = txt.replace(/\n|\s|\t| |　| /g,'');let terms = false;if( tgt == 'diceroll' ){ terms = true; }else if( tgt == 'cf' && ( elm.eq(i).data('dice-result').split(',').indexOf('cr') !== -1 || elm.eq(i).data('dice-result').split(',').indexOf('fb') !== -1 ) ){ terms = true; }else if( elm.eq(i).data('dice-result').split(',').indexOf(tgt) !== -1 ){ terms = true; }if( terms ){if( user_ary.indexOf(thisUser) == -1 ){ user_ary.push(thisUser);dice_ary.push([]);result_ary.push([0,0]); }let user_num = user_ary.indexOf(thisUser);if( Boolean(elm.eq(i).data('dice-ccb')) && !Boolean(elm.eq(i).data('dice-x'))){try{let cbr_result = txt.split('&lt;=')[1].split('[')[1].split(']')[0].split(',');if( cbr_result[0].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[0].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }if( cbr_result[1].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[1].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}catch(e){;}}else if( Boolean(elm.eq(i).data('dice-x')) ){txt = txt.split(/#\d/);for( j = 0 ; j < txt.length ; j++ ){txt[j] = txt[j].replace(/<br>/g,'');if( j > 0 ){txt[j] = '<li class="sub">' + txt[j] + '</li>';if( txt[j].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt[j].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}}txt = txt.join('');}else{txt = txt.replace(/<br>/g,'');if( txt.match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt.match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}let tabspan = '<span>［' + $('#' + elm.eq(i).attr('class').split(' ')[1].toUpperCase()).next().text() + '］</span>';dice_ary[user_num].push(tabspan + txt);}}let output = '';for( i = 0 ; i < user_ary.length ; i++ ){output += '<b>▼ ' + $('#' + user_ary[i].toUpperCase() ).next().text();if( tgt == 'diceroll' || tgt == 'cf' ){ output += '（' + result_ary[i].join('C') + 'F）'; }output += '<br></b>';output += '<li>' + dice_ary[i].join('</li><li>') + '</li><br>';}$('#dice-output-area').html(output).show();$('.dice-output-area').show();$(this).addClass('select');}});});/* copy action */$(function(){$(document).on('click','button.dice-output-area',function(){$('#dice-text-copy').html($('#dice-output-area').html());$('#dice-text-copy span').remove();let li_elm = $('#dice-text-copy li.sub');for( i = 0 ; i < li_elm.length ; i++ ){ li_elm.eq(i).prop('outerHTML','　◦ ' + li_elm.eq(i).text() + '<br>'); }let copyTxt = $('#dice-text-copy').html();copyTxt = copyTxt.replace(/<br><b>/g,'\n\n').replace(/<li>|<b>|<\/b>/g,'').replace(/<\/li>|<br>/g,'\n').replace(/&lt;/g,'<').replace(/&nbsp;/g,' ');copyToClipboard(copyTxt);alert('クリップボードにコピーしました。');$('#dice-text-copy').html('');});});function copyToClipboard(txt){const pre = document.createElement('pre');pre.style.webkitUserSelect = 'auto';pre.style.userSelect = 'auto';pre.textContent = txt;document.body.appendChild(pre);document.getSelection().selectAllChildren(pre);const result = document.execCommand('Copy');document.body.removeChild(pre);return result;}</script>
+</head>
+<header>
+<details id="menu">
+<summary></summary>
+<div>
+<details>
+<summary>発言者別表示切替</summary>
+<div>
+<button id="user-all" class="all hide"></button><br>
+<input type="checkbox" name="user" id="USER0" checked><label for="USER0">system</label><br>
+<input type="checkbox" name="user" id="USER1" checked><label for="USER1">猫谷 結衣</label><br>
+<input type="checkbox" name="user" id="USER2" checked><label for="USER2">八雲　初音</label><br>
+<input type="checkbox" name="user" id="USER3" checked><label for="USER3">紫崎 ユウ</label><br>
+<input type="checkbox" name="user" id="USER4" checked><label for="USER4">銀之丞 琥珀</label><br>
+<input type="checkbox" name="user" id="USER5" checked><label for="USER5">咲坂 一年</label><br>
+<input type="checkbox" name="user" id="USER6" checked><label for="USER6">　</label><br>
+</div>
+</details>
+<details>
+<summary>ダイス出力機能</summary>
+<div>
+<button type="button" class="dice" id="diceroll">ダイス一括表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="sc">成功のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="fl">失敗のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="cf">CF表示</button>
+<div id="dice-output-area" style="display:none;"></div>
+<br>
+<button class="dice-output-area">コピー <i class="fa-regular fa-copy"></i></button><div id="dice-text-copy"></div>
+<br>
+<span style="font-size:70%;">
+※組み合わせダイス（CBR,CBRB）、繰り返しコマンド（Xn CCB等）は正しく判定できない可能性があります。<br>
+※ダイス結果のコピーではタブ名はコピーされません。
+</span>
+</div>
+</details>
+
+<br><br>
+<a href="#"><i class="fa-solid fa-angles-up"></i> ログの先頭へ</a><br>
+<a href="#log-end"><i class="fa-solid fa-angles-down"></i> ログの最後へ</a>
+</div>
+</details>
+</header>
+<body>
+<div id="chat-log">
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        -------------------------------------------------- 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        『居酒屋ニャルラト亭』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        シナリオ制作：小人白夜 様 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        -------------------------------------------------- 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        夜の街を歩く探索者の目の前に、良い香りが漂う赤く目立つ暖簾が垂れ下がったお店がありました。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        お店の名前は『ニャルラト亭』らしいです。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        探索者達は見覚えのない店に戸惑いつつも、美味しいご飯の香りには抗えずに暖簾をくぐってしまうことでしょう。<br> 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        そうすると、店内へ入ってきた探索者たちに向けて南米アフリカ風の男が声をかけてきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「らっしゃい！ニャルラト亭へようこそ！お客さん何食べる？気兼ね無く頼んでいってくれよ！あ、これがお品書きね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        気が付けば君たちはひとつの和室部屋に案内されます。残念ながら知らない相手だろうと相席にされます。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        部屋には全員います 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「(えええ、どういうことっすか...相席とか聞いてないっす...)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「(と、とりあえず何か話さないと)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「えっと...初めまして？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「初めまして、かもしれないねー？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「はじめましてっすー有無を言わさず相席にされたっすねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「二人はここの常連とかっすか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「いーや、初めて来たよ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「あたしも初めてっすね。いい匂いに釣られてふらふら～っと入ってみたんすよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「そうっすかー！うちもそうっす！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        じゃああなた達がそんな感じで話しているとですね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        追加で人が来ますわ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        180cmくらいありそうな背が高いヤクzじゃなかった女の人と、170cmちょっとくらいありそうな優しそうな女の人です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「え、まーじで相席？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「そうみたいですねえ………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……若い子ばっかりですし私たちは帰った方がよいのでは？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「えー？いいじゃん可愛い子ばっかだし！アタシらも相席していいー？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「いいわけないでしょう！？あなた教師の自覚あります！！？？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「相席は全然いいっすよー！あたしは気にしないんでー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「えーと、とりあえず座ったらどうっすか！ね？ね？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「おーいそこのお二人さんも早く座りなよー、いっぱいいた方が楽しいしさ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「ほら、この子らもそう言ってんじゃん。一年は真面目過ぎんだよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「琥珀は不真面目すぎるんです！！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「おふたりさんあつあつだねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「(先が思いやられるっす...どうしてこのお店入っちゃったんだろう)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        このやかましいヤクザとクソ真面目も席に着きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        □お品書き情報 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        新鮮な食材をご用意いたしました。何処のお店でも扱っていない味をどうぞお楽しみください。当店はクレジットカードのお支払いも可能です。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        〈メニューについて〉 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ●通常メニュー<br>メニュー表は6ページに渡り料理がヒエログリフ文字で書かれています。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        解読には【その他言語：ヒエログリフ】が必要です。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        特にイラストの表記もない、文字だけのメニュー表ですが、ご丁寧に各メニューがどういったページかは技能判定無しで確認ができます。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ●ドリンクメニュー 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ドリンクは別の品書きシートに書かれており、こちらは技能判定無しで読むことが可能です。特に指定はない為、好きに飲み物を頼めます。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ●ドリンクメニュー(2018年追加) 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        …と、思いましたが、裏面を見たらドリンクメニューの一部もヒエログリフ文字で書かれているようです。解読には【その他言語：ヒエログリフ】が必要です。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ●スペシャルメニュー(2019年追加) 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        壁のポスターに貼り付けられたメニューです。これもヒエログリフ文字で書かれています。解読には【その他言語：ヒエログリフ】が必要です。<br> 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ●新メニュー (2020年版New！！) 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        『新メニュー！』って机の上に置かれた卓上広告に書いてあるメニューで、目につく位置にあるでしょう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        もしかしたら紙ナプキンが入っているあの筒だと思われます。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・1ページ目:ご飯もの 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・2ページ目:麺もの 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・3ページ目:肉/魚類 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・4ページ目:おつまみ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・5ページ目:デザート 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・6ページ目:〆 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・ドリンクメニュー 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・スペシャルメニュー 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・新メニュー  
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        注文する場合は【ヒエログリフ】で判定。ない場合は1d6で注文できます♡ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「……………なんだこれ。一年読める？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「読めるわけないでしょう。私をなんだと思っているんです？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「え？歩くウィキペディア」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「ウィキペディアはやめていただけません？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        歩くグーグル先生 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ぐーぐるせんせ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……あ、そういえば自己紹介がまだでしたね？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「そうっすね！誰からするっすか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「えっと……私は咲坂一年です、都内で教師をしています」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「銀之丞琥珀、同じく教師。よろしくね～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「(あれ、何かどこかで会ったような...気のせいかな)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「あたしは紫崎ユウっす！駅前のコンビニでバイトしてるっすよー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「ちなみに未成年っす」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「！！？？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「ちょ、ちょ……琥珀！？どうするんですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「どうでもよくない？アタシらの生徒じゃないでしょ？どうなろうがこの子の自己責任じゃん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「最低……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「心配しなくても大丈夫っすよ～お酒は飲まないんで！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「未成年がこの時間に居酒屋にいる時点で心配です！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「えー？まあお酒飲まないならいいでしょ、晩御飯晩御飯」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「そうっすよ！未成年なのにこんな時間に出歩いてたら親が心配するっすよ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「え～？バイトあがりにごはん食べに来ただけっすよ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「まあいいんじゃない？アタシも未成年に手ェ出さないし。それより君ら自己紹介しなくていいの？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「あ、びっくりして忘れてたっす...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「そっすよー次っす次！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「うちは猫谷っす！投資家してるっす！うちはちゃんと成人してるっすよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「投資家！？その若さで……すごいですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「はえ～儲かってそうっすね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「父も投資家で見てたら覚えちゃって。儲かってるっすよ！最近もシャトレーヌってとこに投資してるっす」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……うっ、急に頭が……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「へー投資家なんだー、今度儲かりそうなの教えてよー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「いいね～儲かってんの羨ましい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「うちの指導は厳しいっすよ～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「んじゃ次はそっちの方どうぞっす」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「はいはーい、八雲 初音（やくも はつね）でーす。本屋でなんやかんややってまーす」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「あ、一応学生だからよろしくねせんせー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「大学生？へーいいねー、懐かしー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「懐かしいって……ああ」察した 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「殴るぞ」ひとりだけ三十代 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「高校生かもしれないよ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「いや、高校生はもっとクソガキだから」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「何か銀之丞さん...は教師っぽくないというかフランクな感じっすね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「ま、よろしくねー…えっと…さきちゃんにぎんちゃんにゆうちゃんにゆいちゃんねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「琥珀は不真面目でクズでヤニカスでどうしようもない人なだけです！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「うわ評価最低かよひっで」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「...えっと...それフォローになってないっすよ咲坂さん...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「してませんから」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「ひゅーひゅー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「あ、アタシと一年はそんなんじゃないよ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「すでにフラれた！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「あらー、フラれちゃったかー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「えっ、告った事があるんすか！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「誰がこんな煙草臭い人と……と、とにかくお料理頼みましょう！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「え！？えーっと?二人ともソッチ系なんすか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「そうだよ？」そうだよではない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「ま、アタシはどっちも食えるけどねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「うちは美味しくないので食べないでくれると嬉しいっす...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「えー？わっかんないよー？アタシって結構誰でも食えちゃうタイプだし？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「えー、私も食べられるかもってことー？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「食べるのは料理がいいかなあ…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「あははは、色気より食い気かー！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「どちらかというと私も食べる方だからねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「そ、そろそろ何か注文しましょうか…といっても、メニューが読めませんが」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「そうっすね！料理頼むっすよ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「そっすよー！あたしご飯食べに来たんすから！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        【机の上】 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        人数分の取り皿と割りばしが置かれています。ポット、湯呑みも常備されているようです。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        呼び出しの鈴もあります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        押す！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        店員来ます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        何を注文するか、何ページの何番で指定するのをお勧めします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        まあ1d6でいいよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「まずは飲み物かなー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ドリンクのメニューみる人は幸運！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝65　幸運（ドリンコ） 
+Cthulhu : (1D100&lt;=65) ＞ 62 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「うーん、烏龍茶と2番のこれかなー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        1ｄ6 
+Cthulhu : (1D6) ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        銀ちゃんはおつまみで1d6しようね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        1d6 
+Cthulhu : (1D6) ＞ 4
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「んー、あたし麺類が食べたい気分っすね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        1d6 
+Cthulhu : (1D6) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        一年は肉魚で 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        1d6 
+Cthulhu : (1D6) ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「うちはスペシャルメニューってのが気になるっすね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        1d6 
+Cthulhu : (1D6) ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では注文できました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        料理中　探索する？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        〈お店内部〉 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        わいわい騒がしい居酒屋です。探索者達が案内される先の和室の様な部屋の他にもカウンターなどがあります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        目星わよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        初期値いっきまーす 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        ccb&lt;=50 目星 
+Cthulhu : (1D100&lt;=50) ＞ 59 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝25　目星 
+Cthulhu : (1D100&lt;=25) ＞ 17 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=70 《目星》 
+Cthulhu : (1D100&lt;=70) ＞ 11 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        成功組 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        本棚の中にね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ラテン語版ネクロノミコンがあります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「(初音さん、初音さん、あそこの本ちょっとヤバそうじゃないっすか！？)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「（やばそうだねー、読んでみちゃう？）」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「(いやーそれはマズいんじゃないっすか？やめておいた方が……)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「（じゃあ読むのやめよっかー）」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        和室内部！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        箒と座布団がある。以上です。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        座布団の裏をめくってみるとかとか 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・座布団…ちりめんで出来ている座布団。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        《博物学》か《知識》が振れます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=60 《知識》 
+Cthulhu : (1D100&lt;=60) ＞ 8 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        テレビ番組笑点に出てくるあの座布団にとっても似ていると思います。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#f0908d;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>咲坂 一年</div>
+	<div>
+	
+        ccb&lt;=50　《博物学》 
+Cthulhu : (1D100&lt;=50) ＞ 66 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        は？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        箒でも眺めてみる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・藁のほうき…壁に立て掛けられている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        《博物学》か《知識》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        ccb&lt;=85 ちしき 
+Cthulhu : (1D100&lt;=85) ＞ 87 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        は？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        あらぁ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        おやおや 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        おやおやおや 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「せんせーさん達はこの箒何か感じるものとかないっすか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「え？いえ、特に何も……しいて言えば南部箒だってことくらいでしょうか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「ああ。笑点に出てくる時あるね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「そんなのが気になるの？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「料理来るまで暇だったもので、えへへ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「え？箒もっすか？座布団もテレビで見たことあるやつだったっすよー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        料理来たわ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「お待たせしました～～子アイホートのかき揚げ付き蕎麦でーす」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        蜘蛛みたいな姿をした何かを沢山揚げ、それをトッピングに持った蕎麦。地味に出汁が効いている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        《生物学》どうぞ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝1　せーぶつがく 
+Cthulhu : (1D100&lt;=1) ＞ 61 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        全員な？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=1 《生物学》 
+Cthulhu : (1D100&lt;=1) ＞ 17 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        ccb&lt;=1 生物学 
+Cthulhu : (1D100&lt;=1) ＞ 77 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#68a9cf;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        ccb&lt;=1　《生物学/初期値》 
+Cthulhu : (1D100&lt;=1) ＞ 89 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#f0908d;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>咲坂 一年</div>
+	<div>
+	
+        ccb&lt;=51　《生物学》 
+Cthulhu : (1D100&lt;=51) ＞ 56 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        おお… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「シアエガパスタのお客様～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        なんかうねってる黒いパスタ。イカスミパスタとは違いもっとなんか磯臭い。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ユウちゃんは《幸運》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=45 《幸運》 
+Cthulhu : (1D100&lt;=45) ＞ 99 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        探索者の胸元に向けて触手攻撃を繰り出される。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        どして？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ファンブルなのでダメージ1d5です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        1d5 
+Cthulhu : (1D5) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 紫崎 ユウ ] HP : 11 → 10 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「ミ＝ゴのアヒージョの方～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        多分蟹味噌かなと思う料理。酒のつまみにもいいなってくらいの濃厚さ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「………？？？？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「茹で落とし子の醤油と生姜の混ぜ合わせです～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        グレードが上がったタコのツマミです。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「店長の気まぐれ鍋でーす！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        2d6を3回ﾄﾞｳｿﾞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        2d6 
+Cthulhu : (2D6) ＞ 5[3,2] ＞ 5
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        2d6 
+Cthulhu : (2D6) ＞ 11[5,6] ＞ 11
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        2d6 
+Cthulhu : (2D6) ＞ 7[1,6] ＞ 7
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        中に入っている料理　触手の踊り食い　ヴァルトームの花ケーキ　おろしドール丼 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        これがすべてぶち込まれている冒涜的な鍋です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「こ、これは食べ物...?」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        触手…うねうねしています。熱い鉄板のうえに醤油を垂らしてそのまま食べる料理です。<br>探索者が【いずれかの戦闘技能】に成功しないと、触手は喰われまいと逃げてしまいます。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ケーキ…若干桃っぽい味がする香り豊かな花びらをふんだんに使ったケーキ。ほんのり甘酸っぱい。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        おろしドール…ねばねばと弾力がある粘液が乗ったご飯もの。一見するととろろ丼ぶり。<br>短冊切りにした山芋のかわりに、小さな芋虫に似たものが添えられている。醤油と合う。<br> 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「では、ごゆっくり～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「このっ！逃げるな！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        ccb&lt;=70 こぶし 
+Cthulhu : (1D100&lt;=70) ＞ 39 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        触手「ﾐｯ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「……え、これ食うの？まじ？ゲテモノじゃん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……でも頼んじゃったものですしねえ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「うちのとか鍋の概念壊れてるっすよ...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「最近耳にする昆虫食…かな…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「？え？このパスタあたしの心臓狙ってきたんすけど？食べれないっすよこんなの……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「…………ど、どうする？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「あ、アイフル？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「…………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「場を和まそうかと...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「見た目はアレでも食べたら美味しいかもねー？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「食べたくないっすよーー！！こんななんかうごうごしてる料理ーー！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「……でも、せ、せっかく作っていただいたものですし……えい！」ぱく！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「まじで！！？？？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「（ずーちゃんには勧められないなこれ…）」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「うそぉ！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「んじゃ私もー、いただきまーす」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「あなたのことは忘れないっす先生...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「…………あ、意外と美味しい……？？？？？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「アンタのその変なとこで思い切りがいいの何？？？？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        あ、ちなみに普通においしいよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「あ、この揚げ物美味しい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「え、えぇ……？おいしいんすか？その見た目で？？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「ほんとっすか？じゃあこの触手みたいなのを...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「ゆうちゃんも食べてみるー？ほらほらー」口にめがけて揚げ物がつっこんでくるよ＾＾ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        避けるなら回避 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「何故かおいしいのがなんとも...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=18 《回避》 
+Cthulhu : (1D100&lt;=18) ＞ 72 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        無事に口に突っ込まれたわ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        やったぜ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「うぇ！？もが……や、やめ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「あ、うちのおろしドールもどうぞっす！」つっこむ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「ひぃぃ！？や、やめるっすーーー！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「あ、私のもどうぞ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「うわ……鬼じゃん……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「正気を疑うっす！！なんであたしばっかり！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「先生達もどうぞっす！」突撃 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「！！！？？？？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「おっとー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「い、いやアタシは遠慮するよ！」避けるが？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#68a9cf;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        ccb&lt;=73　《回避》 
+Cthulhu : (1D100&lt;=73) ＞ 83 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        おい 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝67　回避 
+Cthulhu : (1D100&lt;=67) ＞ 17 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        銀ちゃんは喰らった 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#f0908d;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>咲坂 一年</div>
+	<div>
+	
+        ccb&lt;=58　《回避》 
+Cthulhu : (1D100&lt;=58) ＞ 8 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「おっと？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        八雲は先に避けてます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「琥珀はいい気味なのでどうぞ！」銀ちゃんを羽交い絞めにします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「ええい！お返しっす！触手パスタを食らうっす！！！」全員にやっていくわよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「ちょっと！！！！？？？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        ccb&lt;=68 回避 
+Cthulhu : (1D100&lt;=68) ＞ 18 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「まずは味見してからしてよー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        銀ちゃんは回避自動失敗です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「まだ死にたくないっす！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝67　回避 
+Cthulhu : (1D100&lt;=67) ＞ 11 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#f0908d;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>咲坂 一年</div>
+	<div>
+	
+        ccb&lt;=58　《回避》 
+Cthulhu : (1D100&lt;=58) ＞ 86 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        先生避けれませんでした 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        何この異例のPvP 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        やばいですね☆ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        えー、次からDEX順とします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「先生たちには味見係になってもらうっすよ！おいしいっすか！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「どうっすか！？銀之丞さん！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        完全に八雲がPVP起こして眺めてる図じゃん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「美味しいけど口の中に突っ込むなよ！！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「いやほらどくみ...じゃなくて味見にね？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「これはひどいなー」烏龍茶飲んでます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「あら、琥珀は普段人の顔に煙吹きかけたりするからいい気味ですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「今毒味って言ったぞこいつ！！！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「気のせいっす！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「くっそ、こうなったらやり返す！！」全員に同じことをします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        回避するならどうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        ccb&lt;=68 回避 
+Cthulhu : (1D100&lt;=68) ＞ 9 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「ちょっと私関係ないんだけど！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「甘いっす！」華麗に避ける 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝67　回避 
+Cthulhu : (1D100&lt;=67) ＞ 69 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=18 《回避》 
+Cthulhu : (1D100&lt;=18) ＞ 48 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#f0908d;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>咲坂 一年</div>
+	<div>
+	
+        ccb&lt;=58　《回避》 
+Cthulhu : (1D100&lt;=58) ＞ 9 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「甘いですよ琥珀」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「腹・立・つ・わ～～～～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「いただきまーす」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「うぇぇ！？もう嫌っす～～～！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「鍛え方が違うっすよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「んじゃ私からもおかえしー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#68a9cf;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        ccb&lt;=73　《回避》 
+Cthulhu : (1D100&lt;=73) ＞ 75 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        全員にだぞ☆ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        ccb&lt;=68 回避 
+Cthulhu : (1D100&lt;=68) ＞ 39 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=18 《回避》 
+Cthulhu : (1D100&lt;=18) ＞ 82 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#f0908d;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>咲坂 一年</div>
+	<div>
+	
+        ccb&lt;=58　《回避》 
+Cthulhu : (1D100&lt;=58) ＞ 79 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        猫ですよろしくおねがいします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「どうー？美味しいでしょー、ちゃんと味見してるからねー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「意外と美味しいですし、それぞれもう一品ずついって琥珀に毒味させましょう！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「いやー安心して食べれるっす！」もぐもぐ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「さんせーい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「一年ェ！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「うぇ……まだ頼むんすか？もう帰りたいっす……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        全員好きなページの1d6だ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「思ったより量少なかったし、これ行こうかなー？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        1d6 銀ちゃんはシメ 
+Cthulhu : (1D6) ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「新メニュー頼むっす！新しいものには目がないっすよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        1d6 
+Cthulhu : (1D6) ＞ 6
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        1ページで1ｄ6 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        1d6　ドリンク 
+Cthulhu : (1D6) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        1ｄ6 
+Cthulhu : (1D6) ＞ 4
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        1d6　デザートいくわよ 
+Cthulhu : (1D6) ＞ 4
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        料理が来ました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「食屍鬼の夜食で～す」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        なんか腐った香りがする。好きな人は芳醇なチーズみたいなものだと言うだろう。<br>POW12とのPOW対抗が必要。成功すれば食べ終えられる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        というわけでどうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>　</div>
+	<div>
+	
+        RESB(13-12)でふれるよ 
+Cthulhu : (1d100&lt;=55) ＞ 14 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>八雲　初音</div>
+	<div>
+	
+        RESB(13-12) 
+Cthulhu : (1d100&lt;=55) ＞ 26 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        食えたわ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「なんかチーズみたいだなー」もぐもぐ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「カルコサワインでーす」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        大きさと質量が一定を保たない超年代物に見える赤ワイン。<br>探索者がワインを注ごうと瓶の口を傾けると、150ml入るワイングラスへ【3d100】mlの液体が注ぎ込まれる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        3d100 
+Cthulhu : (3D100) ＞ 127[20,62,45] ＞ 127
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        いい感じ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「ヨグソトースでーす」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        色んな果物を混ぜ込んだヨーグルト。むしろ入れすぎてよくわからないが、果物の甘さだけ分かる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「シュブ=二グラスのミルクセーキでーす」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        なんかすっごく生温く、だが濃厚なミルクセーキ。濃くてむしろむせそう。CON10とのCON対抗に成功すれば完食。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#68a9cf;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        RESB(6-10) 
+Cthulhu : (1d100&lt;=30) ＞ 60 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        そりゃそう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「おえっ！！？げほっ、ナニコレ！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「魅惑の粉で～～～す！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        料理に追加して掛けると美味しいらしいと店員が教えてくれる緑がかった粉。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        《博物学》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        ccb&lt;=10 博物学 
+Cthulhu : (1D100&lt;=10) ＞ 18 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        惜しい 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では料理が出揃いました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        どうする？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        PvPか？？？？？？？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        もちろんぶち込む 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        ぶちこめ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では、1R目です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        銀ちゃんから 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        1d4 攻撃対象上から 
+Cthulhu : (1D4) ＞ 4
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        ユウちゃんにぶち込みます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「はい、あーん？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「ひ、ひぃっ」避けますよ！！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=18 《回避》 
+Cthulhu : (1D100&lt;=18) ＞ 17 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        やりますねえ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「い、いらないっすよーー！！」逃げ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「ちっ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        1d4　攻撃対象上から 
+Cthulhu : (1D4) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「八雲さん、どうぞ♡」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「えっ？お酒？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「ええ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「うーん…ちょっとだけならいただこうかなー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        次は八雲ちゃん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「これワインのおつまみにいいですよー、よく合いました♪」咲坂せんせーに攻撃表示します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「あら、でも私お腹いっぱいで～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5 diceroll" style="color:#f0908d;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>咲坂 一年</div>
+	<div>
+	
+        ccb&lt;=58　《回避》 
+Cthulhu : (1D100&lt;=58) ＞ 20 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「まあまあそういわずにー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「うふふ、琥珀にあげてください」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「ちょっとぉ！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「はーい」酔っぱらってます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        次は猫谷ちゃん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        1d4　毒見対象 
+Cthulhu : (1D4) ＞ 4
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ユウちゃんだね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        あっふーん（察し） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        回避潰れてるので自動失敗です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「食らえ！ユウちゃん！」にゃーんと突撃 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「勘弁してくれっすーーー！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        次ユウちゃん！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        1d4　毒見対象 
+Cthulhu : (1D4) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「お返しっす！謎のヨーグルトっすよ！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「いやいらねえ！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#68a9cf;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        ccb&lt;=73　《回避》 
+Cthulhu : (1D100&lt;=73) ＞ 97 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        お前さあ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｗｗｗｗｗｗｗｗｗ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        やったぜ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        おいおい死んだにゃー 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        思ったより多く口の中に入ったし宇宙の深淵が見えた。SANc 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        1d3/1d6 
+Cthulhu : (1D3/1D6) ＞ 1[1]/2[2] ＞ 0
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#68a9cf;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        ccb&lt;=60　《SANc》 
+Cthulhu : (1D100&lt;=60) ＞ 35 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        1d3 
+Cthulhu : (1D3) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        じゃあえっと戦闘は3R目までとします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では2Rメデス 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        銀ちゃんから！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        1d4　上から 
+Cthulhu : (1D4) ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「ほら、あーん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「遠慮しとくっすよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        ccb&lt;=68 回避 
+Cthulhu : (1D100&lt;=68) ＞ 37 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「つれねえなあ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        1d4 上から 
+Cthulhu : (1D4) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「うふふ～八雲さんどうぞ～」さては酔っぱらってるな？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「もういらないれす～」回避回避 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「おい！？一年酔ってない！？」おい！？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#8059C5;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>八雲　初音</div>
+	<div>
+	
+        ｃｃｂ＜＝67　かいひ 
+Cthulhu : (1D100&lt;=67) ＞ 29 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「…うっぷ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        つぎやっちゃん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        1ｄ4 
+Cthulhu : (1D4) ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「これどうぞ～」全力で口にぶち込みます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「し、しまっt...もがっ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        RESB(11-12) 
+Cthulhu : (1d100&lt;=45) ＞ 78 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        食えなかった　おえ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「不覚...ゲホッゲホッ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        つぎねこちゃん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+         
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        1d4 倍返し 
+Cthulhu : (1D4) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        銀ちゃんじゃん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「食らえ！銀先生！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「やだよ！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#68a9cf;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        ccb&lt;=73　《回避》 
+Cthulhu : (1D100&lt;=73) ＞ 84 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        ？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「むぐっ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        避けれんかった 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        次ユウちゃん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        1d4　だれにしようかな！ 
+Cthulhu : (1D4) ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「もともと初音さんがやり始めたことっすよね！！食らうっす！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「ごかんべん～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        自動失敗なのでたべますたべます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        もぐもぐ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        3R目 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        銀ちゃん！猫ちゃん狙おうね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「くらえっ　仕返しだ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「なんでうちっすか！」かいひかいひ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        ccb&lt;=68 回避 
+Cthulhu : (1D100&lt;=68) ＞ 58 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「ちっ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「あらら～～猫谷さんお酒でもいかがですか～？」ふわっふわやな！？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「二連続はひきょ、もがぁ！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        やっちゃん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「お酒にはやっぱりおいひいちーずでしゅよ～」もう一度猫谷にぶち込みます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「し、しんじゃう...にゃ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#ff5722;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        RESB(11-12) 
+Cthulhu : (1d100&lt;=45) ＞ 26 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        食えた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ねこちゃん！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        1d4 さついのはどう 
+Cthulhu : (1D4) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        銀ちゃん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「お返しのお返しっすよ！！！」ねこあたっく 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 diceroll" style="color:#68a9cf;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        ccb&lt;=73　《回避》 
+Cthulhu : (1D100&lt;=73) ＞ 8 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「やなこった！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「ちっ！浅かったか！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ユウちゃん！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「ここはやっぱ空気読むとこだと思うんすよね～てなわけでどうぞっす！」猫ちゃんにｿｫｲ! 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「読まなくていいっすよ～！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        ねこは倒れ伏した 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では戦闘終了です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「………帰るか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「ほえー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「ま、まあ見た目はアレでしたけど美味しかったっすね」起き上がる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「ふぅー、もう入らないっすよー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「うふふ～お酒も料理もおいしかったですね～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「やっぱ一年酔ってるじゃねえか…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「酔ってませんよ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「酔ってませーん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「酔ってんだよ馬鹿。ったく…会計済ませて早く帰るぞ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「酔ってませんってば……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「あ、これも何かの縁っすからおごるっすよ」金持ち 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「あ、マジ？やったー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「えっ、ほんとっすか！？助かるっす～～」ネカフェ暮らし 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「やったー、さしゅがおかねもちー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「ほら一年帰るぞ。肩貸すから自分で歩け」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「わあ～琥珀がお姉さんぶってますね～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        とても良心的な金額でレシートが手渡されます。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        「おーあれだけ頼んだにしては良心的っすね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「よかったですねえ～」ふわふわ… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「だーめだこりゃ。しゃあねえ送ってくか……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        「………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        気がつくと貴方達は夜の街を歩いています。美味しい料理を堪能したあなた方は、口の中に残る味に笑いつつそれぞれの帰路につくでしょう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4" style="color:#68a9cf;">
+	<div>銀之丞 琥珀</div>
+	<div>
+	
+        「ほら一年、お前そんな姿お前のお気に入りの生徒……あーなんだっけ。幸田ちゃんに見られたらどーすんだよ、しゃっきりしろー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user5" style="color:#f0908d;">
+	<div>咲坂 一年</div>
+	<div>
+	
+        「え……？うう…幸田さんに見られるのは困りますぅー…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        そんな感じで先生たちもかえっていきました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        シナリオクリアですわ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user6" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        SAN回復報酬1d10です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#8059C5;">
+	<div>八雲　初音</div>
+	<div>
+	
+        1ｄ10 
+Cthulhu : (1D10) ＞ 9
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        1d10 
+Cthulhu : (1D10) ＞ 8
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#ff5722;">
+	<div>猫谷 結衣</div>
+	<div>
+	
+        1d10 
+Cthulhu : (1D10) ＞ 5
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 八雲　初音 ] SAN : 71 → 80 
+      
+	</div>
+</div>
+
+</div>
+<div id="log-end"></div>
+</body>
+</html>
