@@ -1,0 +1,5431 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>以心電心</title>
+<meta http-equiv="content-type" charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<style>*{font-family:sans-serif;}:root{--header-back:0,0,0;--header-color:#FFF;--awesome:'Font Awesome 5 Free';}body{padding-top:80px;margin:0;}/* header */header{background:rgba(var(--header-back),0.5);color:var(--header-color);position:fixed;top:0;left:0;width:100%;overflow-x:hidden;transition:0.3s;}header:has(#menu[open]){background:rgba(var(--header-back),0.8);}summary{outline:none;}details > summary{display:inline-block;cursor:pointer;opacity:0.3;font-size:80%;font-weight:bold;padding:5px;margin:10px 0 0;}details > summary:hover,details[open] > summary{opacity:1;}details[open] > summary:hover{opacity:0.3;}details > summary:before{content:'\f138';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details[open] > summary:before{content:'\f13a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details > div{margin:10px 10px 30px 20px;word-break:break-all;}details > div > button{padding:3px 20px;margin:0 0 8px;font-size:80%;cursor:pointer;outline:none;border:2px solid var(--header-color);border-radius:3px;background:rgba(0,0,0,0);color:var(--header-color);opacity:0.3;}details > div > button:hover{opacity:1;}button.all.hide:before{content:'一括非表示';}button.all.hide:after{content:'\f070';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}button.all.show:before{content:'一括表示';}button.all.show:after{content:'\f06e';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}input[type="checkbox"]{display:none;}label{cursor:pointer;}input[type="checkbox"]+ label:before{content:'\f0c8';font-family:var(--awesome);font-weight:400;margin-right:0.5em;}input[type="checkbox"]:checked + label:before{content:'\f14a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open]{max-height:85vh;}#menu > summary{padding:0 10px 10px;}#menu[open] > summary{opacity:0.3;}#menu[open] > summary:hover{opacity:1;}#menu > summary:before{content:'\f0c9';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu > summary:after{content:'MENU';}#menu[open] > summary:before{content:'\f00d';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open] > summary:after{content:'CLOSE';}#menu > div{max-height:60vh;max-width:80vw;padding-bottom:50px;overflow-y: auto;}#menu > div::-webkit-scrollbar{display:none;}header a:link,header a:visited{color:var(--header-color);opacity:0.5;text-decoration: none;}header a:hover{opacity:1;}/* chat-log default style */#chat-log{margin:20px 0 20px 25px;}.chat{display:flex;flex-wrap:nowrap;flex-direction:column;padding-right:1em;}.chat > div{word-break:break-all;}.chat > div:nth-child(1){display:block;font-weight:bold;padding-top:0.2em;}.chat > div:nth-child(2){margin-left:1em;padding:0 0.2em 0.2em;}/* headline */[id^="index"]{margin-top:-90px;padding-top:90px;}/* hide-user style */.hide-user > div:nth-child(1),.hide-user2 > div:nth-child(1){display: none !important;}.hide-user > div:nth-child(2):not(:has(b)){margin-left:0;padding:0;}.hide-user + div:not(:has(.hide-user)){padding-bottom:0.5em;}.hide-user b,.hide-user2 b{ margin-left:-1.2em; }/* tab style */body{background:#2a2a2a;}/* diceroll */button.dice{outline:none;border:none;background:none;color:inherit;opacity:0.5;cursor:pointer;transition:0.3s;}button.dice:hover{opacity:1;letter-spacing:0.1em;}button.dice.select{opacity:1;}button.dice.select:hover{letter-spacing:0;cursor:default;}#dice-output-area{padding:10px 15px;background:#000;color:#888;border-radius:3px;font-size:80%;}#dice-output-area li{text-indent:-1.5em;padding-left:2.5em;}#dice-output-area li.sub{list-style-type:circle;padding-left:5em;}button.dice-output-area{display:none;padding:2px 8px;font-size:100%;}#dice-text-copy{display:none;}@media only screen and (orientation: portrait){button.dice{display:block;color:var(--header-color);background:rgba(var(--header-back),1);}span.dice-span{display:none;}}/* safari */summary::-webkit-details-marker {display:none;}/* mediaquery */@media only screen and (orientation: portrait){*{overflow-x:hidden !important;}html{width:100vw;overflow-x:hidden !important;}header{padding:50px 0 0 0;margin:0;width:100%;overflow-x:hidden !important;position:fixed;top:0;left:0;right:0;}#menu{padding-left:10px;}body{padding:120px 0 0 0;margin:0;;width:100%;font-size:90%;overflow-x:hidden !important;}#chat-log{width:90vw;overflow-x:hidden !important;margin:20px 0 20px 15px;}#chat-log div{word-break:break-all;overflow-x:hidden !important;padding-right:0;}.chat > div:nth-child(2){margin-left:0;overflow-x:hidden;}.hide-user b,.hide-user2 b{ margin-left:0em; }[id^="index"]{margin-top:-120px;padding-top:120px;}}</style>
+<script>$(function(){$(document).on('click','#tab-all,#user-all',function(){let tgt = $(this).attr('id').replace('-all','');let result = true;if( $(this).hasClass('hide') ){ result = false; }$('input[name="' + tgt + '"]').prop('checked',result);$(this).toggleClass('show hide');chatShowHide();});});$(function(){$(document).on('change','[name="user"],[name="tab"]',function(){ chatShowHide(); });});function chatShowHide(){$('.chat').show();let hide_list = [];$('[name="user"]:not(:checked),[name="tab"]:not(:checked)').each(function(){ hide_list.push('.' + $(this).attr('id').toLowerCase()); });hide_list = hide_list.join(',');$(hide_list).hide();$('#dice-output-area').html('').hide();$('.dice-output-area').hide();$('button.dice').removeClass('select');}</script><script>/* dice output */$(function(){$(document).on('click','button.dice',function(){if( $(this).hasClass('select') ){ return; }else{$('button.dice.select').removeClass('select');let tgt = $(this).attr('id');let user_ary = [];let dice_ary = [];let result_ary = [];let elm = $('#chat-log > div.diceroll:visible');for( i = 0 ; i < elm.length ; i++ ){let thisUser = elm.eq(i).attr('class').split(' ')[2];let txt = elm.eq(i).children().eq(1).html();try{let txt_re = txt.split('</b>');if( txt_re[1] == undefined ){ throw new Error(); }txt = txt_re[1];}catch(e){;}txt = txt.replace(/\n|\s|\t| |　| /g,'');let terms = false;if( tgt == 'diceroll' ){ terms = true; }else if( tgt == 'cf' && ( elm.eq(i).data('dice-result').split(',').indexOf('cr') !== -1 || elm.eq(i).data('dice-result').split(',').indexOf('fb') !== -1 ) ){ terms = true; }else if( elm.eq(i).data('dice-result').split(',').indexOf(tgt) !== -1 ){ terms = true; }if( terms ){if( user_ary.indexOf(thisUser) == -1 ){ user_ary.push(thisUser);dice_ary.push([]);result_ary.push([0,0]); }let user_num = user_ary.indexOf(thisUser);if( Boolean(elm.eq(i).data('dice-ccb')) && !Boolean(elm.eq(i).data('dice-x'))){try{let cbr_result = txt.split('&lt;=')[1].split('[')[1].split(']')[0].split(',');if( cbr_result[0].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[0].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }if( cbr_result[1].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[1].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}catch(e){;}}else if( Boolean(elm.eq(i).data('dice-x')) ){txt = txt.split(/#\d/);for( j = 0 ; j < txt.length ; j++ ){txt[j] = txt[j].replace(/<br>/g,'');if( j > 0 ){txt[j] = '<li class="sub">' + txt[j] + '</li>';if( txt[j].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt[j].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}}txt = txt.join('');}else{txt = txt.replace(/<br>/g,'');if( txt.match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt.match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}let tabspan = '<span>［' + $('#' + elm.eq(i).attr('class').split(' ')[1].toUpperCase()).next().text() + '］</span>';dice_ary[user_num].push(tabspan + txt);}}let output = '';for( i = 0 ; i < user_ary.length ; i++ ){output += '<b>▼ ' + $('#' + user_ary[i].toUpperCase() ).next().text();if( tgt == 'diceroll' || tgt == 'cf' ){ output += '（' + result_ary[i].join('C') + 'F）'; }output += '<br></b>';output += '<li>' + dice_ary[i].join('</li><li>') + '</li><br>';}$('#dice-output-area').html(output).show();$('.dice-output-area').show();$(this).addClass('select');}});});/* copy action */$(function(){$(document).on('click','button.dice-output-area',function(){$('#dice-text-copy').html($('#dice-output-area').html());$('#dice-text-copy span').remove();let li_elm = $('#dice-text-copy li.sub');for( i = 0 ; i < li_elm.length ; i++ ){ li_elm.eq(i).prop('outerHTML','　◦ ' + li_elm.eq(i).text() + '<br>'); }let copyTxt = $('#dice-text-copy').html();copyTxt = copyTxt.replace(/<br><b>/g,'\n\n').replace(/<li>|<b>|<\/b>/g,'').replace(/<\/li>|<br>/g,'\n').replace(/&lt;/g,'<').replace(/&nbsp;/g,' ');copyToClipboard(copyTxt);alert('クリップボードにコピーしました。');$('#dice-text-copy').html('');});});function copyToClipboard(txt){const pre = document.createElement('pre');pre.style.webkitUserSelect = 'auto';pre.style.userSelect = 'auto';pre.textContent = txt;document.body.appendChild(pre);document.getSelection().selectAllChildren(pre);const result = document.execCommand('Copy');document.body.removeChild(pre);return result;}</script>
+</head>
+<header>
+<details id="menu">
+<summary></summary>
+<div>
+<details>
+<summary>発言者別表示切替</summary>
+<div>
+<button id="user-all" class="all hide"></button><br>
+<input type="checkbox" name="user" id="USER0" checked><label for="USER0">system</label><br>
+<input type="checkbox" name="user" id="USER1" checked><label for="USER1">詩乃宮 撫子</label><br>
+<input type="checkbox" name="user" id="USER2" checked><label for="USER2">小鳥遊 焔</label><br>
+<input type="checkbox" name="user" id="USER3" checked><label for="USER3">NPC</label><br>
+<input type="checkbox" name="user" id="USER4" checked><label for="USER4">KP</label><br>
+</div>
+</details>
+<details>
+<summary>ダイス出力機能</summary>
+<div>
+<button type="button" class="dice" id="diceroll">ダイス一括表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="sc">成功のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="fl">失敗のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="cf">CF表示</button>
+<div id="dice-output-area" style="display:none;"></div>
+<br>
+<button class="dice-output-area">コピー <i class="fa-regular fa-copy"></i></button><div id="dice-text-copy"></div>
+<br>
+<span style="font-size:70%;">
+※組み合わせダイス（CBR,CBRB）、繰り返しコマンド（Xn CCB等）は正しく判定できない可能性があります。<br>
+※ダイス結果のコピーではタブ名はコピーされません。
+</span>
+</div>
+</details>
+
+<br><br>
+<a href="#"><i class="fa-solid fa-angles-up"></i> ログの先頭へ</a><br>
+<a href="#log-end"><i class="fa-solid fa-angles-down"></i> ログの最後へ</a>
+</div>
+</details>
+</header>
+<body>
+<div id="chat-log">
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#eb6ea0;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        ・‥…━━━☆・‥…━━━☆・‥…━━━☆ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#eb6ea0;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#eb6ea0;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        『以心電心』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#eb6ea0;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        シナリオ制作：ねるこ様 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#eb6ea0;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#eb6ea0;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        ・‥…━━━☆・‥…━━━☆・‥…━━━☆ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        いつも通りの日常を過ごしているあなた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ある日、あなたの携帯電話に電話の着信がくる。<br> 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        番号は表示されているが知らない番号だ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        少なくとも、登録されてはいない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        君が不審に思いながらも電話にでるが、もしもし、と問いかけても相手は無言である。<br> 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そして不意に君は頭痛を感じ、思わず携帯電話を取り落してしまう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        頭痛は一瞬で収まるだろう。<br> 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        落とした携帯電話を拾い上げ画面を見てみたときには、もう通話が切れていた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ところで、あなたには電話を掛ける用事がある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        家族にか、仕事の仲間にか、友人にか。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        出前を取りたいとか、そういう理由でもいい。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        とにかく誰かに電話をしなくてはいけない。<br> 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        君は携帯電話を手に、電話帳を開いて目的の相手に電話を掛ける。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「あ……お母さん、今日も部活があるからお迎えは18時過ぎに……うん、校門前でいいよ」お母さんに電話かけます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        『……あら、かける相手、間違えてるわよ』ふふっ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        出る声は君の良く知る声のはずだった。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        だが携帯電話の向こう側から聞こえてきた声は、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        君の目的の相手の声ではなかった。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        相手はどうやら、焔のようだ。おかしそうにクスクスと笑っている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        『ふふ、びっくりしちゃった。……あれ？撫子ちゃん、私の番号知ってたかしら』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        『あ、気にしないでね？それよりほら、ちゃんとお母さんに連絡しないと』/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「えっ、……えっ！？その声……小鳥遊先生、ですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「ご、ごめんなさい。……お母さんに掛けなおすので一旦切りますね」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        『ふふ、またね』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        おかしいな、先生に電話する気じゃなかったのにな。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        君はそう思うことだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そして、今度こそ君はお母さんに電話をかける。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ちゃんと確認もした。今度は間違えていない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        いざ！というときになって、あなたの電話が鳴った。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「わ、電話……？……誰からだろう」着信画面をみてみます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ……先生だあ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あれ？さっき切ったよね？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「……小鳥遊先生？何かご用でしたか？」出ます出ます/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        『……えっ！？撫子ちゃん？？』『やだ、私も間違えちゃったみたい』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        『変な偶然ね』『ごめんなさい、切るわね』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そんな感じで電話が切られる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        君は気を取り直して、お母さんに電話をかけるだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ……だが。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        『……あら？また間違えてるわ…？』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        何度かけても、焔に繋がってしまう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        それは彼女も同じようで、電話の向こうで非常に困っているようだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        『……？？？』首をひねっている 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「ど、どうなってるんでしょう……今度こそお母さんに掛けたはずなのに……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        『うーん……』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        『……ねえ撫子ちゃん、今から出てこれる？』『一度会って話してみましょう？』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        『何かわかるかもしれないわ』根拠はない！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「今からですか？ええと、部活が……と言いたいところですけど……それどころじゃなさそうですね……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「今学校にいるので急用で部活お休みしますって伝えて、そちらに向かいますね」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        『ありがとう。場所は＿＿そうね、駅前のカフェにしましょうか』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では、君は彼女と待ち合わせのカフェに向かう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        入ったことはなかったが、とてもおしゃれなカフェ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        店内を見渡すと、窓際の席で焔がコーヒーを飲んでいた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼女はあなたに気が付くと、にっこりとほほ笑んで 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ひらひらと手を振ってくる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「こんにちは、小鳥遊先生」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「えっと、お待たせしてしまいました……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「いいえ、今来たところよ」にこ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「座って。何か奢るわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「奢ってもらうなんて、そんな……小鳥遊先生にはいつもお世話になりっぱなしなのに……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「いいのよ、お姉さんに甘えておきなさいな」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「ええと……それじゃあ、ミルクティーを……」焔さんの向かい側に座ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「ええ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        焔がミルクティーを注文する。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        その直後、君たち二人の携帯電話が同時に着信を知らせた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        電話に出るとしばらくブツブツという回線の異常のときに聞こえてくるような音があって、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        それから人の声が聞こえてくる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『あれ？通じてるか？…うーん、やっぱダメか～』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『おっかしいなぁ、発動はしてるんですけどねぇ』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『やっぱ失敗だろ～。確かに術式は発動はしてるみたいだけど、声が通らないんじゃなぁ』<br> 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『いや、そしたら出力上げてみますわ』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        と、そんな数人の会話が聞こえてくると、ふいに君たちは酷い頭痛と耳鳴りに襲われる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        一瞬で収まるのだが。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「(なんだったのかしら、今の…)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        不意に、あなたの脳内に直接声が響く。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        前に座っている人の声が、脳内に直接響いているのだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        その考えていることが、お互いの頭の中で聞こえてくる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        それぞれの声が頭の中に、直接響いてくるのだ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《SANチェック 0/1》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=70　《SANc》 
+Cthulhu : (1D100&lt;=70) ＞ 30 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=69　《SANc》 
+Cthulhu : (1D100&lt;=69) ＞ 48 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「だ、大丈夫？(今日はツイてないわねえ……困ったわ。撫子ちゃんも部活があるのに…)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「は、はい。さっき一瞬頭が痛くなったぐらいで……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「あの、部活は事は大丈夫です。小鳥遊先生が気にする事じゃありませんから……」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「……あれ？今の、私口に出していたかしら…？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「……え？私には聞こえたんですけど……あれ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「……あれ？？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「……(もしかしてテレパシーってやつ？？えっすごーい！)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「(あ、これも聞こえちゃうのかしら！？)」あわわ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「テレパシーって……そんなオカルトみたいな事、ありますか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「(はしゃいでる小鳥遊先生、ちょっとかわいいかも……)」ふふ/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「へっ？(かわいいって聞こえた！え！え！？)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「……ど、どういうことなのかしら…(いけないいけない、落ち着かなきゃ。いつもほのにお姉ちゃんは落ち着きがないからって言われてるのに…)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『……んー、やっぱダメっぽいですね』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        『しょうがないな、他の術式から調整するか』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ここで電話は途切れてしまう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《聞き耳》どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=80　《聞き耳》 
+Cthulhu : (1D100&lt;=80) ＞ 71 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=70　《聞き耳》 
+Cthulhu : (1D100&lt;=70) ＞ 12 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        えら～～～～！？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        電話の奥で何やら楽しそうな音楽が聞こえてきていたのに気付く。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        また、その音楽が比較的近所の遊園地の音楽であることが解る。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        電話が切れてもお互いの思考がまるでテレパシーのように通じる状態は変わらず。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        さて、どうしようか。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「今の……遊園地の音楽よね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「……そう、ですね。ええと、行ってみますか？何か分かるかもしれませんし……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「！ええ、そうね！(やった～～～！あそこの遊園地気になってたのよね～～～～)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「……そんなに、ですか？何か面白いアトラクションとかがあるんですか……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「えあっ！？……聞こえちゃうのも困りものね……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「お化け屋敷が有名みたいだから、気になってて…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「と、とにかく行って見ましょっか！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「(ふふ、小鳥遊先生って真っ直ぐで裏表がない人なんだなぁ……)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「はい、じゃあ行きましょうか。お化け屋敷はちょっと怖いけど……」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「……え、ええ、そうね！(な、なんだか照れくさいわね…)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では、君たちは電車に乗ってその遊園地へ向かうだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そうだなあ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《幸運》をどうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=70　《幸運》 
+Cthulhu : (1D100&lt;=70) ＞ 23 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=80　《幸運》 
+Cthulhu : (1D100&lt;=80) ＞ 30 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        えら～い！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では、何事もなく電車に揺られてください。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「(さすがに平日だから空いてるわね…)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「そうですね。満員電車よりずっと快適です」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「……テレパシーって結構恥ずかしいわね…」えへへ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「あ……ごめんなさい。聞こえるとつい反応してしまって……」しゅん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「あ、いいのよ気にしないで！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「……子供っぽい事考えてるのがばれちゃうのはちょっと恥ずかしいかもしれないわね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「……いいえ、そんなことないです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「私にはとても考えつかないような事ばっかりで……私は好きですよ」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「………そう言ってもらえてうれしいわ」にこ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        しばらく電車に揺られていると、目的地の最寄りの駅に着いた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        駅の真ん前がすぐ遊園地になっており、改札口まで微かに遊園地の音楽が聞こえてくる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        焔はあなたに「行きましょうか」とほほ笑む。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#eb6ea0;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        ほんの少しだけ、期待に胸が高鳴った。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        比較的近所にあるテーマパークの遊園地。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        アトラクションはたくさん、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        「観覧車」「フリーフォール」「ジェットコースター」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        「お化け屋敷迷路」「リフトシューティング」「コーヒーカップ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        「トレジャークルーズ」など。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        遊園地内には食べ物屋ももちろんある。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        レストランもあるし、夕方から夜にかけてはバーも開く。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        また、園内のあちらこちらにポップコーンやアイスクリームを売っているワゴンが点在している。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        いろいろなフレーバーをそれぞれのエリアごとに売っているようだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        この広い園内のどこに電話の主がいるのだろうか…。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「へえー、結構大きいのねー！」楽しそう！わくわくしてる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「アトラクション、たくさんあって迷っちゃいますね……どれから乗りますか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「そうねえ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「ジェットコースターから行ってみましょうか！」いい笑顔 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「え、っと……ジェットコースター、ですか……？」ちょっとひきつってる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「あら、苦手？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「少しだけ……。乗れない事はないです、たぶん……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「そう？じゃあ行きましょ！」ごーごー！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        お前はしゃぎすぎだろ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [ジェットコースター] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        上がったり下がったり、ぐるりと一回転したり。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そんなコースを猛スピードで駆け抜けるジェットコースター。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        怖いかどうか《POW*5》をどうぞ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=70　《POW*5》 
+Cthulhu : (1D100&lt;=70) ＞ 85 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        おや？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=(14*5)　《POW×5》 
+Cthulhu : (1D100&lt;=70) ＞ 42 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        じゃあ焔は思ったより怖かった。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そうだなー 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        撫子ちゃんは《APP*5》、焔は《APP*3》をどうぞ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=(17*3)　《APP*3》 
+Cthulhu : (1D100&lt;=51) ＞ 41 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=(15*5)　《APP×5》 
+Cthulhu : (1D100&lt;=75) ＞ 58 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では、二人ともジェットコースターで撮られた写真がまともな顔で撮れていた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        よかったね！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「……思ったより怖かったわ…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「……ふう。思っていたより平気でした。このぐらいのジェットコースターならもう乗れるかな……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「顔ひきつってなくてよかったわ～」あはは 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「(小鳥遊先生の顔、ちょっとひきつってたのは黙っておこう……)」ふふ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「………」ちょっと恥ずかしそうに目をそらしちゃう… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「(あ、照れてる……)」「ええと……折角なので、この写真お土産に買っていきますか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「……え、ええ！そうね！」買いましょう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        普通に買えます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「(小鳥遊先生との写真……初めてだなぁ……)」「写真、二人とも綺麗に写っていて良かったですね」ほっ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「……ふふ、そうね！」にこ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「……次、何に乗りましょうか」「次は撫子ちゃんが決めていいわよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「ええと……じゃあフリーフォールに乗りたいです。さっきのジェットコースターが割と平気だったので……」うきうき 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「ええ、いいわよ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [フリーフォール] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        リフトに乗って地上200ｍのタワーに上り、一気に急降下するアトラクション。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        怖いかどうか《POW*4》で判定 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=(14*4)　《POW*4》 
+Cthulhu : (1D100&lt;=56) ＞ 61 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ……？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=(14*4)　《POW×4》 
+Cthulhu : (1D100&lt;=56) ＞ 61 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        二人とも怖かった 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        なので、《SANチェック 0/1》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=70　《SANc》 
+Cthulhu : (1D100&lt;=70) ＞ 85 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=69　《SANc》 
+Cthulhu : (1D100&lt;=69) ＞ 37 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 小鳥遊 焔 ] SAN : 70 → 69 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「…………(見栄はらなきゃよかったかも)」怖かった 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「………今のは怖かった、です。絶叫系に乗るのはもうやめましょうか……」震えてる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「(小鳥遊先生も怖そうにしてたみたいだし……)」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「だ、大丈夫……？(私より撫子ちゃんの方が心配だわ…)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「……次はゆっくり乗れる観覧車とかどうかしら」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「観覧車……いいですね。激しいのに二つも乗って少し疲れちゃったので」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「ええ、じゃあ行きましょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [観覧車] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ゴンドラに乗り込み、大きな車輪上のフレームをゆっくりと昇っていくことができる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ゆっくり見ることができるし、高いところまで見渡すことができるうだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「わ………綺麗な眺めですね……私の家も見えそう……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「ふふ、そうね。見えるかもしれないわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「……あら」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「(あの丘……撫子ちゃんと初めて会った場所だわ。ここからだと見えるのねえ…)」ほあ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「(あ……あの洋館があった場所だ。小鳥遊先生と初めて会ったところ……)」「(それに…フランさんとお別れしたのも……)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「……あの、聞いてもいいですか？」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「なあに？(そういえばあの時もフラン…って言ってたわねえ…誰なのかしら)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「あ、ええと……。その、私と小鳥遊先生が初めて会った日、どうして先生はあの場所にいたのか……ずっと気になってて……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「え？ああ…あの日はたまたまお友達と出かけてたのよ。それで遅くなっちゃったから、近道しようとしてね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「通りがかって本当に良かったわ。あんな場所で火事なんて…怪我の跡が残らなくてよかったわね」にこ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「……はい、おかげさまで。あの時は恥ずかしいところを見せてしまった上に、病院まで付き添ってもらってしまって……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「本当に、どうやってお礼をすればいいのか……」てれ/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「あら、お礼なんていいのよ？」「困ったときはお互い様だもの」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「……そう言えば、あの時も『フラン』って人の名前呼んでたわよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「どんな人なの？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「そう、ですね…フランさんは……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「ちょっと意地悪で、私の事を困らせてばかりで、何を聞いても私の欲しい答えはくれなかったけど……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「でも、守りたいものを守り通すって決めたら最後まで貫き通すような……そんな人、でした」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「へえ……お別れしたって言ってたけど、またいつか会えるといいわね！」にこ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「………、……はい」「(いつか、が本当にあるといいのにな……)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「………？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では《目星》をどうぞ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=70　《目星》 
+Cthulhu : (1D100&lt;=70) ＞ 65 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=55　《目星》 
+Cthulhu : (1D100&lt;=55) ＞ 6 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        出目えらいな… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        遊園地の中央の城のテラスに黒い服を着た数人の集団を見つける。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《アイデア》どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=60　《アイデア》 
+Cthulhu : (1D100&lt;=60) ＞ 58 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=70　《アイデア》 
+Cthulhu : (1D100&lt;=70) ＞ 62 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        通常一般の客が入れる展望テラスではない、本来は上がれないはずの場所ではないかと気づく。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「あのお城のテラスにいる人達……なんだか怪しい…ような……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「本当。……行ってみる？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「行きましょう。もしかしたら、あの時の電話の人たちかもしれません」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「ええ、そうね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では君たちは観覧車から降りた後、お化け屋敷迷路へと向かうことになる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        [お化け屋敷迷路] 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        城の中は広いお化け屋敷と迷路の複合された迷宮になっている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        一階から徐々に上の階へ上がり、ゴールは頂上あたりの展望台に出られるようになっている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        怖くないかどうか《POW*5》で判定 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=(14*5)　《POW*5》 
+Cthulhu : (1D100&lt;=70) ＞ 93 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        お前怖がりだな？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=(14*5)　《POW×5》 
+Cthulhu : (1D100&lt;=70) ＞ 84 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        怖かったので《SANチェック 0/1》 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=69　《SANc》 
+Cthulhu : (1D100&lt;=69) ＞ 96 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 小鳥遊 焔 ] SAN : 69 → 68 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=69　《SANc》 
+Cthulhu : (1D100&lt;=69) ＞ 49 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        では迷路が抜けられるか《アイデア》をどうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=60　《アイデア》 
+Cthulhu : (1D100&lt;=60) ＞ 72 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=70　《アイデア》 
+Cthulhu : (1D100&lt;=70) ＞ 2 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        勝ち取ったが？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ええ……じゃあ焔は怖さのあまり驚異的なスピードで迷路の謎を解いた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        撫子ちゃんは隣の焔が滅茶苦茶怖がっているのが筒抜けだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        一周回って冷静になれるかもしれない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「ひえええええ…(こんなに怖いなんて聞いてないわよーーー！！)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ※こいつはオカルト技能を65持っています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「(小鳥遊先生、あんなに怖がってるのにあっという間に……やっぱり大学生で家庭教師だと頭の回転が速いのかな……)」素直に感心してる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「ひーー；；(怖い話は好きだけどっ、自分が怖い目に遭うのはだめなのよーー！)」こわかった 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「(心の声が聞こえると小鳥遊先生のかわいい一面がたくさん見られるなぁ……ずっとこのままなのも悪くないかも)」ふふ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「え、そ、それは困っちゃうわ？」おろ… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「(……またほのくんに「見栄はるからそうなるんだよ」って笑われちゃうわね…)」しゅん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「あ…違います……！ずっとこのままだったら生活するのも大変だろうし……ちゃんと元に戻さなきゃって思ってます。本当です……！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「だから……ええと………(なんて言えば励ませるんだろう…)」おろおろ/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「あ、ううん、いいのいいの！えっと、元に戻れるように頑張りましょうね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        もうすぐゴールだ、というところで。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        迷路を彷徨っている途中、ふと黒い人影を見付ける。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        その人影は迷路を迷いなく進み、壁際で辺りをきょろりと見渡してから一度しゃがみこむ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        すると不意に壁が音もなく開いて、その奥に人影は進み消えて行った。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「え、今の……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「壁の向こうに消えて……？お、追いかけた方が……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「…追いかけてみましょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「(なんかちょっとワクワクするかも…)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        その人影が消えた場所へ行ってみて床を調べるとスイッチを発見する。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        押しちゃう？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        押しちゃう！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ぽち！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        スイッチを押せば壁が自動ドアのように開く。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        壁の先は狭い廊下になっている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        足元に小さなライトが点いており薄っすらと明るい。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        すすんでいくと少し歩いたところで扉に行き当たる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        聞き耳ふってもよき？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《聞き耳》いいわよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=80　《聞き耳》 
+Cthulhu : (1D100&lt;=80) ＞ 24 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=70　《聞き耳》 
+Cthulhu : (1D100&lt;=70) ＞ 69 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        どうやらこの扉は外に繋がっていそうだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        数人の話し声が聞こえる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「扉の外……誰か、いるみたいですね。……開けても大丈夫なんでしょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「明らかにスタッフって感じでもなさそうだったし、もし危なそうだったら道に迷っちゃったって言えばなんとかなるわよ」たぶん！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「それでいいんですか……？小鳥遊先生…」ちょっと困っちゃうね… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「大丈夫よ、そもそも私たちを困らせたやつだったらあの人たちをなんとかしないと戻れないと思うし…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「あ、でも本当に危なくなったら私を置いて撫子ちゃんだけで逃げなさいね？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「危なくなったらって……そんな縁起でもない事言わないでください……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「(あの時みたいに、また私だけ、なんて……)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「あの時？」こてん、と首を傾げた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「あっ、いえ！……なんでもないです。それより早く開けませんか？」あせ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「ええ」「行きましょうか」にこ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        扉を開けばそこは城の外だった。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        すっかり日が暮れ始めた城のテラス。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そこに黒づくめの男が３人いた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼らは君たちに気付くと酷く慌てた様子で身構える。<br> 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>オタクっぽい男<br></b>
+
+        「な、なななな、なんだ、お前たちは？！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>フードを被った怪しい男<br></b>
+
+        「どどど、どこのもんだ！？」<br> 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>中二病の延長線上にある男<br></b>
+
+        「ななななななんのようだ！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        動揺も明らかで、身構えるその様子もかなりのへっぴり腰である。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        彼らは庇うように手を広げる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        その背後に何かアンテナのような、大きな電子器材のようなものがあるのが解る。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《目星》をどうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=70　《目星》 
+Cthulhu : (1D100&lt;=70) ＞ 75 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=55　《目星》 
+Cthulhu : (1D100&lt;=55) ＞ 68 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        んーわかんない！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        《アイデア》もどうぞ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=60　《アイデア》 
+Cthulhu : (1D100&lt;=60) ＞ 79 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=70　《アイデア》 
+Cthulhu : (1D100&lt;=70) ＞ 68 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「……ひらめいた！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「たぶん、あれが原因の機械で、あいつらがあれを操ってるのよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「つまり、あれをどうにかして壊せば解決するはず！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「なるほど……じゃあ、まずはあの人たちを何とかしないと……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「こういう時ほのくんならどうするかしら…」「あの子なら多分殴って黙らせるわね！それでいきましょう」それでいきましょうではない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「殴……！？そんな乱暴な……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「あら、でも向こうはやる気みたいよ？」きょと 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        あやしい三人組はわたわたへっぴり腰ながらもあなた達に武器を構えた！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        戦闘開始です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ---------------------------------------------------- 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        1R目 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ---------------------------------------------------- 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        焔から？正気？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「ねえ、あなた達はどうしてこんなことしたの？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「今日一日、とっても大変だったんだから！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>オタクっぽい男<br></b>
+
+        「う、うううううるせえ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「むう……撫子ちゃん、どうしましょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「小鳥遊先生、あの暴力は……できるだけ穏便な方法でなんとかできませんか……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「そう？じゃあ説得してみましょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=45　《説得》 
+Cthulhu : (1D100&lt;=45) ＞ 55 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「えっとー……こんなことしてなんになるって言うのよ！」語彙力どこやってしまったん？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>フードを被った怪しい男<br></b>
+
+        「うるさいぞえーと…謎の美人！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        次、デブ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>NPC</div>
+	<div>
+	<b>オタクっぽい男<br></b>
+
+        sccb&lt;=50　《杖(ペンライト)》 
+Cthulhu : (1D100&lt;=50) ＞ 48 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>オタクっぽい男<br></b>
+
+        1d2 
+Cthulhu : (1D2) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=26　《回避》 
+Cthulhu : (1D100&lt;=26) ＞ 40 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>オタクっぽい男<br></b>
+
+        s1d6+1d4 
+Cthulhu : (1D6+1D4) ＞ 3[3]+1[1] ＞ 4
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 小鳥遊 焔 ] HP : 13 → 9 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>オタクっぽい男<br></b>
+
+        「てい！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「きゃ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        撫子ちゃんどうぞ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        説得でどうにかしたい！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        どうぞ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=65　《説得》 
+Cthulhu : (1D100&lt;=65) ＞ 71 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        だめだった 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ｲﾝ… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        次厨二 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>中二病の延長線上にある男<br></b>
+
+        1d2　攻撃対象 
+Cthulhu : (1D2) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>NPC</div>
+	<div>
+	<b>中二病の延長線上にある男<br></b>
+
+        sccb&lt;=25　《キック》 
+Cthulhu : (1D100&lt;=25) ＞ 93 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>中二病の延長線上にある男<br></b>
+
+        はずれた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        フード 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>フードを被った怪しい男<br></b>
+
+        1d2　攻撃対象 
+Cthulhu : (1D2) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>NPC</div>
+	<div>
+	<b>フードを被った怪しい男<br></b>
+
+        sccb&lt;=50　《こぶし》 
+Cthulhu : (1D100&lt;=50) ＞ 31 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        よけて 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=24　《回避》 
+Cthulhu : (1D100&lt;=24) ＞ 21 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        えらい 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ---------------------------------------------------- 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        2R目 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ---------------------------------------------------- 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        焔！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        説得で良い？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        おｋ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#895b8a;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        ccb&lt;=45　《説得》 
+Cthulhu : (1D100&lt;=45) ＞ 84 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        出目なんとかして 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        デブ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>オタクっぽい男<br></b>
+
+        1d2 
+Cthulhu : (1D2) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>NPC</div>
+	<div>
+	<b>オタクっぽい男<br></b>
+
+        sccb&lt;=50　《こぶし》 
+Cthulhu : (1D100&lt;=50) ＞ 6 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ばか 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        避けて 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=24　《回避》 
+Cthulhu : (1D100&lt;=24) ＞ 37 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>オタクっぽい男<br></b>
+
+        ダメボ間違えました 
+Cthulhu : (1D3+1D6) ＞ 2[2]+6[6] ＞ 8
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>オタクっぽい男<br></b>
+
+        1d3+1d4 
+Cthulhu : (1D3+1D4) ＞ 2[2]+1[1] ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>オタクっぽい男<br></b>
+
+        ヨシ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 詩乃宮 撫子 ] HP : 12 → 9 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        撫子ちゃん！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        説得！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        いいわよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#d192a6;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        ccb&lt;=65　《説得》 
+Cthulhu : (1D100&lt;=65) ＞ 57 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        えら～～～～＾ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「……一体何が目的なんですか！私たちをこんな風にして！人に迷惑をかけるなんて……最低です……！」おこ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>オタクっぽい男<br></b>
+
+        「うっ」(良心の呵責) 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>中二病の延長線上にある男<br></b>
+
+        「うっ」(罪悪感) 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>フードを被った怪しい男<br></b>
+
+        「うっ」(萌え) 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ---------------------------------------------------- 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        戦闘終了 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ---------------------------------------------------- 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        男たちは「ごめんなさ～～～～い！」と一目散に逃げていく。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そこには怪しげな機器とアンテナが残る。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+          
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「これを壊せば元に戻るはずよ」「壊しちゃいましょう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「はい。……これでやっと元通りになるんですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        壊してしまえ～～！！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        アンテナを破壊すれば一瞬酷い眩暈がして、思わずふらついてしまうだろう。<br> 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そしてその眩暈が収まった時、君たちの頭の中に聞こえてくる互いの声はなくなっている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        よかった、とホッとした時、 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        ふいに背後がパッと明るくなりドンと大きな音がする。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        振り向いて見れば夜空に咲く大輪の花火。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        城のテラスから見ればすぐ近くに見え、大きく迫力がある。<br> 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「わあ……！綺麗！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「本当に……綺麗な花火ですね……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「ええ。………ふふ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「テレパシーでなんでも聞こえちゃうのも、いろんなあなたを知れて悪くないかなって思ったけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「……やっぱり、あなたの口からいろいろ知りたいわ」にこ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「………！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「……ふふ、そうですね。……その通りです。私も小鳥遊先生の事、もっと知りたいです。……まだ何にも知らないから」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「(もっといろんないろんなあなたを知って、これからあなたの事を……好きになりたい)」/ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「ふふ、じゃあ……解決したことだし、もうちょっと遊んでいっちゃいましょ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「撫子ちゃん、いつも頑張ってるんだもの。一日くらい悪い子しましょ！」ウインク！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        「ええと……じゃあ、一日ぐらいなら。小鳥遊先生も門限破った言い訳一緒に考えてくださいね……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「ええ、もちろん。一緒に怒られる覚悟はできてるわ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        「＿＿＿ほら、行きましょ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        そう言って、花火を背に彼女はあなたに手を差し伸べる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        その上品な声も、微笑みも、確かに『彼女』と同じで。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        けれど、あなたの知る『彼女』とは違う。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        目の前の彼女は、確かに今のあなたを見ている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        焔の手を取れば、彼女は少し照れたように笑う。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#eb6ea0;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        ぎゅうと手を繋いで、あなた達は夜の遊園地に歩き出した＿＿＿。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        不思議な出来事に巻き込まれて疲れ切った君たちだろうが、とにかくも解決はできたようで。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        隣を歩く彼女と、ほんの少しだけ距離が縮まったような、そんな気がした。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#eb6ea0;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        ・‥…━━━☆・‥…━━━☆・‥…━━━☆ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#eb6ea0;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#eb6ea0;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        『以心電心』 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#eb6ea0;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        シナリオ制作：ねるこ様 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#eb6ea0;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#eb6ea0;">
+	<div>KP</div>
+	<div>
+	<b>　　<br></b>
+
+        ・‥…━━━☆・‥…━━━☆・‥…━━━☆ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        　 
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        シナリオクリアです！お疲れ様でした～～～！！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>KP</div>
+	<div>
+	<b>　<br></b>
+
+        SAN 回復 1ｄ3 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        わ～～～～い！お疲れ様でした！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#d192a6;">
+	<div>詩乃宮 撫子</div>
+	<div>
+	
+        1d3　《SAN回復》 
+Cthulhu : (1D3) ＞ 2
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#895b8a;">
+	<div>小鳥遊 焔</div>
+	<div>
+	
+        1d3 
+Cthulhu : (1D3) ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 詩乃宮 撫子 ] SAN : 69 → 71 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 小鳥遊 焔 ] SAN : 68 → 71 
+      
+	</div>
+</div>
+
+</div>
+<div id="log-end"></div>
+</body>
+</html>
