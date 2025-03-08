@@ -1,0 +1,6278 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>とおりゃんせ</title>
+<meta http-equiv="content-type" charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<style>*{font-family:sans-serif;}:root{--header-back:0,0,0;--header-color:#FFF;--awesome:'Font Awesome 5 Free';}body{padding-top:80px;margin:0;}/* header */header{background:rgba(var(--header-back),0.5);color:var(--header-color);position:fixed;top:0;left:0;width:100%;overflow-x:hidden;transition:0.3s;}header:has(#menu[open]){background:rgba(var(--header-back),0.8);}summary{outline:none;}details > summary{display:inline-block;cursor:pointer;opacity:0.3;font-size:80%;font-weight:bold;padding:5px;margin:10px 0 0;}details > summary:hover,details[open] > summary{opacity:1;}details[open] > summary:hover{opacity:0.3;}details > summary:before{content:'\f138';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details[open] > summary:before{content:'\f13a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details > div{margin:10px 10px 30px 20px;word-break:break-all;}details > div > button{padding:3px 20px;margin:0 0 8px;font-size:80%;cursor:pointer;outline:none;border:2px solid var(--header-color);border-radius:3px;background:rgba(0,0,0,0);color:var(--header-color);opacity:0.3;}details > div > button:hover{opacity:1;}button.all.hide:before{content:'一括非表示';}button.all.hide:after{content:'\f070';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}button.all.show:before{content:'一括表示';}button.all.show:after{content:'\f06e';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}input[type="checkbox"]{display:none;}label{cursor:pointer;}input[type="checkbox"]+ label:before{content:'\f0c8';font-family:var(--awesome);font-weight:400;margin-right:0.5em;}input[type="checkbox"]:checked + label:before{content:'\f14a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open]{max-height:85vh;}#menu > summary{padding:0 10px 10px;}#menu[open] > summary{opacity:0.3;}#menu[open] > summary:hover{opacity:1;}#menu > summary:before{content:'\f0c9';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu > summary:after{content:'MENU';}#menu[open] > summary:before{content:'\f00d';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open] > summary:after{content:'CLOSE';}#menu > div{max-height:60vh;max-width:80vw;padding-bottom:50px;overflow-y: auto;}#menu > div::-webkit-scrollbar{display:none;}header a:link,header a:visited{color:var(--header-color);opacity:0.5;text-decoration: none;}header a:hover{opacity:1;}/* chat-log default style */#chat-log{margin:20px 0 20px 25px;}.chat{display:flex;flex-wrap:nowrap;flex-direction:column;padding-right:1em;}.chat > div{word-break:break-all;}.chat > div:nth-child(1){display:block;font-weight:bold;padding-top:0.2em;}.chat > div:nth-child(2){margin-left:1em;padding:0 0.2em 0.2em;}/* headline */[id^="index"]{margin-top:-90px;padding-top:90px;}/* hide-user style */.hide-user > div:nth-child(1),.hide-user2 > div:nth-child(1){display: none !important;}.hide-user > div:nth-child(2):not(:has(b)){margin-left:0;padding:0;}.hide-user + div:not(:has(.hide-user)){padding-bottom:0.5em;}.hide-user b,.hide-user2 b{ margin-left:-1.2em; }/* tab style */body{background:#2a2a2a;}/* diceroll */button.dice{outline:none;border:none;background:none;color:inherit;opacity:0.5;cursor:pointer;transition:0.3s;}button.dice:hover{opacity:1;letter-spacing:0.1em;}button.dice.select{opacity:1;}button.dice.select:hover{letter-spacing:0;cursor:default;}#dice-output-area{padding:10px 15px;background:#000;color:#888;border-radius:3px;font-size:80%;}#dice-output-area li{text-indent:-1.5em;padding-left:2.5em;}#dice-output-area li.sub{list-style-type:circle;padding-left:5em;}button.dice-output-area{display:none;padding:2px 8px;font-size:100%;}#dice-text-copy{display:none;}@media only screen and (orientation: portrait){button.dice{display:block;color:var(--header-color);background:rgba(var(--header-back),1);}span.dice-span{display:none;}}/* safari */summary::-webkit-details-marker {display:none;}/* mediaquery */@media only screen and (orientation: portrait){*{overflow-x:hidden !important;}html{width:100vw;overflow-x:hidden !important;}header{padding:50px 0 0 0;margin:0;width:100%;overflow-x:hidden !important;position:fixed;top:0;left:0;right:0;}#menu{padding-left:10px;}body{padding:120px 0 0 0;margin:0;;width:100%;font-size:90%;overflow-x:hidden !important;}#chat-log{width:90vw;overflow-x:hidden !important;margin:20px 0 20px 15px;}#chat-log div{word-break:break-all;overflow-x:hidden !important;padding-right:0;}.chat > div:nth-child(2){margin-left:0;overflow-x:hidden;}.hide-user b,.hide-user2 b{ margin-left:0em; }[id^="index"]{margin-top:-120px;padding-top:120px;}}</style>
+<script>$(function(){$(document).on('click','#tab-all,#user-all',function(){let tgt = $(this).attr('id').replace('-all','');let result = true;if( $(this).hasClass('hide') ){ result = false; }$('input[name="' + tgt + '"]').prop('checked',result);$(this).toggleClass('show hide');chatShowHide();});});$(function(){$(document).on('change','[name="user"],[name="tab"]',function(){ chatShowHide(); });});function chatShowHide(){$('.chat').show();let hide_list = [];$('[name="user"]:not(:checked),[name="tab"]:not(:checked)').each(function(){ hide_list.push('.' + $(this).attr('id').toLowerCase()); });hide_list = hide_list.join(',');$(hide_list).hide();$('#dice-output-area').html('').hide();$('.dice-output-area').hide();$('button.dice').removeClass('select');}</script><script>/* dice output */$(function(){$(document).on('click','button.dice',function(){if( $(this).hasClass('select') ){ return; }else{$('button.dice.select').removeClass('select');let tgt = $(this).attr('id');let user_ary = [];let dice_ary = [];let result_ary = [];let elm = $('#chat-log > div.diceroll:visible');for( i = 0 ; i < elm.length ; i++ ){let thisUser = elm.eq(i).attr('class').split(' ')[2];let txt = elm.eq(i).children().eq(1).html();try{let txt_re = txt.split('</b>');if( txt_re[1] == undefined ){ throw new Error(); }txt = txt_re[1];}catch(e){;}txt = txt.replace(/\n|\s|\t| |　| /g,'');let terms = false;if( tgt == 'diceroll' ){ terms = true; }else if( tgt == 'cf' && ( elm.eq(i).data('dice-result').split(',').indexOf('cr') !== -1 || elm.eq(i).data('dice-result').split(',').indexOf('fb') !== -1 ) ){ terms = true; }else if( elm.eq(i).data('dice-result').split(',').indexOf(tgt) !== -1 ){ terms = true; }if( terms ){if( user_ary.indexOf(thisUser) == -1 ){ user_ary.push(thisUser);dice_ary.push([]);result_ary.push([0,0]); }let user_num = user_ary.indexOf(thisUser);if( Boolean(elm.eq(i).data('dice-ccb')) && !Boolean(elm.eq(i).data('dice-x'))){try{let cbr_result = txt.split('&lt;=')[1].split('[')[1].split(']')[0].split(',');if( cbr_result[0].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[0].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }if( cbr_result[1].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[1].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}catch(e){;}}else if( Boolean(elm.eq(i).data('dice-x')) ){txt = txt.split(/#\d/);for( j = 0 ; j < txt.length ; j++ ){txt[j] = txt[j].replace(/<br>/g,'');if( j > 0 ){txt[j] = '<li class="sub">' + txt[j] + '</li>';if( txt[j].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt[j].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}}txt = txt.join('');}else{txt = txt.replace(/<br>/g,'');if( txt.match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt.match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}let tabspan = '<span>［' + $('#' + elm.eq(i).attr('class').split(' ')[1].toUpperCase()).next().text() + '］</span>';dice_ary[user_num].push(tabspan + txt);}}let output = '';for( i = 0 ; i < user_ary.length ; i++ ){output += '<b>▼ ' + $('#' + user_ary[i].toUpperCase() ).next().text();if( tgt == 'diceroll' || tgt == 'cf' ){ output += '（' + result_ary[i].join('C') + 'F）'; }output += '<br></b>';output += '<li>' + dice_ary[i].join('</li><li>') + '</li><br>';}$('#dice-output-area').html(output).show();$('.dice-output-area').show();$(this).addClass('select');}});});/* copy action */$(function(){$(document).on('click','button.dice-output-area',function(){$('#dice-text-copy').html($('#dice-output-area').html());$('#dice-text-copy span').remove();let li_elm = $('#dice-text-copy li.sub');for( i = 0 ; i < li_elm.length ; i++ ){ li_elm.eq(i).prop('outerHTML','　◦ ' + li_elm.eq(i).text() + '<br>'); }let copyTxt = $('#dice-text-copy').html();copyTxt = copyTxt.replace(/<br><b>/g,'\n\n').replace(/<li>|<b>|<\/b>/g,'').replace(/<\/li>|<br>/g,'\n').replace(/&lt;/g,'<').replace(/&nbsp;/g,' ');copyToClipboard(copyTxt);alert('クリップボードにコピーしました。');$('#dice-text-copy').html('');});});function copyToClipboard(txt){const pre = document.createElement('pre');pre.style.webkitUserSelect = 'auto';pre.style.userSelect = 'auto';pre.textContent = txt;document.body.appendChild(pre);document.getSelection().selectAllChildren(pre);const result = document.execCommand('Copy');document.body.removeChild(pre);return result;}</script>
+</head>
+<header>
+<details id="menu">
+<summary></summary>
+<div>
+<details>
+<summary>発言者別表示切替</summary>
+<div>
+<button id="user-all" class="all hide"></button><br>
+<input type="checkbox" name="user" id="USER0" checked><label for="USER0">system</label><br>
+<input type="checkbox" name="user" id="USER1" checked><label for="USER1">浅海 奏</label><br>
+<input type="checkbox" name="user" id="USER2" checked><label for="USER2">紫崎 ユウ</label><br>
+<input type="checkbox" name="user" id="USER3" checked><label for="USER3">　</label><br>
+<input type="checkbox" name="user" id="USER4" checked><label for="USER4">NPC</label><br>
+</div>
+</details>
+<details>
+<summary>ダイス出力機能</summary>
+<div>
+<button type="button" class="dice" id="diceroll">ダイス一括表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="sc">成功のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="fl">失敗のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="cf">CF表示</button>
+<div id="dice-output-area" style="display:none;"></div>
+<br>
+<button class="dice-output-area">コピー <i class="fa-regular fa-copy"></i></button><div id="dice-text-copy"></div>
+<br>
+<span style="font-size:70%;">
+※組み合わせダイス（CBR,CBRB）、繰り返しコマンド（Xn CCB等）は正しく判定できない可能性があります。<br>
+※ダイス結果のコピーではタブ名はコピーされません。
+</span>
+</div>
+</details>
+
+<br><br>
+<a href="#"><i class="fa-solid fa-angles-up"></i> ログの先頭へ</a><br>
+<a href="#log-end"><i class="fa-solid fa-angles-down"></i> ログの最後へ</a>
+</div>
+</details>
+</header>
+<body>
+<div id="chat-log">
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        舞台は現代日本、季節は夏、時刻は夕方頃。探索者達は、Ｓ市中央区の戸成俊之の自宅に訪れていた。<br>理由としては市内で建設されている新しい街のランドマーク『中央タワー』の落成前祝いだ。街全体がこの中央タワー完成に期待を寄せている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        今回奏ちゃんは両親に連れられ前祝いのパーティーに来ている 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        戸成俊之は建設会社の社長である 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        両親は参加者に挨拶周りをしにいったようだ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「パパ、ママ、いってらっしゃいなのです」奏はいい子なので待ちます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ではそこに話しかけてくる人がいます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 俊之 <br></b>
+
+        「こんにちは浅海のお嬢さん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……？どなたでしょうか？お父さまとお母さまのお知り合いなのですか？」ぼろが出た 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 俊之 <br></b>
+
+        「私はこのパーティーの主催者の戸成 俊之というんだ。君の両親を招いたのも私だよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……！本日はお招きいただきましてありがとうございます」ぺこり　お辞儀した 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 俊之 <br></b>
+
+        「いえいえこちらこそ来てくれてありがとう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「ええと…お父さまとお母さまに御用ですか？挨拶回りに行ってしまっていてここにはいないのです。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 俊之 <br></b>
+
+        「ああ、いやまあそうなんだが君に近い年頃の娘が私にもいてね、紹介しようと思って声をかけたんだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「え？かな……私にですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 俊之 <br></b>
+
+        「友達になってくれると嬉しいな、と思ってね。やはり友達は多い方がいいからね。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「そういうことでしたら、喜んで！」友達が少ないので嬉しいね！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 俊之 <br></b>
+
+        「ありがとう！じゃあ早速。葉月ー！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 葉月<br></b>
+
+        「こんにちは！私、葉月っていうの 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「こんにちは。私は浅海 奏です」にこ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 葉月<br></b>
+
+        「わぁ...あなたとってもかわいいわね！お人形さんみたい 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「え、そ、そうなのですか？……嬉しいのです。葉月ちゃんもとってもかわいいのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 葉月<br></b>
+
+        「そ、そうかな？ありがとう。奏ちゃんは好きな食べ物とかあるの？パパが色々食べ物を用意してくれてるから一緒に見に行きましょ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「奏は…えっと、和食なら何でも好きなのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        そんなこんなで仲良くなりました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        しばらくすると葉月は犬の散歩当番だからとパーティーを抜けて行きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 葉月<br></b>
+
+        「じゃあ、また後でね奏ちゃん！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「はい！また後で、なのです！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ではのんびり時間がすぎて行き 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        夜9時頃 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 俊之 <br></b>
+
+        「すまない浅海のお嬢さん。葉月を見なかったかい？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「え？葉月ちゃんなら、さっき犬のお散歩に行くって抜け出してから会ってないです…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「戻ってないのですか…？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 俊之 <br></b>
+
+        「おかしいな、犬の散歩ルート的にそんなに時間がかからないはずなんだが... 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「心配なのです……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 俊之 <br></b>
+
+        「すまないが、一緒に探してくれないか？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「はい！私にできることならお手伝いします！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……あ、でも……お父さまとお母さまに伝えて来てからでもいいですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「私もいなくなったら、きっと心配をかけてしまうのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 俊之 <br></b>
+
+        「それなら私も口添えしよう、私ならきっと信用してもらえるだろう。君の父親の病院も建てるのにも携わっているからね。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「ありがとうございますなのです！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        上手く両親を説得しました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        や　っ　た　ぜ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        というわけで捜索に移ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        あいあいあ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        探索者達が捜索に手を貸すことになると、俊之は地区を分けて捜索しようと提案する。<br>探索者達戸成家の周辺の中央区７丁目を担当することとなり、捜索を始める。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ７丁目は新興住宅地であり、均一に区画整理され、道を照らす街灯が並ぶ。<br>夜だというのに異様に明るく、虫の鳴き声以外の物音はしない。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        聞き耳どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#00ac97;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>浅海 奏</div>
+	<div>
+	
+        ccb&lt;=60　《聞き耳》 
+Cthulhu : (1D100&lt;=60) ＞ 38 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        出目えら 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        捜索を始めると戸成家の飼犬が吠える声が聴こえてくる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「わわ、ワンちゃんが吠えてるのです」見に行きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        探索者が鳴き声の方へ向かうと、そこには青ざめた表情の葉月が立っている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……！葉月ちゃん！どうしたのですか？」駆け寄りましょうか 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 葉月<br></b>
+
+        「奏ちゃん...!よかったやっとついた...! 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「ど、どうしたのですか……！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 葉月<br></b>
+
+        「あのね。散歩中におばあちゃんからもらった指輪を落としちゃって...それで探して見つけたんだけど... 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 葉月<br></b>
+
+        「７丁目だけど 、７丁目じゃない場所に迷い込んだの ……だけど、知らないおじさんが案内して助けてくれたの。」
+<br>「何も喋らなかったけど優しそうなおじさんだったよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……、不思議な場所に迷い込んでしまったのですね？」覚えがあるなあ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「その迷い込んでしまった場所って、どのあたりからか教えてほしいのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 葉月<br></b>
+
+        「うーん指輪を探すのに必死でよく覚えてないんだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「そうなのですか……でも、何はともあれ葉月ちゃんが見つかってよかったのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        聞き耳どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#00ac97;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>浅海 奏</div>
+	<div>
+	
+        ccb&lt;=60　《聞き耳》 
+Cthulhu : (1D100&lt;=60) ＞ 72 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        おい 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        さっきの葉月ちゃんの様子から周囲を見渡してみましょう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        奏は周囲を見渡します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        葉月に視線を戻すと彼女と飼い犬の姿が忽然と姿を消している。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……えっ？葉月、ちゃん？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        SANチェック1/1d3です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#00ac97;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>浅海 奏</div>
+	<div>
+	
+        ccb&lt;=65　《SANc》 
+Cthulhu : (1D100&lt;=65) ＞ 93 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        出目高くない？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        1d3 
+Cthulhu : (1D3) ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 浅海 奏 ] SAN : 65 → 62 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        出目どうした？？？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        その後いくら探しても葉月は見つからない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「そんな、どうして……？」周囲にお目星などある？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「えっと……戸成さんには伝えておかなくちゃ、なのです、きっと……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        おじさんにかくかくしかじかします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        かくしかするとすぐに警察に捜索を依頼するとのことでした。今日はパーティーは取りやめ帰宅していいとのことです。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        では帰宅しますかね…… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        そこから音沙汰なく1週間過ぎました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        わぁお 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        奏ちゃんは葉月の母の和子から戸成家に呼び出される 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        呼び出されました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 和子<br></b>
+
+        ごめんなさいね二人とも呼び出して。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「いえ、大丈夫です……」誰だろう…ユウちゃんにぺこってお辞儀する 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 和子<br></b>
+
+        今知り合いの伝手を総動員して葉月の捜索をしているの。こちらのユウさんもそのうちの一人よ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「ども、紫崎ユウっす！人手が足りないとのことで参上したっすよー！」にこにこ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「そうでしたか。浅海 奏です。宜しくお願いします」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        二人は改めて和子の話を聞きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        彼女の話では夫の俊之は心労と過労で倒れてしまい、近所の病院で入院をしているようだ。<br>俊之は中央タワー建設の中心人物であり、彼が病に伏せている間は、工事もストップしている状況だ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        よくみると和子も化粧で隠しているが目の下にクマが出来ている 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「葉月ちゃん……どこに行ってしまったのでしょう……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 和子<br></b>
+
+        「それを探すのに二人にも協力してもらいたいの。二人ともお願いします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        深々と頭を下げられます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「もちろんなのです！えっと、かなd……私でよければ全然力になりますから……頭を上げてください……」おろおろ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「あらら……大変そうっすね。大丈夫っすよ！あたしも手伝うっす！」謎の自信 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 和子<br></b>
+
+        「ではユウさん契約の話をちょっと... 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「はいはい、何っすか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        正式な依頼を和子から受けるなら手付費用として50万円さらに、成功報酬として300万円を支払う内容を話される 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「一応確認なんすけど、こんなにもらっちゃっていいんすかね？ありがたいんすけど……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 和子<br></b>
+
+        「娘はお金には変えられませんから... 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「そっすか？ま、お金貰う以上責任もって頑張るっすよ！任せてほしいっす！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>戸成 和子<br></b>
+
+        「では葉月のことをよろしくお願いします。あと警察の捜査の進捗状況も聞いて来てもらえるとありがたいです。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「わかりました。また葉月ちゃんと遊びたいので頑張ります」にこ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「了解っすー！んじゃ、まずお巡りさんのとこに行けばいいっすかね？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「そうですね、おまわりさんのところに行ってみましょう！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「そうだ、紫崎さんも乗っていきますか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「車ならはやいですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「お、お嬢様の車っすか？あたし乗ったことないっすよ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「大丈夫です、普通の車ですよ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        奏専属のドライバーは主人の指示を待ってこちらをうかがっています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「ま、バイクは後で取りに来ればいっか。奏ちゃんさえよければお邪魔するっす」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「はい、大丈夫です。バイクはあとでご自宅に届けましょうか？」にこ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「えー！そんな親切にしてもらっちゃっていいんすか！ぜひお願いしたいっすね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「では執事に頼んでおくのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>ドライバー<br></b>
+
+        かしこまりました、連絡しておきます。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「これが……おかねもちのちからっすか……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「ありがとうございます」とりあえずユウちゃんと一緒に車でごーごー 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        警察署につきました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        Ｓ市中央区を管轄する警察署。その周りには一連の行方不明事件を取材しようとしている報道陣が多数いる。<br>警察職員達は連日の加熱報道により、苛立ちと焦燥感を感じているようだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「はわわ……記者さんたちがたくさんなのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「警備員さんにお願いしましょう」警備員さんに話しかけに行きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>警備員<br></b>
+
+        「どうかしましたか？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「私は浅海奏です。えっと…戸成葉月ちゃんの件で、戸成さんの奥様からお話を伺ってきてほしいと言われたのでお伺いさせていただいたのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「あたしたち人探ししてるんすよ。戸成さんとこの娘さんなんすけど……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>警備員<br></b>
+
+        「ああ、少々お待ちください 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        警備員が署内に入ってしばらくすると別の刑事らしき男が出てくる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>三又 五郎 <br></b>
+
+        「どうも、三又五郎といいます。外ではなんですのでとりあえず中へどうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「ありがとうございます」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「お邪魔するっすー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        彼は生活安全課へと二人を通します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        法律か知識の2分の1どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#00ac97;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>浅海 奏</div>
+	<div>
+	
+        ccb&lt;=(45/2)　《知識1/2》 
+Cthulhu : (1D100&lt;=22) ＞ 70 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=30 《知識1/2》 
+Cthulhu : (1D100&lt;=30) ＞ 93 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        特に何も思わず案内されていきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        黙って大人しくついていきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「指名手配の顔凶悪そうっすね！！うける」って笑いながらついていきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……？」聞かなかったことにした 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>三又 五郎 <br></b>
+
+        「.....とりあえず座ってください。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「はい、失礼します」お嬢様なので綺麗に座ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ふつうにすわります。その内足崩しそう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>三又 五郎 <br></b>
+
+        「それで今日はどういったご用件で？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「はい……ええと、戸成さんの奥様から、調査の方の話を聞いてきてほしいと言われて、代わりに。それと、私たちも葉月ちゃんを探すのを手伝ってほしいと言われているので……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……奏はいなくなったとき一緒にいたのです。それに、お友達になったから……また遊びたいのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「あたしも娘さん探すの頼まれてるんすよ。進捗どうっすかね？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>三又 五郎 <br></b>
+
+        「あー捜査の進展ね、特に進展はありません。以上です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……今の段階でわかっていることって教えていただけますか……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#00ac97;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>浅海 奏</div>
+	<div>
+	
+        ccb&lt;=45　《説得》 
+Cthulhu : (1D100&lt;=45) ＞ 46 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        ねえ；；；；； 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        やる気はあった 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=40 《信用》 
+Cthulhu : (1D100&lt;=40) ＞ 73 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>三又 五郎 <br></b>
+
+        「何もないですね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……あの。そう言えば、なんですけど……葉月ちゃん、いなくなる前に不思議なこと言ってたんです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>三又 五郎 <br></b>
+
+        「ほう、あなたは居なくなったとき近くに？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「はい。葉月ちゃんが迷子になって、それで戸成さんに探してほしいと言われたので……それで一緒にいたのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        シークレットダイス ???
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        なーんか隠してると思います 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>三又 五郎 <br></b>
+
+        「近くにいたなら犯人も目撃しているのでは？何か怪しい人物などは 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……いえ。犯人までは見ていないのです。不思議なことならありましたけれど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>三又 五郎 <br></b>
+
+        「不思議なこととは？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……おまわりさんも内緒の事を教えてくれたら奏も言うのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>三又 五郎 <br></b>
+
+        「...捜査の進展に繋がるのでご協力頂けないでしょうかね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「考えてみてほしいのです。奏たちも葉月ちゃんを見つけたい。お巡りさんも事件を解決したい。目的は同じ……ではないでしょうか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……協力、とおっしゃるのなら、こちらにも協力してほしいのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>三又 五郎 <br></b>
+
+        「悪いが一般人に協力している余裕はないんでね。帰ってくれないか 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「むう。困るのです。奏たちは戸成さんに正式にお願いされているので……帰るわけにいかないのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「こんな友達思いの良い子が一生懸命頼んでるんすよ！何か教えてくれてもいいじゃないすかー！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……少し情報をくれるだけでいいのです。お願いします」うるっ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        スカートぎゅうっって握りしめて頭下げてます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        APP×5でどうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#00ac97;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>浅海 奏</div>
+	<div>
+	
+        ccb&lt;=(18*5)　《APP*5》 
+Cthulhu : (1D100&lt;=90) ＞ 53 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「(奏ちゃん、意外と策士っすねぇ……)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では少し心が動いたのか考え込んだ後、場所を移そうと言ってきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「…はい」場所うつすならついていきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「話が分かりそうな人でよかったっすね！！」おまえはなにもしてない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        屋上付近の階段まで来ました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>三又 五郎 <br></b>
+
+        「ここなら人もこねえだろう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        奏ちゃんは涙をごしごししながら聞く姿勢です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「ってことは、人に聞かれたくない話ってことっすか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>三又 五郎 <br></b>
+
+        「まあこういうのはあんまり言うべきではないが 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        以下の情報を教えてくれます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        行方不明事件はＳ市中央区７丁目に集中している。<br>・ 昔から７丁目地区は行方不明（家出人） が多いため、警察は捜査を渋っている印象がある。さらに、事件性のある行方不明事件は刑事課に上がってくるはずだ。<br>・ 詳しくはないが、７丁目には神隠しの伝説があるらしい。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「神隠し……７丁目に集中……」ふむふむ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「教えてくださってありがとうございますなのです。……葉月ちゃんがいなくなる直前のことをお話ししますね」ちゃんとお巡りさんに話します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>三又 五郎 <br></b>
+
+        「なるほどな 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>三又 五郎 <br></b>
+
+        「まあさっきの話、俺が言ったって言うなよ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「はい！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「はいはい、まあ言わないでおくっすよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>三又 五郎 <br></b>
+
+        「そっちのチャライお嬢ちゃんはちょっと心配だがな... 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……まずは神隠しの事から調べる必要がありそうなのです。……お巡りさん、内緒の事を教えてくれてありがとうございました」ぺこり　おじぎした 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「チャラいとはなんすか！失礼っすね！」ぷんすこ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        まあ警察署で得られる情報はこんな感じなのかな？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>三又 五郎 <br></b>
+
+        「もう用は済んだろう早く行け 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「はい！お忙しいところありがとうございました。……紫崎さん、行きましょう？」最後にもう一度ちゃんとお辞儀して立ち去ろうね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        最後に聞き耳どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#00ac97;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>浅海 奏</div>
+	<div>
+	
+        ccb&lt;=60　《聞き耳》 
+Cthulhu : (1D100&lt;=60) ＞ 16 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=65 《聞き耳》 
+Cthulhu : (1D100&lt;=65) ＞ 45 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>三又 五郎 <br></b>
+
+        「『８丁目』は昔から神隠しが多くて弱る……、信じられないが『伊神』の言う通りなのか……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        という独り言が聞こえます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        ほーう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        まあとりあえず車に戻りましょう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「…とりあえず、神隠しについて調べられる場所…図書館でしょうか。紫崎さんはどう思うのです？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「図書館！いいっすね！なんかそういう系の伝承とか調べられそうっすよね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「じゃあ図書館行きましょうか。ドライバーさん、お願いします」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>ドライバー<br></b>
+
+        「かしこまりました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        図書館についてあなた達は車から降ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        わぁい！じゃあ図書館で７丁目の神隠し伝説について調べたいです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>ドライバー<br></b>
+
+        「では調べものが終わるころにまた来ます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「ありがとうございます」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「あざーっす！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        車が去った後、別の車があなた達の傍に近寄ってきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        おや…… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ん？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……？」ユウちゃんの後ろにぴったりくっついておこう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        よく見るとTV局の車だと分かります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「テレビ局の車っすね、どこの局っすか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        中からカメラマンらしき人とインタビュアーらしき女性が降りてきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……？」こわい…… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>馬野 鹿子 <br></b>
+
+        「どーもー＾＾馬野鹿子って言います 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……っ、何の御用ですか……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「はぁ、何か用っすかね？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>馬野 鹿子 <br></b>
+
+        「いやだなぁ怪しいもんじゃないですよ。クトゥTVですー！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>馬野 鹿子 <br></b>
+
+        「さっき警察署から出てきたじゃないですか？行方不明の件について何か知ってますか？もしかして家族の方とかですか?＾＾ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「私たちはなにも……知らないです。それに、あの、迷惑です……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「えぇ～？なんでそんなこと教えなくちゃいけないんすか？嫌っすよ～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>馬野 鹿子 <br></b>
+
+        「ちょっとだけ！ちょっとだけでもいいんです！お話聞かせてもらえませんか！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「や、嫌……です……」じわ　これはガチ泣き 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「ほらー泣いちゃったじゃないすかー！無理矢理聞き出すのはよくないと思うっすね～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>馬野 鹿子 <br></b>
+
+        「あらあら、ほら飴ちゃんあげるから～^^ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「いらないです、帰ってください！」いや！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「あーそういうのいいんで！どーぞ帰ってくださいっす！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        相手はずっと粘ってきますね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        どうしますか？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……だれかっ、たすけてください！！」大きい声で誰かたすけてー！します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「あーもうしつこいっすね！警察呼ぶっすよ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        スマホをとりだします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>馬野 鹿子 <br></b>
+
+        「ちょっ.....!くっ.....今度絶対話を聞かせてもらうからな！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        車に乗って退散していきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……うっ、うええぇん……怖かったのです、ううぅ……」泣いちゃう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        去っていく車に向かって「べーっ」とします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「あー奏ちゃん、怖かったっすね、大丈夫っすか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「はい……ごめんなさい、泣いてしまって……」ぐすぐすしながらも図書館は入れますか 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        入れますね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……図書館で、調べものしないと」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        涙拭きながら調べものします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        七丁目の神隠し伝説について 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        中央区内の図書館。市内に関する資料を揃えることが出来る。司書さんもそこそこいる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        図書館どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#00ac97;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>浅海 奏</div>
+	<div>
+	
+        ccb&lt;=55　《図書館》 
+Cthulhu : (1D100&lt;=55) ＞ 91 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        出目 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=55 《図書館》 
+Cthulhu : (1D100&lt;=55) ＞ 15 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        たすかる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ﾖｼ! 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        資料が一個見つかりました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「見つからないので…奏は司書さんに聞いてくるのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では司書さんが調べてくれます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        シークレットダイス ???
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        資料を持ってきてくれます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……まだあるような気がするのです。あの……お手数ですがもう少し探していただいてもいいですか…？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        あの　奏ちゃんそいつに殺されかけたんですけど 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ではもう一人の顔が悪い司書が調べてくれます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        シークレットダイス ???
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ［資料１］Ｓ市のどうわ<br>Ｓ市に伝わる民話についてまとめられた絵本。中央区についてまとめられたものは以下の三つである。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・『二度栗山（ニドクリヤマ）と弘法法師』<br>弘法大師と思われる僧侶が天狗を連れて農村を訪れた。<br>村の者達は彼を歓待し、そのことに痛く感動した僧侶が、村の近くにあった沼に『種』を投げ込み霊泉とした。<br>その霊泉は年に二度も栗が実る程の豊作をもたらし、村は大いに栄えた<br>という童話。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・『長田寺の水飲み竜』<br>長田寺の欄間に彫られた竜が、水害に悩まされていた村を救ったという童話。<br>川の水を飲み続け、水害を防いだという。<br>この童話は天狗沼の縮小工事の暗喩である。<br>当時の長田寺が水害対策として中心となって工事を行った。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・『さすらさまのて』<br>不気味な挿絵と内容のために子どもたちには不人気な童話。<br>魚を釣りに沼へやって来た子どもが、その帰り道で「さすらさま」に「こっちをみなさい」と声をかけられ、振り返ってしまったため連れ去られたという内容である。<br>不気味なことに最後の一節は「男の子はさすらさまに連れて行かれてしまいました。さすらさまの家族になり、さすらさまになってしまうのです」と書かれている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ［資料２］中央区の地図群
+<br>「中央区マップ最新版」、「中央区マップ２０００年版」、「１９５０年度版天狗町地図」の三つの地図。<br>各地図を比較すると次のようなことが分かる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・今は存在しない旧８丁目<br>２０００年版の地図には、今は存在しない８丁目が記載されている。<br>最新版の地図と比較すると７丁目に吸収されていることが分かる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・天狗沼<br>１９５０年度版天狗町地図には、天狗沼という沼地があったことが分かる。<br>２０００年版と比較すると旧８丁目地域のほとんどを占めていることが分かる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ［資料3］前市長について 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        □元Ｓ市市長『伊神正』について<br>現中央区地域の首長を歴任し、再編合併事業の責任者でもあった政治家である。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        スキャンダルについて<br>中央区の有力寺社関係者（山本白子）と深夜の密会をマスコミに嗅ぎつけられて深夜の密会として報道された。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        合併時の伊神氏の私案について<br>伊神氏の施策で住民達から批判があり、退任の遠因となったものは以下のものである。　　　　　　　 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        埋め立て事業を断行した。さらに、都市開発の名目で埋め立て事業を行ったにも関わらず、埋立地を市街化調整区域（住宅や商業ビルなどを建てられないよう規制した地域）とした。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・合併時に区名を『中央区』とした。中央区の区割りは『Ｓ市中央区◯◯番地』となっている。<br>普通、市名と区名の間には地域名が入るものであり、合併などで整備化された地域はなおさらそのようにする。<br>地域で区域が分かれていないため、番地数が異様に多い。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「(……この伊神という方……気になるのです…)」調べます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#00ac97;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>浅海 奏</div>
+	<div>
+	
+        ccb&lt;=55　《図書館》 
+Cthulhu : (1D100&lt;=55) ＞ 74 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        どうして 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「紫崎さん、あの……この伊神さんという方について調べてほしいのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「お願いできませんか…」お願いします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「ん？いいっすよ！ぐぐれば出てくるっすかね？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=55 《図書館》 
+Cthulhu : (1D100&lt;=55) ＞ 53 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        行方不明となって捜索中になっているらしい。今は新市長が就任して市街地調整区域にも建物が建っているようだ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「ありゃ、この人も今行方不明らしいっすよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「そうですね……ええと、それなら市役所に行ってみませんか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「市長さんにお話を聞きたいのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「今の市長さんからでも話って聞けるんすかね？ま、行ってみればわかるっすね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        市役所にいきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では市役所にぶーんします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ⊂二二二（　＾ω＾）二⊃ﾌﾞｰﾝ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        市役所に来ました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        どうしますか 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        お話を聞きたいので～～～～とりあえず窓口の人に用件を伝えましょう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「あの……すみません。ちょっとよろしいでしょうか…？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        市役所の人に話しかけます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>窓口マン<br></b>
+
+        「どうかしましたか？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「えっと……市長さんにお話を伺いたくて……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「こんちはっすー！市長さんとお話させてほしいっす！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>窓口マン<br></b>
+
+        「市長は現在他県に長期出張中です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「えー、じゃあ電話とかでお話とかさせてもらうとかできないんすかー！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>窓口マン<br></b>
+
+        「無理ですね。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……どうしても、ですか……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「あの、あのっ、お友達が行方不明で、それで調べものしてて……市長さんにお話を聞けたら、何かわかりそうなんです……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>窓口マン<br></b>
+
+        「それでも無理ですね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「あ！メールとかでもいいっすよ！市長さんインスタやってるっすか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>窓口マン<br></b>
+
+        「やってません 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        シークレットダイス ???
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        バスロマンっていいよなあって思いました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「(あーお風呂入りたいっすね……)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        シークレットダイス ???
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        バスロマンってなんだったっけと思います 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……わかりました。お時間を取っていただきありがとうございました」ぺこり　だめそうなのでお辞儀して立ち去ろう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>窓ロマン<br></b>
+
+        「はい。またのお越しをお待ちしてます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……長田寺に行ってみましょう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「もしかしたら何かお話が聞けるかもなのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        寺に行きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ついていきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        車でぶーんします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ⊂二二二（　＾ω＾）二⊃ﾌﾞｰﾝ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        長田寺につきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「ドライバーさん、何度もごめんなさいなのです……もう少しだけ付き合ってくださいね」ごめんね　労わろう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>ドライバー<br></b>
+
+        「いえ仕事ですから、お気になさらず 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「ありがとうございます。……紫崎さん、行きましょう」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        今は夜8時くらいです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「………早く帰らないとパパとママに心配をかけてしまうのです……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……ここでお話を聞いたら一度帰らないと……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「暗くなってきたっすね……大丈夫すかねぇ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        住職さんを訪ねたいです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        昔から中央区地域にある寺であり、地元民から「ちょうでんさん」と親しまれている歴史ある寺だ。<br>寺には身寄りのない子ども達を引き取る児童施設と護身術道場が併設されているが夜のため子供は誰もいない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        寺の方の一室は明かりがついている 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        とんとんノックしてみよう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「どなたですか？」と尋ねられる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「こんばんは。えっと、夜分遅くにごめんなさい。お話を聞かせていただきたいことがあるのですが……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「わ、私は浅海 奏と言います。その、家に電話していただいても構わないので……怪しいものではないのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「うう……うまく伝えられないのです、奏はだめな子なのですぅ……」ちょっと疲れちゃったかな 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ではぐずっているのが聞こえたのかドアが開いて女の人が顔を出します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「どうかしましたか？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「あの、えっと……S市の民話の事で、聞きたいことがあって……夜遅くで申し訳ないのですけれど、お願いします……」深々と頭を下げましょう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「えっとあなた何歳？保護者の方とかは...? 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「えっと、15歳です……あの、今はこの方と一緒にいるので……」紫崎ちゃんをちらっと見ましょう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「あー、一応あたしが付き添い的なそんな感じのアレなんすよ！全然問題ないっすー！」にこにこしてます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「あっ...すいません気づかずに...お姉さんとかですかね？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「えっと……」なんて言えばいい？ってユウちゃんの方見ようかな！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「えーっと……近所に住んでる子っすよ！まあ妹みたいな感じっす！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「ああ、なるほど？まあ外もなんですし中へどうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「ありがとうございます……」上がります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「(たすかったーーー！！)お、お邪魔するっすー……」あがりこみます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では本堂に通されます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        寺の本堂には、一般的な仏具や写真や屏風などが置かれている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        座布団を出されて座るように促される 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「ありがとうございます、失礼します」お行儀よく座ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「お、あざっす！」片膝立てたあぐらをかいてますね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「えーっとそれで何の御用でしょう？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「え、えっとですね……S市の民話についてお聞きしたくて……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「私のお友達が、神隠しに遭ったかもしれなくて……藁を掴むような思いで、その……何か手掛かりがあればって……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「神かくし...ですか？具体的にどういう...? 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「具体的に……えっと、お友達はお散歩をしてて、七丁目だけど七丁目じゃない場所に迷い込んで……知らないおじさんに案内されて、一度家まで戻ってきてたんです。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……でも……少し目を離したら、いなくなってしまって……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「…図書館で神隠しについて調べていたら、ここのお寺の名前が出てきたので……何か聞けるかもって思ったのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「私は何も知りません 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        ハイ心理学 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        シークレットダイス ???
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        何か強烈な恐怖感を感じており、何かを必死に隠している様子が分かる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「………あの………お願いです。きっとお友達も今怖がっているのです。助けてあげたいのです……どうか、知っていることを教えていただけませんか……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「お願いです……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=70 《目星》 
+Cthulhu : (1D100&lt;=70) ＞ 37 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「小さいころに聞かされて怖い話だったから、詳しいことは分からない、知らない！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「怖い話……さすらさまのお話、ですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「私は知らない！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「………もしかして、小さい頃にさすらさまに会ったことがあるのですか……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        すっかり黙り込んでしまいますね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        黙ってる隙に伏せてある写真立てを見に行きます… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「もし、そうなら……どうやって帰ってきたのかだけでも……」申し訳なさそうにするけどこちらも引けない… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「(なぁーんすかねコレ？)」みたいな感じで 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ではそれを見ると山本とおじさんが写っています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        アイデアをどうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=65 《アイデア》 
+Cthulhu : (1D100&lt;=65) ＞ 89 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「なんすか？このオッサン」「裏側にも何か書いてないっすかね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        裏を見ると「伊神のおじさんと記念撮影」と書いてある 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「すんませーん、この写真におねーさんと一緒に写ってる『伊神のおじさん』って人、お知り合いっすか？」二人の前に写真を出します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「そっ、それは... 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「伊神……前の市長さんですよね。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……葉月ちゃん、言ってました。全然喋らないけど、優しそうなおじさんが道案内してくれたって……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……心当たり、あるのではないでしょうか…？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        交渉技能どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#00ac97;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>浅海 奏</div>
+	<div>
+	
+        ccb&lt;=45　《説得》 
+Cthulhu : (1D100&lt;=45) ＞ 76 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        ｳｳﾝｯ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=40 《信用》 
+Cthulhu : (1D100&lt;=40) ＞ 15 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        おおお 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        やったぜ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        観念した様子で伊神氏の失脚した理由は自分とのスキャンダルが原因にもなっていると答える。<br>彼女と伊神氏とは親子のような仲であったが、それを周りに恋愛関係であると誤解されてしまったのだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「やっと話してくれたっすね……そしたらアレっすか？その伊神さんがやろうとしてた事とか、知ってる感じなんすか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        保護者は交渉技能でどうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=40 《信用》 
+Cthulhu : (1D100&lt;=40) ＞ 85 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……もしかして伊神さんは、神隠しを止めようと八丁目の沼……天狗沼を埋め立てようとしたのではないでしょうか……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「神隠し……さすらさまが沼へ来た子を連れ去ってしまうから……沼を埋めて、発生しないようにしたかったのではないですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ではそれを聞くと観念したように話始めます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        白住職は昔に伊神氏と共に『さすらさまのて』を鎮めるために儀式を行ったという。<br>儀式が終わったと早合点してしまい、彼女は『さすらさまのて』の名前を呼んでしまったのである。<br>その声に応えるかのように『彼ら』は白住職に襲いかかったが、ある人伊神氏に庇われ奇跡的に生還したという。<br>その後の白住職は恐怖で何もすることが出来ず、後悔する日々を送っていたという。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……その儀式のこと、詳しく聞かせていただけませんか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「...ホントにこれより先に行くのですか？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「だって、葉月ちゃんは友達なのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「葉月ちゃんを助けたいですし、……パパとママを見てるとわかるのです。戸成さんの奥さんも、戸成さんも、葉月ちゃんを心配してるのです。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「葉月ちゃんだって、ご両親に会いたいと思うのです。だから、一緒にお家に帰るのですよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「あたしも行方不明になった人を探さなきゃいけないんすよ。戸成さんにも頼まれたんすから！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「(……あとはあたしの生活費もかかってるっす！！！)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        すると山本は腕を見せてくる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        そこにはドス黒い手形が禍々しく残っている 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        この恐ろしき事実を知った探索者は１／１Ｄ６ポイントの正気度ポイントを失い、＜クトゥルフ神話＞技能を３ポイント得る。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#00ac97;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>浅海 奏</div>
+	<div>
+	
+        ccb&lt;=62　《SANc》 
+Cthulhu : (1D100&lt;=62) ＞ 40 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=46 《SANc》 
+Cthulhu : (1D100&lt;=46) ＞ 87 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 浅海 奏 ] SAN : 62 → 61 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        1D6 
+Cthulhu : (1D6) ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 紫崎 ユウ ] SAN : 46 → 43 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「不完全にやった結果わたしはこうなりました。だから.... 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「次は必ずやり遂げましょう。皆さんの力で 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……はい！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「がんばるっすよ！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        沈め雛の儀式<br>「さすらさまのて」を抑えるための呪文。<br>人形など人間の姿をした者にマジック・ポイントを篭める。<br>その人形を掴んだ「さすらさまのて」の手腕は、それを離すことはないので新しく手腕が増えることもない。<br>新しく人間を捕まえようともしない。<br>使用する人形は、人間の形をしているものならよい。紙を人型に切り抜いた簡易的なものでよい<br>呪文はさすらさまが潜んでいる場所の前に立ち、生贄を捧げるのと同じように詠唱を行う。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        人形一つにつき1MPです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「お人形さんを作ればよいのですね？それなら得意なのです！」そういう意味ではない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「へ～マジで儀式？って感じなんすね！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「あたし不器用だからちゃんと作れるか心配っすね～！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「奏、器用さには自信があるのです。」どや　だからそうではない 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「ならいっそ、あたしの分奏ちゃんに作ってもらったらいいんじゃないすかね！！」なげ…やり… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        シークレットダイス ???
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「しかしこの人数だけで人形の数が足りるかどうか...今までさすら様は100年に渡って人を取り込んできました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「取り込まれた人間はさすら様の手に変えられ、また人間を取り込むという悪循環に陥っています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「じゃあ、取り込まれた人全員分の人形を用意しないといけないということなのですか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「万全を期すならそういうことですね。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「何人取り込まれたのでしょう……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「あたしらだけじゃ人形が足りないってことは……他にも作る人が必要なんすか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「はい、人形を作るには念を籠めないといけないのですが一人で籠めれる念は限界があります。」<br>「ここ最近だけでも12人の行方不明者がいるらしいですし、100年となると...」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「じゃあ、たくさん人に声をかけて協力してもらうのです。戸成さんとか、お巡りさんとか、協力してくれそうな人にお願いをするのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……それでも足らないなら、テレビの力も借りるのです。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「インターネットで人を集めるとかどうっすか？こういうオカルト系？好きな人って結構いると思うんすよね、オフ会みたいなノリで集められないっすかね～」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「それは名案なのです！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「しかしあんまり大事にすると逆に犠牲者が増える可能性もあります。なるべく皆さんが信用出来る人でお願いできますか？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「奏のパパとママにもお願いしてみるのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「それから、使用人さんにもお願いしてみます。皆さん優しいのできっと大丈夫なのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「んじゃあたしの同僚とかにも声かけてみるっすよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「ひ、必要だったら報酬山分けとかでもいいっすよ……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「し、使用人...?それって何人ほど...? 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「えっとー……奏が知ってるのは60人くらい……でしょうか……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「足らないなら家庭教師さんとかはる先生にもお願いするのです。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「……すげーっすねぇ」ろくじゅ…え……？みたいな顔 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「あわわわわ...ろ、60でしゅか...場所を用意しておかないと 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「？広い場所が必要でしたら、用意するのですよ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「いやーありがたい申し出じゃないっすか！お嬢様サマサマっすね！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「いえ...人形はお寺で作らないといけないので...大丈夫です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「そうなのですか？わかったのです」聞き分けがいい 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「えーっと...じゃあいつから作り始めましょう？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「今夜にでも……と言いたいところですが、使用人さんは泊まり込みの方以外お家に帰ってしまいますし……明日の方が良いのです、パパとママに頼んで事情は今日のうちに説明してもらうのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「とりあえず明日っすかねー、今日はもう遅いんで。同僚に連絡もしたいっすよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「ではまた明日の朝にお待ちしております。また再三の警告になりますが、信用が置ける人以外には話さないようにお願いしますね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「はい、なのです！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「了解っす！んじゃまた明日っすー」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        二人が帰った後、近くで動く人がいたことを気付いたものはいないだろう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では次の日の朝です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「おはようございますなのです！」使用人60人と両親とともに登場する令嬢 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「はようございまーす！ちゃんと同僚も連れてきたっすよー！」バイク×5 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        あ、あはは。ほんとにいるんですね使用人さん... 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「…？奏は嘘は言わないのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「柴崎さんもありがとうございます。今日はよろしくお願いします」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「……あたし柴崎じゃなくて紫崎っすよ。ま、よく間違えられるんでいいんすけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「す、すいません。では気を取り直して早速人形作りに取り掛かろうと思います 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「はい！皆さん頑張るのです！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「やるっすよ！おー！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        二人が連れてきた人たちは一律10mpとします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        どれくらいMP使わせますか 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        使用人たちはそれぞれ8mp使って作ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        コンビニの同僚は9mp使います 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        525体出来ました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        二人は12体作りました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「すいません、私は儀式の為に精神力を温存しておかないといけないのでつくれないんです... 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「はい。大丈夫です。……皆さんありがとうございますなのです、お好きな飲み物を持っていって、休んでくださいね」というわけで持参した大量の飲料を使用人さんとかユウちゃんの同僚に配ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「みんなお疲れーっす！これだけあればいけるっすよ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>使用人<br></b>
+
+        「奏お嬢様のためならこれくらいどうということはないです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>同僚<br></b>
+
+        2Lのコーラをもらってラッパ飲みします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「本当に使用人さんたちにはいつも助かっているのです。ありがとうございますなのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>同僚2<br></b>
+
+        「一仕事した後のプァンタはサイコーだな！！！！どころでこれ日給いくら？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「成功報酬で10万っすかね……はは……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「えーっと流石に儀式にまでこの人数を連れて行くわけにはいかないので...私と奏さんと紫崎さんだけでお願いします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「はい。……では行ってくるのです」心配しないで大丈夫なのです、って両親とか使用人さんに説明してからついていきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「じゃ、あたしはバイク転がして行くんで。奏ちゃん後ろ乗るっすか？」乗るんだったらヘルメット貸してあげようね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「はわ……こ、こわいので山本さん、乗せていただいてもいいですか……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「えぇ、わたしは車で向かうので構いませんよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「そっすか？風を切って走るの気持ちいいんすけどね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では沼にぬまぬまと向かいます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ぬまぬま 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        天狗沼は旧８丁目の街中にある。少し路地裏の小道に入った場所で、背の高い竹やぶに覆われた水たまりのような池だ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        沼につくと山本さんが話始めます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「注意事項がいくつかあります。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「まずひとつ、決して儀式の最中と儀式が終わってからも例の名前を呼んではいけません 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「二つ目、儀式の最中は目をつぶっていてもらいます。恐ろしいものを見る事になりますから 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「三つ目、決して儀式が終わるまで目を開けないでください。あの手この手で惑わせようと相手は動いてきます。」<br>「どれが真実でどれが嘘なのか惑わされないように。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        以上です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「う……なんか難しそうっすね……でも、ここまで来たんだからやるしかないっすよね！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「わかったのです。がんばるのです！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        イケイケドンドン 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「では...いきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「はい。」お目目閉じちゃおうね　きゅっ… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ぎゅ～～～って目を瞑ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        星間の虚空を越え、源へと回帰せん<br>万物の終焉はかつて生まれ来るところ<br>謎に充ち満ちた全ての定命のものの理解を超え<br>かつてありしものはまた再び砕かれん<br>種族の周期を古代へと辿ろう<br>源へと回帰し、根源の中へと<br>歳月につもりし厄災とて消し去れぬ<br>彼の青白き幼生は常に戻る、<br>それぞれの時代、何時であれ！<br>ウボ＝サスラ、愚鈍なる厄災<br>精神なき神、造物主！<br>さぁ！贄を受け取り給え！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        詩を唱えた後に、池から大量の何かが飛び出してくる。<br>辺りには腐臭が充満し、大蛇のような巨大なものが這い回る。<br>周囲を確かめるように動き、探索者へと絡みつくかもしれない。<br>暫くした後に手腕達は人形に殺到し、奪い合うかのように人形を掴み池の中へと戻っていく。<br>目を閉じているために、分からないが目の前には巨大な手腕達が這い回っている事実に１／１Ｄ６ポイントの正気度ポイントを喪失する。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#00ac97;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>浅海 奏</div>
+	<div>
+	
+        ccb&lt;=61　《SANc》 
+Cthulhu : (1D100&lt;=61) ＞ 95 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        1d6 
+Cthulhu : (1D6) ＞ 6
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        あぁ！！！！！！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#00ac97;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>浅海 奏</div>
+	<div>
+	
+        ccb&lt;=55　《アイデア》 
+Cthulhu : (1D100&lt;=55) ＞ 58 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        よぉし！！！！！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=43 《SANc》 
+Cthulhu : (1D100&lt;=43) ＞ 90 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        1d6 
+Cthulhu : (1D6) ＞ 6
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 浅海 奏 ] SAN : 61 → 55 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=65 《アイデア》 
+Cthulhu : (1D100&lt;=65) ＞ 65 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        1d10 
+Cthulhu : (1D10) ＞ 4
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        多弁症ですね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「………」怖いのでもっとぎゅーっと目を閉じる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「バスロマンいかのおすしデミグラスハンバーグっす！！！！！」目瞑ったままなにか言ってる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        そのまま少し経つと 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「儀式おわりましたよー！」と元気な声が聞こえる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……っ」目を開けないです　聞き耳振ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=65 《聞き耳》 
+Cthulhu : (1D100&lt;=65) ＞ 49 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#00ac97;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>浅海 奏</div>
+	<div>
+	
+        ccb&lt;=60　《聞き耳》 
+Cthulhu : (1D100&lt;=60) ＞ 97 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        お前！！！！！！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        奏は触手に足を取られて転びます。1のダメージ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 浅海 奏 ] HP : 11 → 10 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        紫崎さん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「きゃっ！」目は絶対開けないよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「あ、ああーーっ！！誰っすか！儀式が終わったとかウソっすね！あたしにはわかるっすよ！！噓つきは泥棒の始まりなんすよ！！おまわりさんに突き出しちゃうっすよーーー！！！」クソデカ大声 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「(……やっぱりうそなのです、ぜったい目を開けないのです……！)」ぎゅ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では次に奏さん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        はい 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        あなたの頬に二つの手が触れます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        ひぃ！！！！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「ひ……っ！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        しかし何もしてこない、ただ触れているだけだ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「(こわい、こわい、こわい……！でも開けちゃダメなのです、これは絶対違うのです……！)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ゆらゆら揺れて触れる手に違和感を覚える 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        アイデアかな？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#00ac97;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>浅海 奏</div>
+	<div>
+	
+        ccb&lt;=55　《アイデア》 
+Cthulhu : (1D100&lt;=55) ＞ 12 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        えらいぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        その手には何かついている。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        これは...この感触は...指輪だ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……この手、葉月ちゃんの手なのです？大丈夫ですよ、もうすぐ帰れますからね…」お目目は開けないよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        しかしその言葉を聞いても頬から離れようとしない。何かを訴えるかのようにゆらゆらと触れている 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        そのおてて引っ張れる？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        ぐいっと 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        引っ張るならSIZ8とSTRとの対抗です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……ユウさん、手伝ってほしいのです！こっちへ来てほしいのです！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「えっ？こっち！？こっちってどっちっすか！？あっちっすか！？お空の彼方っすか？？？」あわあわしてます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「こっちです、奏はここにいるのです！」ユウちゃんの手を掴みます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「奏ちゃんはここにいるっすね？まだ大丈夫っすね！？よしっす！なにがよしかはわかんないけどよしっす！！そんであたしは何をするんすか！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「奏と一緒にこの手を引いてほしいのです！！」ユウちゃんに葉月ちゃんらしき手を握らせよう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「引っぱればいいんすね？綱引きの要領でいけばいいんすね！うんとこどっこいしょっす！！」ひっぱります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        というわけで二人で引っ張ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ではSTR17です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>　</div>
+	<div>
+	
+         
+Cthulhu : (1d100&lt;=5) ＞ 52 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>　</div>
+	<div>
+	
+        resb(17-8) 
+Cthulhu : (1d100&lt;=95) ＞ 39 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では何かをずるっ！と引っ張りだすことに成功します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……！葉月ちゃん、ですか？」目を開けないまま聞いてみます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        返事はありません 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=65 《聞き耳》 
+Cthulhu : (1D100&lt;=65) ＞ 56 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        振るべき？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        ありおさんの結果を聞いてみます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ではかすかにですが自分たちのものではない息遣いが聞こえます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「いっきものじゃなーい！すか！？いやでも生きてはいるから……いきもの……？？？とにかく人間じゃないっすね！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……山本さん！！今どんな感じなのです！？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        返事はありません 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        で　す　よ　ね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        振ります… 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#00ac97;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>浅海 奏</div>
+	<div>
+	
+        ccb&lt;=60　《聞き耳》 
+Cthulhu : (1D100&lt;=60) ＞ 5 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        ﾝｯﾌｗｗｗｗｗ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では詠唱している声が聞こえてきます。また先ほど引きずりだした何かが震えながらもしっかりと自分にしがみついているのが分かる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「………まだ儀式は終わっていないので目を開けることはできないのですが……葉月ちゃんですか？葉月ちゃんなら、奏の手を握ってください」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        そう言うとその何かはかすかにだがあなたの手を握ってくる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……大丈夫、大丈夫なのですよ。もうすぐ帰れるのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        そう励ましながらしばらく経つと 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「終わりましたよ....」と疲れ切った声が聞こえる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#f0349b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        ccb&lt;=65 《聞き耳》 
+Cthulhu : (1D100&lt;=65) ＞ 36 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では詠唱がもう聞こえず触手がはい回る音も聞こえなくなっている 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「えぇ～？ほんとっすか？今度こそ終わったっすね？もう目を開けてもいいんすよねーー！！」ってクソデカ大声で確認をとります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「ええ、終わりましたよ...」と帰ってきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……終わった、のです？」ユウちゃんに確認 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「んーーあたしの勘は終わったと告げてるっすよ！たぶん！！！」薄目をあけてみる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        薄目を開けて見ると 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        そこには先ほど目を閉じたときと同じ沼があるだけだった 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「……あ。ほんとに終わってるっす」ぽかん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……大丈夫そうなのです」目を開けます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        奏は目を開けると気づく 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        自分の足元に衰弱しているがしっかりとしがみついている葉月がいるのを 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……葉月ちゃん！大丈夫なのですか？」屈んで体を支えよう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        返事はありません。かなり衰弱していて、ほぼ気絶に近い状態のようです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「その子が葉月ちゃんっすか？えと、とりあえず救急車！呼んどくっす！」スマホとりだします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……はやく病院に連れて行かないとなのです、お願いするのです。パパとママにも連絡しておくのです」総合病院の院長の娘なのである 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「お疲れ様です...みなさん...無事助けられたんですね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……はい！山本さんのおかげなのです！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「怖いのに、協力していただいてありがとうございました」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「いえ、こちらこそ... 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「...伊神のおじさんは...だめだったみたいですね。あまりにも時間が経ちすぎてしまった... 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「私もあなた達のようにもっと早く勇気を出していれば... 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「………でも、きっと山本さんが頑張っているのを、伊神さんも見ていたはずです。今回頑張って勇気を出してくれたこと、絶対見ているのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「そうだと...嬉しいな 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「絶対そう、なのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では皆で協力して葉月を連れて車に向かおうとすると 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        向こうからがやがやと人がやってきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        どうやら報道陣のようです。マイクやカメラと一緒に鹿子も見えます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>馬野 鹿子 <br></b>
+
+        「みなさーん！おつかれさまでーす！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「げっ、あの人……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……何の用ですか。帰ってほしいのです」きっ！と睨みます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「あんたに話すことは何もないっす！あたしら急いでるんで失礼するっす！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>馬野 鹿子 <br></b>
+
+        「どうでしたか？　さ す ら 様　は退治出来ましたか？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「………あっ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「………もう知らないのです。皆さん、行きましょう？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        馬鹿がそういった瞬間どこからか声が聞こえる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        「こっちを見なさい」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        優しげだがおぞましさを伴った声だ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「………」無視します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「……しらないっす！！はやく行くっすよ！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では馬鹿含めた取材クルーが振り返った瞬間触手に連れて行かれるのを目撃する 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        そしてその触手は 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        自分たちにも迫ってきている 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……！！逃げるのです！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        車に乗って逃げますよ！！！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        車までだっしゅ！！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        山本も大慌てで車に乗り込み走り出します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        マンホールから触手が飛び出したり、周囲の林から触手が這い出してきてる中、車で爆走する 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「あわわ……！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「これが世紀末っすか？？？この町はもう終わりっす！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……７丁目から出るのです！！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「行方不明事件は７丁目に集中してるのです。だからたぶんあれは７丁目から出られない……！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「わ、わかりました！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ７丁目から脱出するとまるでそこに壁でもあるかのように触手が追ってこなくなる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        しかし７丁目の様子はまさに地獄絵図だ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「やっぱりだめだったの...?また繰り返すの...? 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……あれはたぶん、あの人たちも見捨ててはいけなかったのです……奏の判断ミスなのです……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……でも、まさか振り向くなんて……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「人が苦しんでるとこを嬉々として嗅ぎ奴らのことなんて知ったこっちゃないっす！同然の報いっすよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「...まだ取り込まれたばかりだから...神社で人形を作ってまた儀式をすれば何とかなるはず... 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「今は活性化してるけどしばらくして落ち着けばまた儀式が出来るはずよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「………さっき取り込まれたの。何人でしたか？」やる気です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「作る人が足らないなら、今度はパパとママの使用人さんや、はる先生、パパとママの病院の先生や看護師さんにもお願いするのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        数の暴力やめて 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「この光景を見てもまだ協力してくれるの? 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「だって、このままだとまた神隠しが起きて、悲しい顔をする人が増えるのです。」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「パパとママ言ってました。悲しい顔をする人がいなくなるために動きなさいって。パパとママはそのために頑張ってるのです。だから奏だってできるのです」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「むー……あたし的には葉月ちゃんを助けた時点でもう目的は達成できてるんで、これ以上関わることないと思うんすけどー……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「……なら、奏からのお願いです。お金が必要だったら払います。奏が紫崎さんを雇います！！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「……しょーがないっすね！もうちょっとだけ付き合うっすよ！生きていくためにはお金が必要なんで」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#888888;">
+	<div>NPC</div>
+	<div>
+	<b>山本 白子 <br></b>
+
+        「お二人とも...ありがとうございます！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        「ありがとうございます！……その、奏の貯金は200万円しかないのですが、ちゃんと見合ったお金は払います！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        「貯金多くないすか！！？！？！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ではエンディングに移ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        後日改めて沈め雛の儀式を行い馬鹿達を助けた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        彼らはすっかり意気消沈しており、しばらくは強引な取材などは控えるだろう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        葉月もすっかり回復し、最近はちょくちょく奏やユウと遊んでいるようだ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        山本は今後の事を考え、沼を完全に埋め立てるようだ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        今までは取り込まれた伊神を救うため沼を残しておいたが今回の事で完全に吹っ切れたようだ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        そして探索者達は日常へと帰って行く 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        それを見つめる巨大な昆虫がいたが、それは誰にも気づかれず姿を消した 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        とおりゃんせ　END 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        お疲れさまでした～～～～！！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        おつかれさまでした！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        □ウボ＝サスラの落とし子に遭遇し生還した<br>・１Ｄ６ポイントの正気度回復 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        □戸成葉月を救うことが出来た<br>・１Ｄ１０ポイントの正気度回復<br>・１Ｄ６ポイントの＜信用＞の成長 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        □儀式によって手腕の数を激減させた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・１Ｄ３ポイントの正気度回復 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        □儀式後に天狗沼をコンクリートなどで埋め立てた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ・１Ｄ３ポイントの正気度回復 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        1d6+1d10+1d3+1d3 
+Cthulhu : (1D6+1D10+1D3+1D3) ＞ 6[6]+6[6]+1[1]+1[1] ＞ 14
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#00ac97;">
+	<div>浅海 奏</div>
+	<div>
+	
+        1d6 
+Cthulhu : (1D6) ＞ 6
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        1d6+1d10+1d3+1d3 
+Cthulhu : (1D6+1D10+1D3+1D3) ＞ 1[1]+10[10]+1[1]+2[2] ＞ 14
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#f0349b;">
+	<div>紫崎 ユウ</div>
+	<div>
+	
+        1d6 
+Cthulhu : (1D6) ＞ 5
+      
+	</div>
+</div>
+
+</div>
+<div id="log-end"></div>
+</body>
+</html>
