@@ -1,0 +1,3537 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>毒入りスープ</title>
+<meta http-equiv="content-type" charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<style>*{font-family:sans-serif;}:root{--header-back:0,0,0;--header-color:#FFF;--awesome:'Font Awesome 5 Free';}body{padding-top:80px;margin:0;}/* header */header{background:rgba(var(--header-back),0.5);color:var(--header-color);position:fixed;top:0;left:0;width:100%;overflow-x:hidden;transition:0.3s;}header:has(#menu[open]){background:rgba(var(--header-back),0.8);}summary{outline:none;}details > summary{display:inline-block;cursor:pointer;opacity:0.3;font-size:80%;font-weight:bold;padding:5px;margin:10px 0 0;}details > summary:hover,details[open] > summary{opacity:1;}details[open] > summary:hover{opacity:0.3;}details > summary:before{content:'\f138';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details[open] > summary:before{content:'\f13a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}details > div{margin:10px 10px 30px 20px;word-break:break-all;}details > div > button{padding:3px 20px;margin:0 0 8px;font-size:80%;cursor:pointer;outline:none;border:2px solid var(--header-color);border-radius:3px;background:rgba(0,0,0,0);color:var(--header-color);opacity:0.3;}details > div > button:hover{opacity:1;}button.all.hide:before{content:'一括非表示';}button.all.hide:after{content:'\f070';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}button.all.show:before{content:'一括表示';}button.all.show:after{content:'\f06e';font-family:var(--awesome);font-weight:600;margin-left:0.5em;}input[type="checkbox"]{display:none;}label{cursor:pointer;}input[type="checkbox"]+ label:before{content:'\f0c8';font-family:var(--awesome);font-weight:400;margin-right:0.5em;}input[type="checkbox"]:checked + label:before{content:'\f14a';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open]{max-height:85vh;}#menu > summary{padding:0 10px 10px;}#menu[open] > summary{opacity:0.3;}#menu[open] > summary:hover{opacity:1;}#menu > summary:before{content:'\f0c9';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu > summary:after{content:'MENU';}#menu[open] > summary:before{content:'\f00d';font-family:var(--awesome);font-weight:600;margin-right:0.5em;}#menu[open] > summary:after{content:'CLOSE';}#menu > div{max-height:60vh;max-width:80vw;padding-bottom:50px;overflow-y: auto;}#menu > div::-webkit-scrollbar{display:none;}header a:link,header a:visited{color:var(--header-color);opacity:0.5;text-decoration: none;}header a:hover{opacity:1;}/* chat-log default style */#chat-log{margin:20px 0 20px 25px;}.chat{display:flex;flex-wrap:nowrap;flex-direction:column;padding-right:1em;}.chat > div{word-break:break-all;}.chat > div:nth-child(1){display:block;font-weight:bold;padding-top:0.2em;}.chat > div:nth-child(2){margin-left:1em;padding:0 0.2em 0.2em;}/* headline */[id^="index"]{margin-top:-90px;padding-top:90px;}/* hide-user style */.hide-user > div:nth-child(1),.hide-user2 > div:nth-child(1){display: none !important;}.hide-user > div:nth-child(2):not(:has(b)){margin-left:0;padding:0;}.hide-user + div:not(:has(.hide-user)){padding-bottom:0.5em;}.hide-user b,.hide-user2 b{ margin-left:-1.2em; }/* tab style */body{background:#2a2a2a;}/* diceroll */button.dice{outline:none;border:none;background:none;color:inherit;opacity:0.5;cursor:pointer;transition:0.3s;}button.dice:hover{opacity:1;letter-spacing:0.1em;}button.dice.select{opacity:1;}button.dice.select:hover{letter-spacing:0;cursor:default;}#dice-output-area{padding:10px 15px;background:#000;color:#888;border-radius:3px;font-size:80%;}#dice-output-area li{text-indent:-1.5em;padding-left:2.5em;}#dice-output-area li.sub{list-style-type:circle;padding-left:5em;}button.dice-output-area{display:none;padding:2px 8px;font-size:100%;}#dice-text-copy{display:none;}@media only screen and (orientation: portrait){button.dice{display:block;color:var(--header-color);background:rgba(var(--header-back),1);}span.dice-span{display:none;}}/* safari */summary::-webkit-details-marker {display:none;}/* mediaquery */@media only screen and (orientation: portrait){*{overflow-x:hidden !important;}html{width:100vw;overflow-x:hidden !important;}header{padding:50px 0 0 0;margin:0;width:100%;overflow-x:hidden !important;position:fixed;top:0;left:0;right:0;}#menu{padding-left:10px;}body{padding:120px 0 0 0;margin:0;;width:100%;font-size:90%;overflow-x:hidden !important;}#chat-log{width:90vw;overflow-x:hidden !important;margin:20px 0 20px 15px;}#chat-log div{word-break:break-all;overflow-x:hidden !important;padding-right:0;}.chat > div:nth-child(2){margin-left:0;overflow-x:hidden;}.hide-user b,.hide-user2 b{ margin-left:0em; }[id^="index"]{margin-top:-120px;padding-top:120px;}}</style>
+<script>$(function(){$(document).on('click','#tab-all,#user-all',function(){let tgt = $(this).attr('id').replace('-all','');let result = true;if( $(this).hasClass('hide') ){ result = false; }$('input[name="' + tgt + '"]').prop('checked',result);$(this).toggleClass('show hide');chatShowHide();});});$(function(){$(document).on('change','[name="user"],[name="tab"]',function(){ chatShowHide(); });});function chatShowHide(){$('.chat').show();let hide_list = [];$('[name="user"]:not(:checked),[name="tab"]:not(:checked)').each(function(){ hide_list.push('.' + $(this).attr('id').toLowerCase()); });hide_list = hide_list.join(',');$(hide_list).hide();$('#dice-output-area').html('').hide();$('.dice-output-area').hide();$('button.dice').removeClass('select');}</script><script>/* dice output */$(function(){$(document).on('click','button.dice',function(){if( $(this).hasClass('select') ){ return; }else{$('button.dice.select').removeClass('select');let tgt = $(this).attr('id');let user_ary = [];let dice_ary = [];let result_ary = [];let elm = $('#chat-log > div.diceroll:visible');for( i = 0 ; i < elm.length ; i++ ){let thisUser = elm.eq(i).attr('class').split(' ')[2];let txt = elm.eq(i).children().eq(1).html();try{let txt_re = txt.split('</b>');if( txt_re[1] == undefined ){ throw new Error(); }txt = txt_re[1];}catch(e){;}txt = txt.replace(/\n|\s|\t| |　| /g,'');let terms = false;if( tgt == 'diceroll' ){ terms = true; }else if( tgt == 'cf' && ( elm.eq(i).data('dice-result').split(',').indexOf('cr') !== -1 || elm.eq(i).data('dice-result').split(',').indexOf('fb') !== -1 ) ){ terms = true; }else if( elm.eq(i).data('dice-result').split(',').indexOf(tgt) !== -1 ){ terms = true; }if( terms ){if( user_ary.indexOf(thisUser) == -1 ){ user_ary.push(thisUser);dice_ary.push([]);result_ary.push([0,0]); }let user_num = user_ary.indexOf(thisUser);if( Boolean(elm.eq(i).data('dice-ccb')) && !Boolean(elm.eq(i).data('dice-x'))){try{let cbr_result = txt.split('&lt;=')[1].split('[')[1].split(']')[0].split(',');if( cbr_result[0].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[0].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }if( cbr_result[1].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( cbr_result[1].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}catch(e){;}}else if( Boolean(elm.eq(i).data('dice-x')) ){txt = txt.split(/#\d/);for( j = 0 ; j < txt.length ; j++ ){txt[j] = txt[j].replace(/<br>/g,'');if( j > 0 ){txt[j] = '<li class="sub">' + txt[j] + '</li>';if( txt[j].match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt[j].match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}}txt = txt.join('');}else{txt = txt.replace(/<br>/g,'');if( txt.match(/決定的成功/) ){ result_ary[user_num][0] = result_ary[user_num][0] + 1; }else if( txt.match(/致命的失敗/) ){ result_ary[user_num][1] = result_ary[user_num][1] + 1; }}let tabspan = '<span>［' + $('#' + elm.eq(i).attr('class').split(' ')[1].toUpperCase()).next().text() + '］</span>';dice_ary[user_num].push(tabspan + txt);}}let output = '';for( i = 0 ; i < user_ary.length ; i++ ){output += '<b>▼ ' + $('#' + user_ary[i].toUpperCase() ).next().text();if( tgt == 'diceroll' || tgt == 'cf' ){ output += '（' + result_ary[i].join('C') + 'F）'; }output += '<br></b>';output += '<li>' + dice_ary[i].join('</li><li>') + '</li><br>';}$('#dice-output-area').html(output).show();$('.dice-output-area').show();$(this).addClass('select');}});});/* copy action */$(function(){$(document).on('click','button.dice-output-area',function(){$('#dice-text-copy').html($('#dice-output-area').html());$('#dice-text-copy span').remove();let li_elm = $('#dice-text-copy li.sub');for( i = 0 ; i < li_elm.length ; i++ ){ li_elm.eq(i).prop('outerHTML','　◦ ' + li_elm.eq(i).text() + '<br>'); }let copyTxt = $('#dice-text-copy').html();copyTxt = copyTxt.replace(/<br><b>/g,'\n\n').replace(/<li>|<b>|<\/b>/g,'').replace(/<\/li>|<br>/g,'\n').replace(/&lt;/g,'<').replace(/&nbsp;/g,' ');copyToClipboard(copyTxt);alert('クリップボードにコピーしました。');$('#dice-text-copy').html('');});});function copyToClipboard(txt){const pre = document.createElement('pre');pre.style.webkitUserSelect = 'auto';pre.style.userSelect = 'auto';pre.textContent = txt;document.body.appendChild(pre);document.getSelection().selectAllChildren(pre);const result = document.execCommand('Copy');document.body.removeChild(pre);return result;}</script>
+</head>
+<header>
+<details id="menu">
+<summary></summary>
+<div>
+<details>
+<summary>発言者別表示切替</summary>
+<div>
+<button id="user-all" class="all hide"></button><br>
+<input type="checkbox" name="user" id="USER0" checked><label for="USER0">system</label><br>
+<input type="checkbox" name="user" id="USER1" checked><label for="USER1">高天原　琴香</label><br>
+<input type="checkbox" name="user" id="USER2" checked><label for="USER2">朝雲　美優</label><br>
+<input type="checkbox" name="user" id="USER3" checked><label for="USER3">　</label><br>
+<input type="checkbox" name="user" id="USER4" checked><label for="USER4">奴隷の少女</label><br>
+</div>
+</details>
+<details>
+<summary>ダイス出力機能</summary>
+<div>
+<button type="button" class="dice" id="diceroll">ダイス一括表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="sc">成功のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="fl">失敗のみ表示</button><span class="dice-span">/</span>
+<button type="button" class="dice" id="cf">CF表示</button>
+<div id="dice-output-area" style="display:none;"></div>
+<br>
+<button class="dice-output-area">コピー <i class="fa-regular fa-copy"></i></button><div id="dice-text-copy"></div>
+<br>
+<span style="font-size:70%;">
+※組み合わせダイス（CBR,CBRB）、繰り返しコマンド（Xn CCB等）は正しく判定できない可能性があります。<br>
+※ダイス結果のコピーではタブ名はコピーされません。
+</span>
+</div>
+</details>
+
+<br><br>
+<a href="#"><i class="fa-solid fa-angles-up"></i> ログの先頭へ</a><br>
+<a href="#log-end"><i class="fa-solid fa-angles-down"></i> ログの最後へ</a>
+</div>
+</details>
+</header>
+<body>
+<div id="chat-log">
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        １：はじめに<br>このシナリオは『クトゥルフの呼び声』に対応したものです。<br>シナリオの舞台は小さな密室となります。<br>時代、季節は自由に決めて構いません。<br>プレイヤーキャラクターは１～３人くらいを推奨します。<br>推奨技能は目星と図書館です。<br>余裕があれば医学か薬学を取っておくといいかもしれません。<br>職業が医者であればそういった技能は取りやすいので、推奨職業にしてみましょう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ２：あらすじ<br>探索者はある日の夜、目を覚ますと正方形の部屋に閉じ込められていました。<br>その真ん中には、机の上に乗った真っ赤なスープが一つぽつんと置かれています。<br>知らず知らずの内にこの世界に閉じ込められた探索者達。<br>彼等は無事、この世界から抜け出すことが出来るのだろうか？<br> 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ３：最初の部屋<br>探索者達は何でもない平凡な日々を贈る中、ある日の夜に突然目を覚まします。<br>目を覚ますとそこは、壁も床もコンクリートで出来た四方に扉のある正方形の部屋です。<br>この時点での探索者は丸腰で、着ている衣類は全て白いローブのようなぼろきれで、他には何もありません。<br>財布やケータイなどは勿論、普段身につけているアクセサリーなどもありません。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        そして不思議な事に探索者同士はこの世界の中では、外国人であったとしてもお互いが共通の言語で喋っているかのように感じるでしょう。<br>天井の薄暗い豆電球だけが部屋を照らし、真ん中には古い木製の長机と椅子が一つあります。<br>更に机の上には木製の器に入った、赤い無臭のスープが一つ。<br>そして椅子の上には、古い紙切れが二つ落ちています。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「ふわ～ぁ…うーん？」目ごしごし 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「……くしゅん！なんだか寒いわね……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「あら？私昨日こんな格好で寝てたかしら？」きょとん 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        お互いの存在に気付きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「ええと……おはよう、かしら？あなたも今起きたところ？」話しかけてみます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「うわあ！だ、誰！？」とってもびっくりします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「あっ、ごめんなさい。驚かせちゃったかしら？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「私は高天原 琴香(たかまのはら ことか)。まだまだ新米だけど、看護師をしています」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「……あなたのお名前も聞いてもいいかしら？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「は、はい！朝雲 美優(あさぐも みゆ）です！だ、大学生です」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「あらあら……混乱する気持ちもわかるけど今は落ち着いて、ね？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「……まずは、今置かれている状況を確かめてみましょうか」室内を見渡すなどしています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        部屋の四方には、それぞれ材質や雰囲気の異なる扉が4つあります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「真ん中に椅子と机と…なんかありますね？」机チェックしま 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        机の中央のスープは、赤い無臭のスープです。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        こちらのスープは少し湯気が出ており、まだ温かそうです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        椅子の上には紙が2枚あります。内容は以下の通りです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ～帰りたいなら　一時間以内に　毒入りスープを飲め。<br>　飲むまでは　君じゃあここから　出られない。<br>　一時間以内に　飲めなかったら　お迎えが来るぞ～ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        そしてもう一つの紙には、この部屋の地図を思わしきものが記されています。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        最初の部屋は『スープの部屋』、北の部屋は『調理室』、南の部屋は『礼拝室』、西の部屋は『書物庫』、東の部屋は『下僕の部屋』と記されてます。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        さて、読み終わったら《目星》どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>朝雲　美優</div>
+	<div>
+	
+        CCB&lt;=70 目星 (1D100&lt;=70) ＞ 82 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#e43b4b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>高天原　琴香</div>
+	<div>
+	
+        ccb&lt;=70　《目星》 (1D100&lt;=70) ＞ 46 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        《目星》に成功したプレイヤーは、文が書かれている紙の裏にこんなメッセージが書かれていることに気づきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ～暖かい　人間の　血の　スープ　冷めない　内に　召し上がれ～ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        この文を読んだ人限定で、《アイデア》どうぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#e43b4b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl,fb">
+	<div>高天原　琴香</div>
+	<div>
+	
+        ccb&lt;=60　《アイデア》 (1D100&lt;=60) ＞ 98 ＞ 致命的失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        こわいよ～～！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        この赤いスープが非常に魅力的に感じてしまう。<br>一口だけならと、スープに口を付けてしまうでしょう。<br>すると、なぜか止まらずに全て飲み干してしまいます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「……そうだ。私、お腹がすいていたの！ちょうどいいわ、いただきましょう」スープを…飲んじゃうんですか…？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        《アイデア》もっかいお願いします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#e43b4b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>高天原　琴香</div>
+	<div>
+	
+        ccb&lt;=60　《アイデア》 (1D100&lt;=60) ＞ 89 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        失敗した場合はそのドロリとした気味の悪い感触と味に1/1d3の正気度ポイントを喪失します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#e43b4b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>高天原　琴香</div>
+	<div>
+	
+         (1D100&lt;=60) ＞ 37 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+         (1D3) ＞ 3
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 高天原　琴香 ] SAN : 78 → 75 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 高天原　琴香 ] SAN : 75 → 78 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#e43b4b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>高天原　琴香</div>
+	<div>
+	
+        ccb&lt;=78　《SANc》 (1D100&lt;=78) ＞ 42 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 高天原　琴香 ] SAN : 78 → 77 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        スープを飲み干しましたが、気味の悪い感触以外には特に何も変化は無いです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「………ごちそうさまでした。……うぷ」青い顔でおててを合わせています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「それにしても、スープを飲んだのに何も起こらないわね？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        何も起こりません 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「ちょっと顔色悪いですよ…？」飲んだんだ…って顔しでます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「うふ……大丈夫よ。ちょっと……独特な味わいだっただけだから」お顔が青いねぇ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「そんなことより、地図を見る限り他の部屋もありそうね。見に行ってみましょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「そ、そうですね！ここにいてももう何もおきなさそうですし…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「まずは……そうね、書物庫から行きましょう。情報は大切だもの」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ５：西の部屋<br>西の部屋は綺麗な木製の扉となっています。<br>鍵などはかかっていないので難なく開けることが出来るでしょう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「普通の扉ですね、入ってみましょ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        この部屋は中央には小さな四足の古い机があり、その上にあるキャンドル皿に乗せられたろうそくがうっすらと部屋を照らしてます。<br>四隅には本が一杯に詰められた本棚が置いてある。<br>不思議な事にこの書物庫の本は、その探索者達の読みやすい母国語で書かれているので、誰でも手軽に文章を読むことができます。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「あら、本がこんなにたくさん……何から読めばいいのかしら」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「これ…怪しそう！」適当に本を取ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>朝雲　美優</div>
+	<div>
+	
+        CCB&lt;=70 図書館 (1D100&lt;=70) ＞ 21 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#e43b4b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>高天原　琴香</div>
+	<div>
+	
+        ccb&lt;=70　《図書館》 (1D100&lt;=70) ＞ 94 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ここで《図書館》ロールをして成功すると、『スープの夢について』と記された真っ黒な本を見つけます。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「なんだろこの本？スープがうんたらかんたら…」手に取ろうとします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        本はべったりと湿っていて、本に触れると僅かに甘い香りのする黒い液体が付着します。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「うわっ！この本なんかべとべとする！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「み、美優ちゃん……！？どうかしたの……？」駆け寄ってきてくれるよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「本なのにべたべたしててびっくりしたんです…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「何か付着してるのかしら……ちょっと貸してもらえる？私も見てみるわね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        ちゅわけで薬学を振りたいです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#e43b4b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>高天原　琴香</div>
+	<div>
+	
+        ccb&lt;=51　《薬学》 (1D100&lt;=51) ＞ 1 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        《薬学》ロールに成功すると、この液体が何らかの猛毒であるという可能性に気付けます。<br>これは黒い蓮によって作られた毒薬で、非常に致死性が高いです。<br>触れただけなら害はありませんが、傷口からこの液体が流れ込んだりこの液体を体内に摂取してしまった場合、POT25との対抗ロールをすることとなります。<br>失敗した者は幻覚を見て、呼吸と心拍が激しくなっていき、一分以内に心臓は疲れ果て、即死する。<br>成功しても耐久力とCONの1/2を失い、更に毒薬が引き起こす幻覚から0/1の正気度ポイントを失う。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「ことかさん、このべたべた何かわかりました？私にはさっぱり…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「……これ、かなり危険な猛毒だわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「触れる分には問題ないのだけれど、絶対になめたり触った手で顔をこすったりしないようにね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「念のため、本を読み終わったら手を洗いに行ったほうがいいかもしれないわね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「も、猛毒!?!?!?さ、触りません！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「ででで…でも読んだ方がいいですよね？触っちゃったし…」恐る恐る読み申す 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        本の内容は、以下の通りの事だけが記されている。<br><br>真ん中の部屋・・・ちゃんとしたスープを飲まないと出られない。メモの裏にはスープの正体が記されている。<br>上の部屋・・・調味料や食器が沢山置いてある。ちょっとだけ予備のスープが鍋にある。<br>右の部屋・・・とっても良い子が待っている。いいものを持ってるよ。<br>左の部屋・・・本はとっても大事だから持ち出したら駄目。ろうそくはもってける。<br>下の部屋・・・神様が眠っている。毒の資料がある。番人は活きのいいものを食べなきゃいなくならない。<br>大事な事・・・死ぬ覚悟をして飲むように。<br> 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「うーん？いろんな部屋のことが書いてあります…」かくしかで伝える 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ろうそくを持ち出す場合、ろうそくの変化で時間経過がある程度わかるようになります。現在はまだろうはかなり残ってます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「なるほど……それなら私は次は右の部屋に行こうかしら……」少し考えこみ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「ほんとに右の部屋行くんですか？私は上の部屋に行こうと思うんですけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「あら、それなら別行動しましょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「今のところ、この本には本当のことしか書かれていないでしょう？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「だったら右の部屋も扉の見た目ほど危なくないかもしれないわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「じゃ、じゃあ蝋燭もって行ってください！何か役に立つかもしれないので…」蝋燭を渡すます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「あら、ありがとう！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「そうね、暗かったら困るものね。私としたことがうっかりしていたわ」ろうそくを受け取りますわよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ４：東の部屋<br>東の部屋は、錆びた鉄で出来た扉となっています。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「とは言ったものの、中の様子は窺っておいたほうがよさそうね」聞き耳が振りたいです！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        聞き耳どぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#e43b4b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>高天原　琴香</div>
+	<div>
+	
+        ccb&lt;=65　《聞き耳》 (1D100&lt;=65) ＞ 5 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        中から物音は全く聞こえません。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ですが、直感的に人の気配を感じます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「ごめんくださーい……どなたかいらっしゃいますか？」人の気配がするなら…とノックしてみましょうね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ひたひたという足音が中から近づいて来てるのに気付くでしょう。返事はありません 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「ええと……これは入ってもいいのかしら……？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「お邪魔しまーす……」困惑しつつそっ…と開けます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        扉は鍵がかかっていますが、《鍵開け》ロールをしなくても力づくで開けられるほど脆いものです。<br>扉のSTR5に対抗して勝てば、扉は難なく開くことが出来ます。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>　</div>
+	<div>
+	
+        resb(5-11) (1d100&lt;=20) ＞ 27 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        錆びついた扉は重いですが、なんとか開きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        中には灯りが全くなく、更に中央の部屋も豆電球の光は届かないので、《目星》ロールにマイナス補正がかかることでしょう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        《目星》どぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#e43b4b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>高天原　琴香</div>
+	<div>
+	
+        ccb&lt;=70　《目星》 (1D100&lt;=70) ＞ 11 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では足音の主に気が付きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        《目星》ロールに成功するとそれが十代後半くらいのやつれた女の子だと気付きます。<br>女の子は探索者と同じ白いローブを着ていますが、それは血に塗れていて片手には拳銃を握っています。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「…………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「あら、中にいたのはあなただったんですね。こんにちは」話しかけてみようね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「…………」言葉は発しませんが、ペコリとお辞儀をしてくれます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「あなたは……このお部屋に住んでるのかしら？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「…………」少しゆっくりと首を傾げたのちに、首を横に振ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「あら、そうなのね……少しこの部屋の中を見せてもらおうと思ったのだけれど、大丈夫なのかしら……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「…………」コクコクと首を縦に振ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「ありがとう。それじゃあお邪魔させてもらうわね」探索できる！ﾔｯﾀｰ!! 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#e43b4b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>高天原　琴香</div>
+	<div>
+	
+        ccb&lt;=70　《目星》 (1D100&lt;=70) ＞ 51 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        彼女がいた部屋を《目星》ロールなどでしっかり確認してみると、中に紙切れがあるのに気付くでしょう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ～それは　名前もない　貴方の　下僕です。<br>　言われたことは　嫌でも　絶対に　従います。<br>　無口だけど　人懐っこい　良い子なので　可愛がって　あげてください～ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ただし一緒に、頭のない男性の遺体を発見してしまいます。<br>これを見た探索者は1/1d4+1の正気度ポイントを失います。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#e43b4b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>高天原　琴香</div>
+	<div>
+	
+        ccb&lt;=77　《SANc》 (1D100&lt;=77) ＞ 75 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 高天原　琴香 ] SAN : 77 → 76 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「これは……この子について書かれた紙？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「(……本当に絶対服従なのだとしたら、ここに遺体があるのはおかしいわね)」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「ねえ、この男性は前のあなたのご主人だったり……するのかしら」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「…………」ふるふると横に首を振っています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>　</div>
+	<div>
+	
+        sccb&lt;=35 (1D100&lt;=35) ＞ 36 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        なんでこの子首振ってんだろーなー 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「……そうね、変なこと聞いてごめんなさいね」申し訳なさそうに 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「そうだわ。私、他のお部屋も見て回ろうと思ってるの。良かったら一緒に来てもらえる？人手は多い方がいいもの」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「…………」大きく一回頷いて、後ろをちょこちょこ着いて回るようになります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        仲間が1人増えた！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「ありがとう。助かるわ！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「……」こくりと小さく頷きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ６：北の部屋<br>北の部屋は、真っ白なドアノブなどがない、板のような押し扉となっています。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「琴香さんは大丈夫かな…」心配してます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        聞き耳どぞ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>朝雲　美優</div>
+	<div>
+	
+        CCB&lt;=65 聞き耳 (1D100&lt;=65) ＞ 21 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ぽたりぽたりと間隔をあけて水滴のような音が聞こえてきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「うーん、開けてみようかな」あけます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        この部屋はとても綺麗な印象を受け、食器棚や調理台、ガスコンロや洗い場など様々なものがあります。<br>部屋は幾つもの豆電球が設置されていて、この部屋は真昼のようにずっと明るいです。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「結構明るいし綺麗にしてある…本によるとスープがちょっとあるんだっけ…」探します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        初手食器棚で 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        食器棚に注目してみると、全ての食器が銀色である事に気付きます。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        《歴史》《オカルト》または《地質学》《薬学》がふれます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>朝雲　美優</div>
+	<div>
+	
+        CCB&lt;=50 歴史 (1D100&lt;=50) ＞ 22 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        銀には魔除けの力があり、高い精神力を象徴するものである事を知っています。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「スープ飲むのにちょっと持っていこうかな？」パクります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        もっていけます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        毒に塗れた手で食器に触ったことにより、銀食器が黒ずみます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        銀は毒薬に多用された硫化ヒ素と合うと黒ずみます。その性質のため、毒味に用いられることもあります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「あ！毒ついてるんだった…手洗わないと！」洗い場行きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        手を洗いにいくと、洗い場の蛇口が少し緩んでおり、水滴がぽたぽたと垂れているのがわかる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「ちゃんと閉めないと、もったいないなー」おててキレイキレイします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        キレイキレイできました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        銀食器をパクりつつ調理台に向かいます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        調理台の隅に紙切れがあるのに気付きます。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ～大事な　調味料は　現在　在庫切れ～ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「在庫切れって言われても…何が無いのか全然わからないや」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「うーん、ここにもスープないとこっちかな？」ガスコンロに向かいます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ガスコンロの上には蓋をしてある大きな鍋が置いてあります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        匂いちぇっく 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>朝雲　美優</div>
+	<div>
+	
+        CCB&lt;=65 聞き耳 (1D100&lt;=65) ＞ 55 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        無臭ですが、熱気は感じます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「これっぽい！」蓋オープン 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        中はバラバラの死体で一杯になっています。<br>死体を目撃した探索者は1/1d6の正気度ポイントを失います。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        また、このサンチェック以降、血の匂いを嗅ぎ分けられるようになります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>朝雲　美優</div>
+	<div>
+	
+        CCB&lt;=65　SAN (1D100&lt;=65) ＞ 37 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 朝雲　美優 ] SAN : 65 → 64 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「わあああああああ！！」クソデカ大声 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「い、今の声は……美優ちゃん！？いったい何が……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「…………」後ろをついていきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        2人は調理室にきました。ろうそくは元の1/3ほど減っています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        また、下僕の少女は探索者の後ろにしがみつきながら恐る恐る覗き込んでいます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「美優ちゃん、大丈夫！？何があったの？」入口から声をかけます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「だだだ、大丈夫です！ちょっとだけびっくりしただけですから！」頑張って返事します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「ほ、本当に大丈夫なのかしら……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「ちょっと様子を見てくるから、ここで待っててね」と女の子に言って美優ちゃんに駆け寄ります 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「……」こくりと頷き、その場で待ちます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        駆け寄ったら鍋の中のバラバラ死体が見えちゃったってことでいいですか？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#e43b4b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>高天原　琴香</div>
+	<div>
+	
+        ccb&lt;=76　《SANc》 (1D100&lt;=76) ＞ 54 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 高天原　琴香 ] SAN : 76 → 75 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「予備のスープって……まさかこれが？」顔をしかめつつ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「落ち着いて美優ちゃん。とりあえずもう見えないから大丈夫よ」蓋をしめます ないない！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「はい…うぇぇ…どうみてもスープじゃないよ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「はぁ……。そうね、とてもこれはスープ……と呼べるものじゃないわね。どうしたものかしら……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「こんなの調味料じゃどうにもならないよ…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「あっ、琴香さんの方は何かありましたか？こっちはこれとこれと流し台位でした」銀食器をみせつつカクシカ共有 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「……なるほどね。私の方は……」こっちも大まかにかくしかで共有します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「それで、ちょっとびっくりするかもしれないのだけど……ええと、入ってきてもらえる？」入口に向かって呼びかけます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「……」恐る恐る入ってきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「わぁ、私たち以外にも人がいたんですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「私は朝雲 美優、よろしくね！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「……」こくりと小さく頷きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「あら！そういえば私の自己紹介がまだだったわね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「高天原 琴香です。美優ちゃん共々、仲良くしてくれると嬉しいわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「……」コクコクと2回頷きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「そうだわ、せっかく流し台があるのなら私は手を洗って来るわね。さっきから手のベタつきが気になって仕方なくて……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        キレイキレイしにいきます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        キレイキレイなりました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ろうそくは今半分くらいの長さになってます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        手洗いから戻ります！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「おかえりなさい！これで一安心ですね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「えっと…この子なんて呼べばいいかな？ちょっと不便だよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「……？」不思議そうに首を傾げてます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「初音ちゃんがいればなー…琴香さんはなにかありますか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「名前……うーん、そうね……赤と白で縁起が良さそうな色の子だとは思うのだけれど……どんな名前がいいのかしら？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「えー、紅白だと…巫女さんのイメージがあるなあ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「うーんと……あ、思い出したわ。実家で咲いた牡丹がこの子みたいな色合いだったの」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「だから『牡丹』ちゃん……というのはどうかしら」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「……？」よくわかってはいないようだが、気に入ったらしい 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「携帯があったら写真を見せてあげられたのだけれど……残念だわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「かわいい！よろしくね牡丹ちゃん」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「……」返事するように頷きます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「ねえ牡丹ちゃん、早速なんだけど大事な調味料ってどんなのか知ってる？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「……？」よくわからないと言った様子です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc,cr">
+	<div>　</div>
+	<div>
+	
+        sccb&lt;=60 (1D100&lt;=60) ＞ 5 ＞ 決定的成功/スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        嘘ついてないよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        少し待つと、何か思い出したようにキョロキョロしはじめる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        少女は思い出したように琴香の手を指しはじめた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「えっ、私？私の手、何かついているのかしら……」匂いを嗅ぐしぐさをしています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「……」首を横に振っています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「普通の手に見えるけど…牡丹ちゃん、私の手にはなにかある？」おてて見せます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「……」首を横に振っています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「なんだろう…私と琴香さん大体同じの触ったと思うけど…もしかしてスープ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「牡丹ちゃん。私、これと似たようなスープをさっき飲んだの。何か関係あるかしら？」蓋をあけて鍋の中身を見せます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「……」ふるふるふるふると首を横に振っています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「あ、もしかして毒じゃない？琴香さんさっきまでついてたし！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「……」うんうんと頷いてます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「じゃあ、書物庫の本についていたのが特別な調味料？……でも、そんな危険なものを何に使うのかしらね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「じゃあこのスープにあの毒を入れる……わけにはいかないよね…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「ここで考えても帰れないし…最後の部屋に行きます？色々と書かれてますけど…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「活きのいいもの、ねぇ……。丸腰で向かったら私たちが食べられてしまうかもしれないわね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「ならこのスープはどうですか？食器によそっていけば…持ち歩きたくないですけど…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「そうしてみましょうか。この状態でも活きがいいと思ってもらえたらいいのだけど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「うう…気持ち悪い…」何かの部位をいれつつスープをよそいます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「……大丈夫？よかったら持っていくのは私がやるわよ？」よそう様子を見守っていました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「じゃ、じゃあお願いします…蝋燭もつので…」交換するする 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「はい、任されました。それじゃあ行きましょうか」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        ごーごー 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ７：南の部屋<br>南の部屋は、小窓付きの一回り大きな厚い鉄扉となっています。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        扉に聞き耳でございますわ！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「ちょっと怖いなあ…」聞き耳いきまうす 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#e43b4b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>高天原　琴香</div>
+	<div>
+	
+        ccb&lt;=65　《聞き耳》 (1D100&lt;=65) ＞ 9 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>朝雲　美優</div>
+	<div>
+	
+        CCB&lt;=65 聞き耳 (1D100&lt;=65) ＞ 40 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        扉越しに《聞き耳》ロールに成功した場合、部屋の向こうから何かの荒い呼吸音と、ズルズルという何か重いものを引きずるような音を耳にします。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「中から聞こえるの、番人が出す音かしら……」小窓から中の様子を窺ってみます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「わ、私もみます…」おそるおそる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        もし小窓から中を確認すれば、ぼんやりと青白い部屋の中に一枚だけの翼を持った巨大なクサリヘビのような怪物の姿を確認するでしょう。<br>この怪物を目撃した探索者は0/1d10の正気度ポイントを喪失します。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#e43b4b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>高天原　琴香</div>
+	<div>
+	
+        ccb&lt;=75　《SANc》 (1D100&lt;=75) ＞ 35 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>朝雲　美優</div>
+	<div>
+	
+        CCB&lt;=64　SAN (1D100&lt;=64) ＞ 49 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「………その、思ったより大きいわね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「これっぽっちじゃ足りないですよね絶対！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「どうしよう…鍋ごと持ってこないtダメかな…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        あれだけの巨体だが、扉を壊してこちら側へ来ようとはしていない。あくまであの部屋を徘徊しているだけのようだ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「それか、奴隷の部屋の遺体を持ってくる……とかかしら。気は進まないけれど」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「鍋にしましょう！私持ってきますから」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「手伝った方がいいかしら？重かったら大変でしょうし……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「牡丹ちゃん、これもってて！」蝋燭渡します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「……」蝋燭持ちます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「琴香さん、鍋取りに行きましょ！」おててつかみます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「そ、そうね！時間もないし急いで取りに行かないと！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        二人で鍋を持ってきました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        持ってきました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        持ってきました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「持っては来ましたけど…開けないと何もできないですよね…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「それじゃあ、私が扉を開けるから美優ちゃんはお鍋の方の準備をお願いしてもいいかしら」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「は、はい！任せてください！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「……よし、じゃあ開けるわね！」ひらけごま！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では、扉を開けると、クサリヘビの怪物がこちらに気付き襲い掛かって来ます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        戦闘開始です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>　</div>
+	<div>
+	
+        ccb&lt;=65 噛みつき (1D100&lt;=65) ＞ 88 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        スープの残骸ぶん投げて気をそらしたいです！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        良いですよ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「なんとかなれー！」（ぽいぽい投げます） 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ぽいぽい投げました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        牡丹は蛇の怪物を見てひどく怯えています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        え！？この状態からでも振れる目星があるんですか！？ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#e43b4b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>高天原　琴香</div>
+	<div>
+	
+        ccb&lt;=70　《目星》 (1D100&lt;=70) ＞ 14 ＞ スペシャル
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#e43b4b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>高天原　琴香</div>
+	<div>
+	
+        ccb&lt;=75　《幸運》 (1D100&lt;=75) ＞ 58 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        蛇の怪物の鱗に紙切れが挟まっていることに気づく。蛇が動いた際の振動で、運良くなんとか読める範囲に落ちた。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ～真ん中の　弱々しい　太陽の中。<br>　もしくは　黒染めの　夢の知識。<br>　そこに　調味料は　隠れている～ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        2ターン目です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        怪物は床にぶちまけられたスープには目もくれず、活きの良い3人の方に向かって来ます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>　</div>
+	<div>
+	
+        ccb&lt;=65 噛みつき (1D100&lt;=65) ＞ 88 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「に、逃げましょう！！！ドア閉めて！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「これ以上はどうにもできないわね……逃げましょう！」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「牡丹ちゃんも！行きましょう」おびえてる牡丹ちゃんも連れていきましょうね 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        3人は一度部屋を出ます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        扉を閉めると、蛇の怪物はこちらを恨めしそうに睨みながらも、扉を破壊するような様子はなく、再び礼拝室内を徘徊し始めます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        ろうそくの火はいつの間にか消えてしまっていた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        戦闘終了です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「もう追ってこないよね？大丈夫だよね？」がくぶる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「今のところはね。どうやらあの部屋からは出てこないみたいね……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「そういえば、さっきの怪物の鱗に挟まってた紙にこんなことが書いてあって……」かくしか共有しまうす 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        共有しますた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        たすかる 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「真ん中の弱々しい太陽って…この豆電球のことかな？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「……おそらくはね。机の上に立つか、肩車でもすれば調べられるかしら」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        机の上に立てば届くでしょう 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「よいしょっ…何かあるといいけど…」豆電球みます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        豆電球の中には黒い小瓶が入っています。しかし、取り出すには壊すしか無さそうです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「美優ちゃん、どう？何かあったかしら？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「電球の中に黒い小瓶があります！でも壊さないと取れないかも…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「困ったわね……ろうそくはさっき消えてしまったし、明かりになるものがなくなってしまうわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「調理室に行けば明かりはありますし、大丈夫かも？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「いつお迎えにくるかもわからないし…割ってささっと飲んでみませんか？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「そうね。なら、その電球は外しちゃいましょうか。早めに中身を取り出した方がいいわよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「わかりました！」豆電球取って中身出します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        中の黒い小瓶を取り出せました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        中央の部屋は真っ暗になってしまいました 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「これって毒なのかな？琴香さんわかります？」ビンを渡す 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「わかったわ。少し見てみるわね」ビンを受け取って中身を確認します 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        先程目にしたばかりなので、はっきりとわかる。書庫で調べた黒い毒と同じ毒だ。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「……そうね、これはさっき書物庫で見た毒と全く同じものだわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「これが特別な調味料だったのね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「……」コクコクと頷いてます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「えー！さっきの無駄足だったの！？そんなぁ…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「まあまあ、あの部屋に行ってなかったら気づけなかったのかもしれないのだし、全くの無駄ということでもないと思うわよ？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「それもそうですね…じゃ、じゃあこの毒をスープに入れて飲むしかないですよね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「もうそれしかなさそうね。……死を覚悟して飲まなきゃいけないのね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「牡丹ちゃん、これ飲んで大丈夫だと思う？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「……？」首を傾げています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「うーん…どっちにしてもこれしか飲むのないよね…飲みたくないよぉ…」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「牡丹ちゃんは飲む必要ないのかしらね？元々この子がどこにいたかは分からないけれど……」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「確かに…どこの子なんだろうね？牡丹ちゃんって元の場所に帰りたい？」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>下僕の少女<br></b>
+
+        「……」また、首を傾げています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3 diceroll" style="color:#888888;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>　</div>
+	<div>
+	
+        sccb&lt;=60 心理学 (1D100&lt;=60) ＞ 18 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        元の場所というのがよくわからないようです 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>牡丹<br></b>
+
+        「……？」不思議そうに眺めてます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「……牡丹ちゃん。このスープを飲んだらきっと私たちが元居た世界に戻れる……はずなの」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「ただ、本当に戻れる保証はないし、ひょっとしたら死んでしまうかもしれないわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「だから、これを飲むかどうかの判断はあなた自身に任せたいの」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「けれど……そうね、私たちと一緒についてきてくれるのなら、飲んでくれたら嬉しいわ」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>牡丹<br></b>
+
+        「…………」渡されたスープをじーーっと見つめています 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        「じゃあ……私は飲むわ。美優ちゃんに牡丹ちゃん、生きて戻れたらまた会いましょうね」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        一思いに一気飲みします！！！ 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>牡丹<br></b>
+
+        「……！」琴香が飲む様子を見て、追いかけるように牡丹も飲み始めます 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        「わ、私も飲みます！」ちょっとずつごくごく 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        スープが血液だという事実を知った上で飲んだならば、1/1d6の正気度喪失となります。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2 diceroll" style="color:#e91e63;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>奴隷の少女</div>
+	<div>
+	<b>牡丹<br></b>
+
+        ccb&lt;=50 (1D100&lt;=50) ＞ 53 ＞ 失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>牡丹<br></b>
+
+        1d6 (1D6) ＞ 4
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="sc">
+	<div>朝雲　美優</div>
+	<div>
+	
+        ccb&lt;=64　SAN (1D100&lt;=64) ＞ 52 ＞ 成功
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 牡丹 ] SAN : 50 → 46 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 朝雲　美優 ] SAN : 64 → 63 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では、毒を飲んだみなさんはPOT25との対向ロールをします 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2 diceroll" style="color:#e91e63;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>奴隷の少女</div>
+	<div>
+	<b>牡丹<br></b>
+
+        resb(6-25) (1d100&lt;=-45) ＞ 自動失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        即死です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1 diceroll" style="color:#e43b4b;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>高天原　琴香</div>
+	<div>
+	
+        resb(10-25) (1d100&lt;=-25) ＞ 自動失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 牡丹 ] HP : 8 → 0 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2 diceroll" style="color:#cddc39;" data-dice-ccb="0" data-dice-x="0" data-dice-result="fl">
+	<div>朝雲　美優</div>
+	<div>
+	
+        resb(5-25) (1d100&lt;=-50) ＞ 自動失敗
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 朝雲　美優 ] HP : 9 → 0 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 高天原　琴香 ] HP : 13 → 0 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        では、死を経験したみなさんは1d10の正気度喪失です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>牡丹<br></b>
+
+        1d10 (1D10) ＞ 4
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 牡丹 ] SAN : 46 → 42 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        1d10 (1D10) ＞ 7
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        1d10 (1D10) ＞ 6
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 朝雲　美優 ] SAN : 63 → 56 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 高天原　琴香 ] SAN : 75 → 69 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        スープを全て飲み干し、毒の効果が発生し終えると、探索者達の視界は真っ白に染まり上がります。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        死にゆく探索者の脳内に、吠えるような声で『勇敢なる者よ！現へと還るがいい！』と言う声が響いてきます。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        次に目を覚ました時、探索者達は昨夜眠っていた場所で目を覚まし、無事朝を迎えます。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        あの妙な部屋は何処にもなく、探索者達が夢の中で負った怪我は全て消えています。<br>それどころか、夢の中で死んだ探索者までもが無事に目を覚ますのです。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 牡丹 ] HP : 0 → 8 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 朝雲　美優 ] HP : 0 → 9 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 高天原　琴香 ] HP : 0 → 13 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        この悪夢から無事抜け出せた探索者は1d10の正気度を獲得します。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user2" style="color:#cddc39;">
+	<div>朝雲　美優</div>
+	<div>
+	
+        1d10 (1D10) ＞ 10
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        1d10 (1D10) ＞ 6
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>牡丹<br></b>
+
+         
+      <br>
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        毒のスープを自ら進んで飲み干した探索者には、5の正気度回復です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        また、少女を連れ帰る判断をしたプレイヤーのうち、最も少女が懐いていたプレイヤーは、1d6の正気度回復です 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user1" style="color:#e43b4b;">
+	<div>高天原　琴香</div>
+	<div>
+	
+        1d6 (1D6) ＞ 1
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 朝雲　美優 ] SAN : 56 → 71 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user0 hide-user" style="color:#888888;">
+	<div>system</div>
+	<div>
+	
+        [ 高天原　琴香 ] SAN : 69 → 81 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        目を覚ました探索者は、いつもの日常に帰る。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        はずだったのだが 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        琴香が家の扉を開けると 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        白髪の少女がボーッと立ち尽くしていた 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user4 hide-user2" style="color:#e91e63;">
+	<div>奴隷の少女</div>
+	<div>
+	<b>牡丹<br></b>
+
+        「…………」 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        扉が開き、琴香の姿を認識すると、子猫のようにすぐに擦り寄ってくる。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        探索者はこの夢を始まりに、さらなる神話的恐怖へと引き込まれていくかもしれません。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        もしかすると夢で出会った探索者達は現実でも出会うかもしれませんし、夢で見た神話生物を現実でも目にするかもしれません。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        そして何よりもこの夢の被害者は、探索者だけとは限らないのです。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        少なくともこの悪夢で得たものは、全くの無意味ではないのは確かでしょう。 
+      
+	</div>
+</div>
+
+<div class="chat tab0 user3" style="color:#888888;">
+	<div>　</div>
+	<div>
+	
+        〜完〜    
+      
+	</div>
+</div>
+
+</div>
+<div id="log-end"></div>
+</body>
+</html>
